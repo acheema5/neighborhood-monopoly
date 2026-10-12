@@ -1,3 +1,6 @@
+import { MapContainer, Marker, TileLayer } from "react-leaflet";
+import { divIcon } from "leaflet";
+import "leaflet/dist/leaflet.css";
 import type { Business } from "../data/types";
 import { useAppStore } from "../store/useAppStore";
 
@@ -14,42 +17,46 @@ const CATEGORY_INITIAL: Record<string, string> = {
   Services: "V",
 };
 
+const ROOSEVELT_ISLAND_CENTER: [number, number] = [40.761, -73.9497];
+
+function markerIcon(initial: string, collected: boolean, selected: boolean) {
+  const size = selected ? 38 : 32;
+  return divIcon({
+    html: `<span class="business-marker-pin${collected ? " business-marker-pin--collected" : ""}">${initial}</span>`,
+    className: "business-marker-icon",
+    iconSize: [size, size],
+    iconAnchor: [size / 2, size / 2],
+  });
+}
+
 export function ExploreMap({ businesses, selectedId, onSelect }: ExploreMapProps) {
   const isCollected = useAppStore((s) => s.isCollected);
 
   return (
     <div className="explore-map">
-      <svg
-        className="explore-map__surface"
-        viewBox="0 0 100 100"
-        preserveAspectRatio="none"
-        aria-hidden="true"
+      <MapContainer
+        center={ROOSEVELT_ISLAND_CENTER}
+        zoom={15}
+        scrollWheelZoom={false}
+        className="explore-map__leaflet"
       >
-        <rect x="0" y="0" width="100" height="100" fill="var(--map-water)" />
-        <rect x="8" y="6" width="84" height="88" rx="6" fill="var(--map-land)" />
-        <rect x="8" y="24" width="84" height="2" fill="var(--map-street)" />
-        <rect x="8" y="52" width="84" height="2" fill="var(--map-street)" />
-        <rect x="8" y="76" width="84" height="2" fill="var(--map-street)" />
-        <rect x="33" y="6" width="2" height="88" fill="var(--map-street)" />
-        <rect x="64" y="6" width="2" height="88" fill="var(--map-street)" />
-      </svg>
-
-      {businesses.map((business) => {
-        const collected = isCollected(business.id);
-        const selected = business.id === selectedId;
-        return (
-          <button
-            key={business.id}
-            type="button"
-            className={`business-marker${collected ? " business-marker--collected" : ""}${selected ? " business-marker--selected" : ""}`}
-            style={{ left: `${business.mapPosition.x}%`, top: `${business.mapPosition.y}%` }}
-            onClick={() => onSelect(business.id)}
-            aria-label={business.name}
-          >
-            {CATEGORY_INITIAL[business.category] ?? "•"}
-          </button>
-        );
-      })}
+        <TileLayer
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        />
+        {businesses.map((business) => {
+          const collected = isCollected(business.id);
+          const selected = business.id === selectedId;
+          return (
+            <Marker
+              key={business.id}
+              position={[business.mapPosition.lat, business.mapPosition.lng]}
+              icon={markerIcon(CATEGORY_INITIAL[business.category] ?? "•", collected, selected)}
+              eventHandlers={{ click: () => onSelect(business.id) }}
+            />
+          );
+        })}
+      </MapContainer>
     </div>
   );
 }

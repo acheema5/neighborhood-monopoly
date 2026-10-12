@@ -17,7 +17,7 @@ export interface Business {
   addressOrArea: string;
   distanceLabel: string;
   image: string;
-  mapPosition: { x: number; y: number };
+  mapPosition: { lat: number; lng: number };
   featuredItems: string[];
   tasks: BusinessTask[];
   pointsReward: number;

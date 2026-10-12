@@ -255,40 +255,37 @@ ul {
   margin-bottom: var(--space-4);
 }
 
-.explore-map__surface {
-  position: absolute;
-  inset: 0;
+.explore-map__leaflet {
   width: 100%;
   height: 100%;
 }
 
-.business-marker {
-  position: absolute;
-  transform: translate(-50%, -50%);
-  width: 32px;
-  height: 32px;
+.business-marker-icon {
+  background: none;
+  border: none;
+}
+
+.business-marker-pin {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
   border-radius: 50%;
   border: 2px solid var(--color-surface);
   background: var(--color-text);
   color: var(--color-accent-contrast);
   font-size: 12px;
   font-weight: 700;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   box-shadow: var(--shadow-sm);
-  padding: 0;
 }
 
-.business-marker--collected {
+.business-marker-pin--collected {
   background: var(--color-accent);
 }
 
-.business-marker--selected {
-  width: 38px;
-  height: 38px;
-  box-shadow: var(--shadow-md);
-  z-index: 2;
+.leaflet-container {
+  font-family: var(--font-sans);
 }
 
 /* ---------- Preview card ---------- */
