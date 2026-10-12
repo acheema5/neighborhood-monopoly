@@ -1,4 +1,4 @@
-export type CategoryGroup = "Food & Drink" | "Books & Culture" | "Music" | "Fashion";
+export type CategoryGroup = "Food & Drink" | "Culture" | "Fashion";
 
 export type TaskType = "tap" | "demo_checkin" | "demo_action" | "simulated_qr";
 

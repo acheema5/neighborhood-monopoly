@@ -74,35 +74,50 @@ ul {
   justify-content: space-around;
   background: var(--color-surface);
   border-top: 1px solid var(--color-border);
-  padding: var(--space-3) 0 var(--space-4);
+  padding: var(--space-2) 0 var(--space-3);
 }
 
 .bottom-nav__item {
-  font-size: 12px;
-  font-weight: 500;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  font-size: 10px;
+  font-weight: 600;
   color: var(--color-text-muted);
   text-decoration: none;
   padding: var(--space-1) var(--space-3);
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-md);
+}
+
+.bottom-nav__item svg {
+  width: 22px;
+  height: 22px;
 }
 
 .bottom-nav__item--active {
   color: var(--color-accent);
-  font-weight: 700;
 }
 
 /* ---------- Shared controls ---------- */
 
 .chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
   border: 1px solid var(--color-border);
   background: var(--color-surface);
   border-radius: var(--radius-full);
-  padding: 6px 14px;
+  padding: 7px 14px;
   font-size: 13px;
   font-weight: 500;
   color: var(--color-text);
-  margin-right: var(--space-2);
   white-space: nowrap;
+}
+
+.chip svg {
+  width: 14px;
+  height: 14px;
 }
 
 .chip--active {
@@ -113,26 +128,80 @@ ul {
 
 .explore-page__chips,
 .collection-page__chips,
-.events-page__chips,
-.rewards-page__tabs {
+.events-page__chips {
   display: flex;
-  overflow-x: auto;
-  padding-bottom: var(--space-3);
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+}
+
+.explore-page__search-wrap {
+  position: relative;
+  margin-bottom: var(--space-3);
+}
+
+.explore-page__search-wrap svg {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 16px;
+  height: 16px;
+  color: var(--color-text-muted);
 }
 
 .explore-page__search {
   width: 100%;
   border: 1px solid var(--color-border);
   background: var(--color-surface);
-  border-radius: var(--radius-md);
-  padding: var(--space-3);
+  border-radius: var(--radius-full);
+  padding: 11px 14px 11px 40px;
   font-size: 14px;
-  margin-bottom: var(--space-3);
 }
 
 .explore-page__progress {
   color: var(--color-accent);
   font-weight: 600;
+}
+
+/* ---------- Segmented control ---------- */
+
+.segmented {
+  display: flex;
+  background: #efede7;
+  padding: 4px;
+  border-radius: var(--radius-full);
+  margin-bottom: var(--space-4);
+}
+
+.segmented button {
+  flex: 1;
+  border: none;
+  background: transparent;
+  padding: 8px 0;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: var(--radius-full);
+  color: var(--color-text-muted);
+}
+
+.segmented button.segmented__item--active {
+  background: var(--color-surface);
+  color: var(--color-text);
+  box-shadow: var(--shadow-sm);
+}
+
+.points-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--color-accent-soft);
+  color: var(--color-accent);
+  font-weight: 700;
+  font-size: 14px;
+  padding: 8px 16px;
+  border-radius: var(--radius-full);
+  margin-bottom: var(--space-4);
 }
 
 /* ---------- Placeholder imagery ---------- */
@@ -146,16 +215,12 @@ ul {
   background: var(--cat-food);
 }
 
-.placeholder-image[data-category="Books & Culture"] {
-  background: var(--cat-shopping);
+.placeholder-image[data-category="Culture"] {
+  background: var(--cat-culture);
 }
 
 .placeholder-image[data-category="Fashion"] {
-  background: var(--cat-arts);
-}
-
-.placeholder-image[data-category="Music"] {
-  background: var(--cat-services);
+  background: var(--cat-fashion);
 }
 
 /* ---------- Cards ---------- */
@@ -277,10 +342,12 @@ ul {
   border-radius: 50%;
   border: 2px solid var(--color-surface);
   background: var(--color-text);
-  color: var(--color-accent-contrast);
-  font-size: 12px;
-  font-weight: 700;
   box-shadow: var(--shadow-sm);
+}
+
+.business-marker-pin svg {
+  width: 60%;
+  height: 60%;
 }
 
 .business-marker-pin--collected {

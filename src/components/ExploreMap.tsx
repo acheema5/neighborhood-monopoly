@@ -4,6 +4,7 @@ import "leaflet/dist/leaflet.css";
 import type { Business } from "../data/types";
 import { useAppStore } from "../store/useAppStore";
 import { EAST_VILLAGE_CENTER } from "../data/coordinates";
+import { markerGlyphSvg } from "../data/markerGlyphs";
 
 interface ExploreMapProps {
   businesses: Business[];
@@ -11,17 +12,10 @@ interface ExploreMapProps {
   onSelect: (id: string) => void;
 }
 
-const CATEGORY_INITIAL: Record<string, string> = {
-  "Food & Drink": "F",
-  "Books & Culture": "B",
-  Music: "M",
-  Fashion: "S",
-};
-
-function markerIcon(initial: string, collected: boolean, selected: boolean) {
-  const size = selected ? 38 : 32;
+function markerIcon(category: string, collected: boolean, selected: boolean) {
+  const size = selected ? 40 : 34;
   return divIcon({
-    html: `<span class="business-marker-pin${collected ? " business-marker-pin--collected" : ""}">${initial}</span>`,
+    html: `<span class="business-marker-pin${collected ? " business-marker-pin--collected" : ""}">${markerGlyphSvg(category)}</span>`,
     className: "business-marker-icon",
     iconSize: [size, size],
     iconAnchor: [size / 2, size / 2],
@@ -50,7 +44,7 @@ export function ExploreMap({ businesses, selectedId, onSelect }: ExploreMapProps
             <Marker
               key={business.id}
               position={[business.mapPosition.lat, business.mapPosition.lng]}
-              icon={markerIcon(CATEGORY_INITIAL[business.categoryGroup] ?? "•", collected, selected)}
+              icon={markerIcon(business.category, collected, selected)}
               eventHandlers={{ click: () => onSelect(business.id) }}
             />
           );

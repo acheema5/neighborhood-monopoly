@@ -26,7 +26,7 @@ export function ProfilePage() {
       <button type="button" onClick={() => navigate("/collection")}>
         Collection History
       </button>
-      <button type="button" onClick={() => navigate("/rewards")}>
+      <button type="button" onClick={() => navigate("/collection?tab=rewards")}>
         Rewards
       </button>
 

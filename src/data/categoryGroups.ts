@@ -5,8 +5,8 @@ export const CATEGORY_GROUP_BY_RAW_CATEGORY: Record<string, CategoryGroup> = {
   "Coffee & Bakery": "Food & Drink",
   Bakery: "Food & Drink",
   Restaurant: "Food & Drink",
-  Books: "Books & Culture",
-  Music: "Music",
+  Books: "Culture",
+  Music: "Culture",
   Vintage: "Fashion",
   Fashion: "Fashion",
 };
