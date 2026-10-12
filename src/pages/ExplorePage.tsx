@@ -67,9 +67,10 @@ export function ExplorePage() {
         ))}
       </div>
 
-      <ExploreMap businesses={filtered} selectedId={selectedId} onSelect={setSelectedId} />
-
-      {selected && <BusinessPreviewCard business={selected} />}
+      <div className="explore-page__map-area">
+        <ExploreMap businesses={filtered} selectedId={selectedId} onSelect={setSelectedId} />
+        {selected && <BusinessPreviewCard business={selected} />}
+      </div>
     </div>
   );
 }
