@@ -5,7 +5,7 @@ import { useAppStore } from "../store/useAppStore";
 import { ExploreMap } from "../components/ExploreMap";
 import { BusinessPreviewCard } from "../components/BusinessPreviewCard";
 
-const CATEGORIES = ["All", "Food & Drink", "Shopping", "Arts", "Services"] as const;
+const CATEGORIES = ["All", "Food & Drink", "Books & Culture", "Music", "Fashion"] as const;
 
 export function ExplorePage() {
   const [category, setCategory] = useState<typeof CATEGORIES[number]>("All");
@@ -15,7 +15,7 @@ export function ExplorePage() {
 
   const filtered = useMemo(() => {
     return businesses.filter((b) => {
-      const matchesCategory = category === "All" || b.category === category;
+      const matchesCategory = category === "All" || b.categoryGroup === category;
       const matchesQuery = b.name.toLowerCase().includes(query.toLowerCase());
       return matchesCategory && matchesQuery;
     });
@@ -28,6 +28,9 @@ export function ExplorePage() {
       <h1>{neighborhood.name}</h1>
       <p className="explore-page__progress">
         {collectedCount} / {businesses.length} places collected
+      </p>
+      <p className="demo-disclaimer">
+        Unofficial school demo · real businesses, fictional rewards &amp; pricing
       </p>
 
       <input

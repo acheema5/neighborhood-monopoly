@@ -1,14 +1,14 @@
 import { create } from "zustand";
 import { businesses } from "../data/businesses";
 import { badges } from "../data/badges";
-import { POINTS_PER_PROPERTY } from "../data/constants";
+import { playerSeed } from "../data/player";
 
 interface AppState {
+  pointsBalance: number;
   collectedBusinessIds: string[];
   completedTaskIdsByBusiness: Record<string, string[]>;
-  pointsBalance: number;
   earnedBadgeIds: string[];
-  redeemedCouponIds: string[];
+  redeemedRewardBusinessIds: string[];
   savedEventIds: string[];
 
   completeTask: (businessId: string, taskId: string) => void;
@@ -17,57 +17,73 @@ interface AppState {
   collectBusiness: (businessId: string) => void;
   isCollected: (businessId: string) => boolean;
   toggleSavedEvent: (eventId: string) => void;
-  redeemCoupon: (businessId: string) => void;
+  canRedeem: (businessId: string) => boolean;
+  redeemReward: (businessId: string) => void;
   resetDemo: () => void;
 }
 
-const initialState = {
-  collectedBusinessIds: [] as string[],
-  completedTaskIdsByBusiness: {} as Record<string, string[]>,
-  pointsBalance: 0,
-  earnedBadgeIds: [] as string[],
-  redeemedCouponIds: [] as string[],
-  savedEventIds: [] as string[],
-};
+function buildInitialState() {
+  const collectedBusinessIds = [...playerSeed.initialCollectedBusinessIds];
+  const completedTaskIdsByBusiness: Record<string, string[]> = {};
+  for (const id of collectedBusinessIds) {
+    const business = businesses.find((b) => b.id === id);
+    if (business) {
+      completedTaskIdsByBusiness[id] = business.tasks.map((t) => t.id);
+    }
+  }
+  const earnedBadgeIds = evaluateGlobalBadges({
+    collectedBusinessIds,
+    earnedBadgeIds: [...playerSeed.badgeIds],
+  });
 
-function evaluateBadges(state: {
+  return {
+    pointsBalance: playerSeed.startingPoints,
+    collectedBusinessIds,
+    completedTaskIdsByBusiness,
+    earnedBadgeIds,
+    redeemedRewardBusinessIds: [] as string[],
+    savedEventIds: [] as string[],
+  };
+}
+
+function evaluateGlobalBadges(state: {
   collectedBusinessIds: string[];
-  savedEventIds: string[];
   earnedBadgeIds: string[];
 }): string[] {
   const earned = new Set(state.earnedBadgeIds);
+  const collected = businesses.filter((b) => state.collectedBusinessIds.includes(b.id));
 
-  const collectedBusinesses = businesses.filter((b) =>
-    state.collectedBusinessIds.includes(b.id),
-  );
+  if (collected.length >= 3) earned.add("block-explorer");
+  if (collected.length === businesses.length) earned.add("local-legend");
 
-  if (collectedBusinesses.some((b) => b.category === "Food & Drink")) {
-    earned.add("coffee-explorer");
-  }
-  if (state.collectedBusinessIds.length >= 5) {
-    earned.add("neighborhood-collector");
-  }
-  if (state.collectedBusinessIds.length === businesses.length) {
-    earned.add("full-set");
-  }
-  if (state.savedEventIds.length >= 1) {
-    earned.add("event-goer");
+  const hasBookstore = collected.some((b) => b.category === "Books");
+  const musicCount = collected.filter((b) => b.category === "Music").length;
+  if (hasBookstore && musicCount >= 2) earned.add("culture-collector");
+
+  for (const business of collected) {
+    earned.add(business.badgeId);
   }
 
   return badges.filter((b) => earned.has(b.id)).map((b) => b.id);
 }
 
 export const useAppStore = create<AppState>((set, get) => ({
-  ...initialState,
+  ...buildInitialState(),
 
   completeTask: (businessId, taskId) => {
+    const business = businesses.find((b) => b.id === businessId);
+    const task = business?.tasks.find((t) => t.id === taskId);
+    if (!business || !task) return;
+
     const existing = get().completedTaskIdsByBusiness[businessId] ?? [];
     if (existing.includes(taskId)) return;
+
     set({
       completedTaskIdsByBusiness: {
         ...get().completedTaskIdsByBusiness,
         [businessId]: [...existing, taskId],
       },
+      pointsBalance: get().pointsBalance + task.points,
     });
   },
 
@@ -79,9 +95,7 @@ export const useAppStore = create<AppState>((set, get) => ({
     const business = businesses.find((b) => b.id === businessId);
     if (!business) return false;
     const completed = get().completedTaskIdsByBusiness[businessId] ?? [];
-    return business.tasks
-      .filter((t) => t.required)
-      .every((t) => completed.includes(t.id));
+    return business.tasks.every((t) => completed.includes(t.id));
   },
 
   collectBusiness: (businessId) => {
@@ -92,10 +106,9 @@ export const useAppStore = create<AppState>((set, get) => ({
     if (!business) return;
 
     const collectedBusinessIds = [...get().collectedBusinessIds, businessId];
-    const pointsBalance = get().pointsBalance + business.pointsReward;
-    const earnedBadgeIds = evaluateBadges({
+    const pointsBalance = get().pointsBalance + business.unlockPointsBonus;
+    const earnedBadgeIds = evaluateGlobalBadges({
       collectedBusinessIds,
-      savedEventIds: get().savedEventIds,
       earnedBadgeIds: get().earnedBadgeIds,
     });
 
@@ -109,21 +122,26 @@ export const useAppStore = create<AppState>((set, get) => ({
     const savedEventIds = current.includes(eventId)
       ? current.filter((id) => id !== eventId)
       : [...current, eventId];
-    const earnedBadgeIds = evaluateBadges({
-      collectedBusinessIds: get().collectedBusinessIds,
-      savedEventIds,
-      earnedBadgeIds: get().earnedBadgeIds,
+    set({ savedEventIds });
+  },
+
+  canRedeem: (businessId) => {
+    const business = businesses.find((b) => b.id === businessId);
+    if (!business) return false;
+    if (!get().isCollected(businessId)) return false;
+    if (get().redeemedRewardBusinessIds.includes(businessId)) return false;
+    return get().pointsBalance >= business.reward.pointsCost;
+  },
+
+  redeemReward: (businessId) => {
+    const business = businesses.find((b) => b.id === businessId);
+    if (!business || !get().canRedeem(businessId)) return;
+
+    set({
+      pointsBalance: get().pointsBalance - business.reward.pointsCost,
+      redeemedRewardBusinessIds: [...get().redeemedRewardBusinessIds, businessId],
     });
-    set({ savedEventIds, earnedBadgeIds });
   },
 
-  redeemCoupon: (businessId) => {
-    const current = get().redeemedCouponIds;
-    if (current.includes(businessId)) return;
-    set({ redeemedCouponIds: [...current, businessId] });
-  },
-
-  resetDemo: () => set({ ...initialState }),
+  resetDemo: () => set({ ...buildInitialState() }),
 }));
-
-export const POINTS_PER_PROPERTY_RULE = POINTS_PER_PROPERTY;

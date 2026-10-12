@@ -12,7 +12,7 @@ export function BusinessCard({ business }: { business: Business }) {
       className={`business-card${isCollected ? " business-card--collected" : ""}`}
     >
       <div className="business-card__image-wrap">
-        <PlaceholderImage category={business.category} className="business-card__image" />
+        <PlaceholderImage category={business.categoryGroup} className="business-card__image" />
         {isCollected && <span className="business-card__stamp">✓</span>}
       </div>
       <div className="business-card__body">
@@ -20,7 +20,7 @@ export function BusinessCard({ business }: { business: Business }) {
           <span className="business-card__category">{business.category}</span>
         </div>
         <h3 className="business-card__name">{business.name}</h3>
-        <p className="business-card__distance">{business.distanceLabel}</p>
+        <p className="business-card__distance">{business.address}</p>
       </div>
     </Link>
   );

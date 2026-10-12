@@ -3,6 +3,7 @@ import { divIcon } from "leaflet";
 import "leaflet/dist/leaflet.css";
 import type { Business } from "../data/types";
 import { useAppStore } from "../store/useAppStore";
+import { EAST_VILLAGE_CENTER } from "../data/coordinates";
 
 interface ExploreMapProps {
   businesses: Business[];
@@ -12,12 +13,10 @@ interface ExploreMapProps {
 
 const CATEGORY_INITIAL: Record<string, string> = {
   "Food & Drink": "F",
-  Shopping: "S",
-  Arts: "A",
-  Services: "V",
+  "Books & Culture": "B",
+  Music: "M",
+  Fashion: "S",
 };
-
-const ROOSEVELT_ISLAND_CENTER: [number, number] = [40.761, -73.9497];
 
 function markerIcon(initial: string, collected: boolean, selected: boolean) {
   const size = selected ? 38 : 32;
@@ -35,8 +34,8 @@ export function ExploreMap({ businesses, selectedId, onSelect }: ExploreMapProps
   return (
     <div className="explore-map">
       <MapContainer
-        center={ROOSEVELT_ISLAND_CENTER}
-        zoom={15}
+        center={EAST_VILLAGE_CENTER}
+        zoom={16}
         scrollWheelZoom={false}
         className="explore-map__leaflet"
       >
@@ -51,7 +50,7 @@ export function ExploreMap({ businesses, selectedId, onSelect }: ExploreMapProps
             <Marker
               key={business.id}
               position={[business.mapPosition.lat, business.mapPosition.lng]}
-              icon={markerIcon(CATEGORY_INITIAL[business.category] ?? "•", collected, selected)}
+              icon={markerIcon(CATEGORY_INITIAL[business.categoryGroup] ?? "•", collected, selected)}
               eventHandlers={{ click: () => onSelect(business.id) }}
             />
           );

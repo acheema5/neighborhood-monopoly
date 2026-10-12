@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { businesses } from "../data/businesses";
 import { neighborhood } from "../data/neighborhood";
+import { playerSeed } from "../data/player";
 import { useAppStore } from "../store/useAppStore";
 
 export function ProfilePage() {
@@ -12,8 +13,8 @@ export function ProfilePage() {
 
   return (
     <div className="profile-page">
-      <h1>Demo Explorer</h1>
-      <p>Local Explorer</p>
+      <h1>{playerSeed.name}</h1>
+      <p>Level {playerSeed.level} Explorer · {playerSeed.streakDays} day streak</p>
 
       <h2>My {neighborhood.name}</h2>
       <p>
@@ -33,6 +34,9 @@ export function ProfilePage() {
       <button type="button" onClick={resetDemo}>
         Reset Demo
       </button>
+
+      <h2>About this demo</h2>
+      <p className="demo-disclaimer">{neighborhood.disclaimer}</p>
     </div>
   );
 }

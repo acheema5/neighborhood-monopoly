@@ -13,9 +13,15 @@ export function BusinessDetailPage() {
 
   const canCollect = useAppStore((s) => (business ? s.canCollect(business.id) : false));
   const isCollected = useAppStore((s) => (business ? s.isCollected(business.id) : false));
+  const canRedeem = useAppStore((s) => (business ? s.canRedeem(business.id) : false));
+  const isRedeemed = useAppStore((s) =>
+    business ? s.redeemedRewardBusinessIds.includes(business.id) : false,
+  );
   const collectBusiness = useAppStore((s) => s.collectBusiness);
+  const redeemReward = useAppStore((s) => s.redeemReward);
 
   const [showUnlock, setShowUnlock] = useState(false);
+  const [showDirections, setShowDirections] = useState(false);
 
   if (!business) {
     return <p>Business not found.</p>;
@@ -26,25 +32,37 @@ export function BusinessDetailPage() {
     setShowUnlock(true);
   }
 
+  const earnedPoints = business.tasks.reduce(
+    (sum, t) => sum + t.points,
+    0,
+  );
+
   return (
     <div className="business-detail">
-      <PlaceholderImage category={business.category} className="business-detail__image" />
+      <PlaceholderImage category={business.categoryGroup} className="business-detail__image" />
       <h1>{business.name}</h1>
       <p className="business-detail__meta">
-        {business.category} · {business.addressOrArea} · {business.distanceLabel}
+        {business.category} · {business.address}
       </p>
       <p>{business.description}</p>
 
-      <h2>Featured</h2>
-      <ul>
-        {business.featuredItems.map((item) => (
-          <li key={item}>{item}</li>
+      <h2>{business.catalogLabel}</h2>
+      <ul className="business-detail__catalog">
+        {business.catalog.map((item) => (
+          <li key={item.id}>
+            <span>{item.name}</span>
+            <span>${item.priceUSD.toFixed(2)}</span>
+          </li>
         ))}
       </ul>
+      <p className="demo-disclaimer">{business.dataStatus}</p>
 
       <h2>Status: {isCollected ? "Collected" : canCollect ? "Ready to collect" : "In progress"}</h2>
 
       <h2>How to collect this property</h2>
+      <p className="business-detail__quest-total">
+        {business.tasks.length} tasks · {earnedPoints} pts total · +{business.unlockPointsBonus} bonus on unlock
+      </p>
       <TaskChecklist business={business} />
 
       {!isCollected && (
@@ -53,14 +71,24 @@ export function BusinessDetailPage() {
         </button>
       )}
 
+      <h2>Reward</h2>
       <p className="business-detail__reward-preview">
-        Reward: +{business.pointsReward} points
-        {business.couponReward ? ` · ${business.couponReward}` : ""}
+        {business.reward.title} · {business.reward.pointsCost} pts
       </p>
+      {isCollected && (
+        <button type="button" disabled={isRedeemed || !canRedeem} onClick={() => redeemReward(business.id)}>
+          {isRedeemed ? "Redeemed" : "Redeem Reward (demo)"}
+        </button>
+      )}
 
-      <button type="button" onClick={() => alert("Directions are simulated for this demo.")}>
+      <button type="button" onClick={() => setShowDirections(true)}>
         Get Directions (demo)
       </button>
+      {showDirections && (
+        <p className="demo-disclaimer">
+          Directions are simulated for this demo — no real routing is performed.
+        </p>
+      )}
 
       {showUnlock && (
         <UnlockModal

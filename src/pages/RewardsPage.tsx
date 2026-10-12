@@ -3,19 +3,18 @@ import { businesses } from "../data/businesses";
 import { badges } from "../data/badges";
 import { useAppStore } from "../store/useAppStore";
 
-const TABS = ["Coupons", "Points", "Badges"] as const;
+const TABS = ["Rewards", "Points", "Badges"] as const;
 
 export function RewardsPage() {
   const [tab, setTab] = useState<typeof TABS[number]>("Points");
   const pointsBalance = useAppStore((s) => s.pointsBalance);
   const collectedBusinessIds = useAppStore((s) => s.collectedBusinessIds);
-  const redeemedCouponIds = useAppStore((s) => s.redeemedCouponIds);
+  const redeemedRewardBusinessIds = useAppStore((s) => s.redeemedRewardBusinessIds);
   const earnedBadgeIds = useAppStore((s) => s.earnedBadgeIds);
-  const redeemCoupon = useAppStore((s) => s.redeemCoupon);
+  const canRedeem = useAppStore((s) => s.canRedeem);
+  const redeemReward = useAppStore((s) => s.redeemReward);
 
-  const availableCoupons = businesses.filter(
-    (b) => b.couponReward && collectedBusinessIds.includes(b.id),
-  );
+  const availableRewards = businesses.filter((b) => collectedBusinessIds.includes(b.id));
 
   return (
     <div className="rewards-page">
@@ -36,18 +35,30 @@ export function RewardsPage() {
       </div>
 
       {tab === "Points" && (
-        <p>Earn 100 points each time you collect a property.</p>
+        <>
+          <p>Each quest task earns points immediately. Collecting a property adds an unlock bonus on top.</p>
+          <p className="demo-disclaimer">Points are a mock in-game currency — not real currency.</p>
+        </>
       )}
 
-      {tab === "Coupons" && (
+      {tab === "Rewards" && (
         <ul className="rewards-page__coupons">
-          {availableCoupons.length === 0 && <li>No coupons yet — collect a property to earn one.</li>}
-          {availableCoupons.map((b) => {
-            const redeemed = redeemedCouponIds.includes(b.id);
+          {availableRewards.length === 0 && (
+            <li>No rewards yet — collect a property to unlock one.</li>
+          )}
+          {availableRewards.map((b) => {
+            const redeemed = redeemedRewardBusinessIds.includes(b.id);
+            const eligible = canRedeem(b.id);
             return (
               <li key={b.id}>
-                {b.name}: {b.couponReward}{" "}
-                <button type="button" disabled={redeemed} onClick={() => redeemCoupon(b.id)}>
+                <span>
+                  {b.name}: {b.reward.title} ({b.reward.pointsCost} pts)
+                </span>
+                <button
+                  type="button"
+                  disabled={redeemed || !eligible}
+                  onClick={() => redeemReward(b.id)}
+                >
                   {redeemed ? "Redeemed" : "Use"}
                 </button>
               </li>

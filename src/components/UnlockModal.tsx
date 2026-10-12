@@ -12,10 +12,8 @@ export function UnlockModal({ business, onViewCollection, onBackToMap }: UnlockM
       <div className="unlock-modal">
         <p className="unlock-modal__eyebrow">Property Unlocked!</p>
         <h2 className="unlock-modal__name">{business.name}</h2>
-        <p className="unlock-modal__reward">+{business.pointsReward} points</p>
-        {business.couponReward && (
-          <p className="unlock-modal__coupon">Coupon earned: {business.couponReward}</p>
-        )}
+        <p className="unlock-modal__reward">+{business.unlockPointsBonus} bonus points</p>
+        <p className="unlock-modal__coupon">Badge earned: {business.badgeTitle}</p>
         <div className="unlock-modal__actions">
           <button type="button" onClick={onViewCollection}>
             View My Collection

@@ -8,16 +8,14 @@ export function BusinessPreviewCard({ business }: { business: Business }) {
 
   return (
     <Link to={`/business/${business.id}`} className="preview-card">
-      <PlaceholderImage category={business.category} className="preview-card__image" />
+      <PlaceholderImage category={business.categoryGroup} className="preview-card__image" />
       <div className="preview-card__body">
         <div className="preview-card__top">
           <span className="preview-card__category">{business.category}</span>
-          <span className="preview-card__distance">{business.distanceLabel}</span>
         </div>
         <h3 className="preview-card__name">{business.name}</h3>
         <p className="preview-card__status">
-          {isCollected ? "Collected" : "Tap to view details"}
-          {business.couponReward && !isCollected ? ` · ${business.couponReward}` : ""}
+          {isCollected ? "Collected" : `Tap to view details · earn ${business.badgeTitle}`}
         </p>
       </div>
     </Link>

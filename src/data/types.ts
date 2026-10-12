@@ -1,40 +1,56 @@
-export type Category = "Food & Drink" | "Shopping" | "Arts" | "Services";
+export type CategoryGroup = "Food & Drink" | "Books & Culture" | "Music" | "Fashion";
 
-export type TaskType = "visit" | "purchase" | "qr" | "other";
+export type TaskType = "tap" | "demo_checkin" | "demo_action" | "simulated_qr";
 
 export interface BusinessTask {
   id: string;
   label: string;
   type: TaskType;
-  required: boolean;
+  points: number;
+}
+
+export interface CatalogItem {
+  id: string;
+  name: string;
+  priceUSD: number;
+  isMock: true;
+}
+
+export interface BusinessReward {
+  title: string;
+  pointsCost: number;
+  mockOnly: true;
 }
 
 export interface Business {
   id: string;
   name: string;
-  category: Category;
+  category: string;
+  categoryGroup: CategoryGroup;
+  address: string;
   description: string;
-  addressOrArea: string;
-  distanceLabel: string;
-  image: string;
+  dataStatus: string;
   mapPosition: { lat: number; lng: number };
-  featuredItems: string[];
+  catalogLabel: string;
+  catalog: CatalogItem[];
   tasks: BusinessTask[];
-  pointsReward: number;
-  couponReward?: string;
+  unlockPointsBonus: number;
+  badgeId: string;
+  badgeTitle: string;
+  reward: BusinessReward;
 }
 
 export interface NeighborhoodEvent {
   id: string;
   title: string;
-  category: string;
   dateTimeLabel: string;
   location: string;
   description: string;
-  image: string;
+  participatingBusinessIds: string[];
+  mockOnly: true;
 }
 
-export type BadgeType = "collection" | "event" | "milestone";
+export type BadgeType = "collection" | "milestone";
 
 export interface Badge {
   id: string;
@@ -42,11 +58,22 @@ export interface Badge {
   description: string;
   type: BadgeType;
   associatedBusinessId?: string;
-  unlockRule: string;
 }
 
 export interface Neighborhood {
   id: string;
   name: string;
-  description: string;
+  city: string;
+  demoArea: string;
+  disclaimer: string;
+}
+
+export interface PlayerSeed {
+  name: string;
+  level: number;
+  startingPoints: number;
+  streakDays: number;
+  initialCollectedBusinessIds: string[];
+  badgeIds: string[];
+  collectibleGoal: number;
 }

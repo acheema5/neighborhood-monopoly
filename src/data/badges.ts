@@ -1,33 +1,40 @@
 import type { Badge } from "./types";
+import { businesses } from "./businesses";
+import { slugify } from "./slug";
 
-export const badges: Badge[] = [
+const businessBadges: Badge[] = businesses.map((b) => ({
+  id: b.badgeId,
+  title: b.badgeTitle,
+  description: `Collect ${b.name} to earn this badge.`,
+  type: "collection",
+  associatedBusinessId: b.id,
+}));
+
+const milestoneBadges: Badge[] = [
   {
-    id: "coffee-explorer",
-    title: "Coffee Explorer",
-    description: "Collect your first Food & Drink property.",
-    type: "collection",
-    associatedBusinessId: "island-coffee-collective",
-    unlockRule: "Collect any Food & Drink business",
-  },
-  {
-    id: "neighborhood-collector",
-    title: "Neighborhood Collector",
-    description: "Collect 5 properties in Roosevelt Island.",
+    id: slugify("First Steps"),
+    title: "First Steps",
+    description: "Awarded for starting your East Village journey (demo starter badge).",
     type: "milestone",
-    unlockRule: "collectedBusinessIds.length >= 5",
   },
   {
-    id: "full-set",
-    title: "Island Completionist",
-    description: "Collect every property in Roosevelt Island.",
+    id: slugify("Block Explorer"),
+    title: "Block Explorer",
+    description: "Unlock any 3 properties.",
     type: "milestone",
-    unlockRule: "collectedBusinessIds.length === businesses.length",
   },
   {
-    id: "event-goer",
-    title: "Event Goer",
-    description: "Mark interest in a neighborhood event.",
-    type: "event",
-    unlockRule: "savedEventIds.length >= 1",
+    id: slugify("Local Legend"),
+    title: "Local Legend",
+    description: "Unlock all 10 properties.",
+    type: "milestone",
+  },
+  {
+    id: slugify("Culture Collector"),
+    title: "Culture Collector",
+    description: "Unlock one bookstore and two record stores.",
+    type: "milestone",
   },
 ];
+
+export const badges: Badge[] = [...businessBadges, ...milestoneBadges];

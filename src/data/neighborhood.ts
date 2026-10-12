@@ -1,9 +1,10 @@
 import type { Neighborhood } from "./types";
-import { NEIGHBORHOOD_ID } from "./constants";
+import seed from "./eastVillageSeed.json";
 
 export const neighborhood: Neighborhood = {
-  id: NEIGHBORHOOD_ID,
-  name: "Roosevelt Island",
-  description:
-    "A small, walkable island neighborhood in the East River, home to a growing mix of independent cafes, shops, and community spots.",
+  id: seed.neighborhood.id,
+  name: seed.neighborhood.name,
+  city: seed.neighborhood.city,
+  demoArea: seed.neighborhood.demoArea,
+  disclaimer: seed.disclaimer,
 };

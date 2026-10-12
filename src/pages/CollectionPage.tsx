@@ -4,13 +4,13 @@ import { neighborhood } from "../data/neighborhood";
 import { useAppStore } from "../store/useAppStore";
 import { BusinessCard } from "../components/BusinessCard";
 
-const CATEGORIES = ["All", "Food & Drink", "Shopping", "Arts", "Services"] as const;
+const CATEGORIES = ["All", "Food & Drink", "Books & Culture", "Music", "Fashion"] as const;
 
 export function CollectionPage() {
   const [category, setCategory] = useState<typeof CATEGORIES[number]>("All");
   const collectedCount = useAppStore((s) => s.collectedBusinessIds.length);
 
-  const filtered = businesses.filter((b) => category === "All" || b.category === category);
+  const filtered = businesses.filter((b) => category === "All" || b.categoryGroup === category);
 
   return (
     <div className="collection-page">

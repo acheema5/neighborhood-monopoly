@@ -10,16 +10,20 @@ export function TaskChecklist({ business }: { business: Business }) {
     <ul className="task-checklist">
       {business.tasks.map((task) => {
         const completed = isTaskCompleted(business.id, task.id);
+        const label = task.type === "simulated_qr" ? `${task.label} — Simulate QR Scan` : task.label;
         return (
           <li key={task.id} className="task-checklist__item">
             <label className="task-checklist__label">
-              <input
-                type="checkbox"
-                checked={completed}
-                disabled={isCollected || (task.type === "qr" && completed)}
-                onChange={() => completeTask(business.id, task.id)}
-              />
-              {task.type === "qr" ? `${task.label} — Simulate QR Scan` : task.label}
+              <span className="task-checklist__checkbox-wrap">
+                <input
+                  type="checkbox"
+                  checked={completed}
+                  disabled={isCollected || completed}
+                  onChange={() => completeTask(business.id, task.id)}
+                />
+                {label}
+              </span>
+              <span className="task-checklist__points">+{task.points} pts</span>
             </label>
           </li>
         );
