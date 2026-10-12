@@ -125,6 +125,48 @@ export function UserIcon(props: IconProps) {
   );
 }
 
+export function ChevronRightIcon(props: IconProps) {
+  return (
+    <svg {...base(props)}>
+      <path d="m9 18 6-6-6-6" />
+    </svg>
+  );
+}
+
+export function ArrowLeftIcon(props: IconProps) {
+  return (
+    <svg {...base(props)}>
+      <path d="M19 12H5" />
+      <path d="m12 19-7-7 7-7" />
+    </svg>
+  );
+}
+
+export function StarIcon(props: IconProps) {
+  return (
+    <svg {...base(props)} fill="currentColor" strokeWidth={1}>
+      <path d="M12 2.5 14.9 9l7 .6-5.3 4.6 1.6 6.8L12 17.3 5.8 21l1.6-6.8L2.1 9.6l7-.6Z" />
+    </svg>
+  );
+}
+
+export function CheckIcon(props: IconProps) {
+  return (
+    <svg {...base(props)} strokeWidth={2.4}>
+      <path d="M20 6 9 17l-5-5" />
+    </svg>
+  );
+}
+
+export function MapPinIcon(props: IconProps) {
+  return (
+    <svg {...base(props)}>
+      <path d="M12 21s7-6.2 7-11.5a7 7 0 1 0-14 0C5 14.8 12 21 12 21Z" />
+      <circle cx="12" cy="9.5" r="2.3" />
+    </svg>
+  );
+}
+
 export const CATEGORY_ICON_BY_RAW_CATEGORY: Record<string, (props: IconProps) => React.JSX.Element> = {
   Coffee: CoffeeIcon,
   "Coffee & Bakery": CoffeeIcon,

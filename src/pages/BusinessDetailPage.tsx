@@ -5,6 +5,7 @@ import { useAppStore } from "../store/useAppStore";
 import { TaskChecklist } from "../components/TaskChecklist";
 import { UnlockModal } from "../components/UnlockModal";
 import { PlaceholderImage } from "../components/PlaceholderImage";
+import { ArrowLeftIcon } from "../components/icons";
 
 export function BusinessDetailPage() {
   const { businessId } = useParams();
@@ -32,18 +33,24 @@ export function BusinessDetailPage() {
     setShowUnlock(true);
   }
 
-  const earnedPoints = business.tasks.reduce(
-    (sum, t) => sum + t.points,
-    0,
-  );
+  const earnedPoints = business.tasks.reduce((sum, t) => sum + t.points, 0);
+  const statusLabel = isCollected ? "Collected" : canCollect ? "Ready to collect" : "In progress";
 
   return (
     <div className="business-detail">
-      <PlaceholderImage category={business.categoryGroup} className="business-detail__image" />
+      <div className="business-detail__image-wrap">
+        <PlaceholderImage category={business.categoryGroup} className="business-detail__image" />
+        <button type="button" className="business-detail__back" onClick={() => navigate(-1)} aria-label="Back">
+          <ArrowLeftIcon />
+        </button>
+      </div>
+
       <h1>{business.name}</h1>
       <p className="business-detail__meta">
         {business.category} · {business.address}
       </p>
+      <span className={`status-pill${isCollected ? " status-pill--collected" : ""}`}>{statusLabel}</span>
+
       <p>{business.description}</p>
 
       <h2>{business.catalogLabel}</h2>
@@ -57,8 +64,6 @@ export function BusinessDetailPage() {
       </ul>
       <p className="demo-disclaimer">{business.dataStatus}</p>
 
-      <h2>Status: {isCollected ? "Collected" : canCollect ? "Ready to collect" : "In progress"}</h2>
-
       <h2>How to collect this property</h2>
       <p className="business-detail__quest-total">
         {business.tasks.length} tasks · {earnedPoints} pts total · +{business.unlockPointsBonus} bonus on unlock
@@ -66,7 +71,7 @@ export function BusinessDetailPage() {
       <TaskChecklist business={business} />
 
       {!isCollected && (
-        <button type="button" disabled={!canCollect} onClick={handleCollect}>
+        <button type="button" className="business-detail__cta" disabled={!canCollect} onClick={handleCollect}>
           Collect Property
         </button>
       )}
@@ -76,12 +81,21 @@ export function BusinessDetailPage() {
         {business.reward.title} · {business.reward.pointsCost} pts
       </p>
       {isCollected && (
-        <button type="button" disabled={isRedeemed || !canRedeem} onClick={() => redeemReward(business.id)}>
+        <button
+          type="button"
+          className="business-detail__cta"
+          disabled={isRedeemed || !canRedeem}
+          onClick={() => redeemReward(business.id)}
+        >
           {isRedeemed ? "Redeemed" : "Redeem Reward (demo)"}
         </button>
       )}
 
-      <button type="button" onClick={() => setShowDirections(true)}>
+      <button
+        type="button"
+        className="business-detail__cta business-detail__cta--secondary"
+        onClick={() => setShowDirections(true)}
+      >
         Get Directions (demo)
       </button>
       {showDirections && (

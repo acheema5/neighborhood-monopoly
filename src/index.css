@@ -202,6 +202,47 @@ ul {
   padding: 8px 16px;
   border-radius: var(--radius-full);
   margin-bottom: var(--space-4);
+  flex-shrink: 0;
+}
+
+.points-pill svg {
+  width: 14px;
+  height: 14px;
+}
+
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+  background: #f1efe8;
+  color: var(--color-text-muted);
+}
+
+.status-pill--collected {
+  background: var(--color-accent-soft);
+  color: var(--color-accent);
+}
+
+/* ---------- Progress bar ---------- */
+
+.progress-bar {
+  height: 6px;
+  border-radius: var(--radius-full);
+  background: var(--color-border);
+  overflow: hidden;
+  margin-bottom: var(--space-3);
+}
+
+.progress-bar__fill {
+  height: 100%;
+  background: var(--color-accent);
+  border-radius: var(--radius-full);
+  transition: width 200ms ease-out;
 }
 
 /* ---------- Placeholder imagery ---------- */
@@ -242,30 +283,9 @@ ul {
   border-color: var(--color-accent);
 }
 
-.business-card__image-wrap {
-  position: relative;
-}
-
 .business-card__image,
 .event-card__image {
   height: 110px;
-}
-
-.business-card__stamp {
-  position: absolute;
-  top: var(--space-2);
-  right: var(--space-2);
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  background: var(--color-accent);
-  color: var(--color-accent-contrast);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 13px;
-  font-weight: 700;
-  box-shadow: var(--shadow-sm);
 }
 
 .business-card__body,
@@ -273,9 +293,8 @@ ul {
   padding: var(--space-3) var(--space-4);
 }
 
-.business-card__top {
-  display: flex;
-  justify-content: space-between;
+.business-card__category {
+  display: block;
   font-size: 11px;
   color: var(--color-text-muted);
   text-transform: uppercase;
@@ -289,13 +308,9 @@ ul {
   margin: 0 0 2px;
 }
 
-.business-card__distance,
-.preview-card__status {
-  font-size: 12px;
-  margin: 0;
-}
-
 .business-card__distance {
+  font-size: 12px;
+  margin: 0 0 var(--space-2);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -362,6 +377,7 @@ ul {
 
 .preview-card {
   display: flex;
+  align-items: center;
   gap: var(--space-3);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
@@ -370,21 +386,24 @@ ul {
   text-decoration: none;
   color: inherit;
   overflow: hidden;
+  padding-right: var(--space-3);
 }
 
 .preview-card__image {
-  width: 88px;
+  width: 80px;
+  height: 80px;
   flex-shrink: 0;
+  border-radius: 0;
 }
 
 .preview-card__body {
-  padding: var(--space-3) var(--space-4) var(--space-3) 0;
+  padding: var(--space-3) 0;
   flex: 1;
+  min-width: 0;
 }
 
-.preview-card__top {
-  display: flex;
-  justify-content: space-between;
+.preview-card__category {
+  display: block;
   font-size: 11px;
   color: var(--color-text-muted);
   text-transform: uppercase;
@@ -392,22 +411,57 @@ ul {
   margin-bottom: var(--space-1);
 }
 
+.preview-card__chevron {
+  width: 18px;
+  height: 18px;
+  color: var(--color-text-muted);
+  flex-shrink: 0;
+}
+
 /* ---------- Business detail ---------- */
+
+.business-detail__image-wrap {
+  position: relative;
+  margin-bottom: var(--space-4);
+}
 
 .business-detail__image {
   width: 100%;
-  height: 160px;
+  height: 180px;
   border-radius: var(--radius-lg);
-  margin-bottom: var(--space-4);
+}
+
+.business-detail__image-wrap .business-detail__back {
+  position: absolute;
+  top: var(--space-3);
+  left: var(--space-3);
+  width: 36px;
+  height: 36px;
+  margin: 0;
+  border-radius: 50%;
+  background: var(--color-surface);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-md);
+  color: var(--color-text);
+  padding: 0;
+}
+
+.business-detail__back svg {
+  width: 18px;
+  height: 18px;
 }
 
 .business-detail__meta {
   font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 0.3px;
+  display: inline;
 }
 
-.business-detail button {
+.business-detail__cta {
   display: block;
   width: 100%;
   border: none;
@@ -420,13 +474,13 @@ ul {
   color: var(--color-accent-contrast);
 }
 
-.business-detail button:disabled {
+.business-detail__cta:disabled {
   background: var(--color-border);
   color: var(--color-text-muted);
   cursor: not-allowed;
 }
 
-.business-detail button:last-of-type {
+.business-detail__cta--secondary {
   background: var(--color-surface);
   color: var(--color-text);
   border: 1px solid var(--color-border);
@@ -485,7 +539,6 @@ ul {
 }
 
 .task-checklist__item {
-  padding: var(--space-3);
   border-bottom: 1px solid var(--color-border);
 }
 
@@ -493,18 +546,50 @@ ul {
   border-bottom: none;
 }
 
-.task-checklist__label {
+.task-checklist__row {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: var(--space-2);
-  font-size: 14px;
+  gap: var(--space-3);
+  width: 100%;
+  padding: var(--space-3);
+  border: none;
+  background: none;
+  font-family: inherit;
+  text-align: left;
 }
 
-.task-checklist__checkbox-wrap {
+.task-checklist__row:disabled {
+  cursor: default;
+}
+
+.task-checklist__step {
   display: flex;
   align-items: center;
-  gap: var(--space-2);
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: #f1efe8;
+  color: var(--color-text-muted);
+  font-size: 12px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.task-checklist__step svg {
+  width: 14px;
+  height: 14px;
+}
+
+.task-checklist__step--done {
+  background: var(--color-accent);
+  color: var(--color-accent-contrast);
+}
+
+.task-checklist__label {
+  flex: 1;
+  font-size: 14px;
+  color: var(--color-text);
 }
 
 .task-checklist__points {
@@ -609,43 +694,68 @@ ul {
 
 /* ---------- Rewards ---------- */
 
-.rewards-page__points {
-  font-size: 32px;
-  font-weight: 700;
-  color: var(--color-text);
-  margin-bottom: var(--space-4);
-}
-
-.rewards-page__coupons,
-.rewards-page__badges {
+.reward-list,
+.badge-list {
   list-style: none;
   padding: 0;
 }
 
-.rewards-page__coupons li {
+.reward-card {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: var(--space-3);
+  gap: var(--space-3);
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-lg);
   background: var(--color-surface);
   margin-bottom: var(--space-2);
+  padding: var(--space-2);
+  box-shadow: var(--shadow-sm);
+}
+
+.reward-card--empty {
+  display: block;
+  color: var(--color-text-muted);
+  font-size: 14px;
+  box-shadow: none;
+}
+
+.reward-card__image {
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius-md);
+  flex-shrink: 0;
+}
+
+.reward-card__body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+  font-size: 13px;
+}
+
+.reward-card__body strong {
   font-size: 14px;
 }
 
-.rewards-page__coupons button {
+.reward-card__cost {
+  color: var(--color-accent);
+  font-weight: 600;
+  font-size: 12px;
+}
+
+.reward-card button {
   border: 1px solid var(--color-accent);
   background: var(--color-accent-soft);
   color: var(--color-accent);
   border-radius: var(--radius-full);
-  padding: 4px 12px;
+  padding: 7px 14px;
   font-size: 12px;
   font-weight: 600;
   flex-shrink: 0;
 }
 
-.rewards-page__coupons button:disabled {
+.reward-card button:disabled {
   border-color: var(--color-border);
   background: transparent;
   color: var(--color-text-muted);
@@ -653,6 +763,9 @@ ul {
 }
 
 .badge {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
   padding: var(--space-3);
@@ -667,14 +780,109 @@ ul {
   background: var(--color-accent-soft);
 }
 
-.badge strong {
+.badge__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--color-surface);
+  color: var(--color-text);
+  flex-shrink: 0;
+}
+
+.badge--earned .badge__icon {
+  background: var(--color-accent);
+  color: var(--color-accent-contrast);
+}
+
+.badge__icon svg {
+  width: 18px;
+  height: 18px;
+}
+
+.badge__text strong {
   font-size: 14px;
 }
 
 /* ---------- Profile ---------- */
 
-.profile-page button {
-  display: block;
+.profile-page__identity {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+}
+
+.profile-page__avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--color-accent-soft);
+  color: var(--color-accent);
+  flex-shrink: 0;
+}
+
+.profile-page__avatar svg {
+  width: 28px;
+  height: 28px;
+}
+
+.profile-page__identity h1 {
+  margin: 0;
+}
+
+.profile-page__identity p {
+  margin: 0;
+}
+
+.stat-row {
+  display: flex;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  margin-bottom: var(--space-5);
+  overflow: hidden;
+}
+
+.stat-row__item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--space-3);
+  border-right: 1px solid var(--color-border);
+}
+
+.stat-row__item:last-child {
+  border-right: none;
+}
+
+.stat-row__item strong {
+  font-size: 18px;
+}
+
+.stat-row__item span {
+  font-size: 11px;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.settings-list {
+  list-style: none;
+  padding: 0;
+  margin-bottom: var(--space-4);
+}
+
+.settings-list button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   width: 100%;
   text-align: left;
   border: 1px solid var(--color-border);
@@ -683,4 +891,21 @@ ul {
   padding: var(--space-3);
   font-size: 14px;
   margin-bottom: var(--space-2);
+}
+
+.settings-list button svg {
+  width: 16px;
+  height: 16px;
+  color: var(--color-text-muted);
+}
+
+.collection-page__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.collection-page__header h1 {
+  margin: 0;
 }

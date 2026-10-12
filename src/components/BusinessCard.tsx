@@ -11,16 +11,14 @@ export function BusinessCard({ business }: { business: Business }) {
       to={`/business/${business.id}`}
       className={`business-card${isCollected ? " business-card--collected" : ""}`}
     >
-      <div className="business-card__image-wrap">
-        <PlaceholderImage category={business.categoryGroup} className="business-card__image" />
-        {isCollected && <span className="business-card__stamp">✓</span>}
-      </div>
+      <PlaceholderImage category={business.categoryGroup} className="business-card__image" />
       <div className="business-card__body">
-        <div className="business-card__top">
-          <span className="business-card__category">{business.category}</span>
-        </div>
+        <span className="business-card__category">{business.category}</span>
         <h3 className="business-card__name">{business.name}</h3>
         <p className="business-card__distance">{business.address}</p>
+        <span className={`status-pill${isCollected ? " status-pill--collected" : ""}`}>
+          {isCollected ? "Collected" : "Not collected"}
+        </span>
       </div>
     </Link>
   );

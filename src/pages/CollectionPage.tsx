@@ -5,7 +5,9 @@ import { badges } from "../data/badges";
 import { neighborhood } from "../data/neighborhood";
 import { useAppStore } from "../store/useAppStore";
 import { BusinessCard } from "../components/BusinessCard";
-import { BookIcon, UtensilsIcon, BagIcon } from "../components/icons";
+import { ProgressBar } from "../components/ProgressBar";
+import { PlaceholderImage } from "../components/PlaceholderImage";
+import { BookIcon, UtensilsIcon, BagIcon, StarIcon, CATEGORY_ICON_BY_RAW_CATEGORY } from "../components/icons";
 import type { CategoryGroup } from "../data/types";
 
 const CATEGORIES: Array<{ label: "All" | CategoryGroup; Icon?: typeof BookIcon }> = [
@@ -35,11 +37,16 @@ export function CollectionPage() {
 
   return (
     <div className="collection-page">
-      <h1>Collection</h1>
+      <div className="collection-page__header">
+        <h1>Collection</h1>
+        <span className="points-pill">
+          <StarIcon /> {pointsBalance} pts
+        </span>
+      </div>
       <p>
         {collectedBusinessIds.length} / {businesses.length} properties collected in {neighborhood.name}
       </p>
-      <p className="points-pill">{pointsBalance} pts</p>
+      <ProgressBar value={collectedBusinessIds.length} max={businesses.length} />
 
       <div className="segmented">
         {SUB_TABS.map((t) => (
@@ -79,23 +86,24 @@ export function CollectionPage() {
       )}
 
       {subTab === "Rewards" && (
-        <ul className="rewards-page__coupons">
+        <ul className="reward-list">
           {availableRewards.length === 0 && (
-            <li>No rewards yet — collect a property to unlock one.</li>
+            <li className="reward-card reward-card--empty">
+              No rewards yet — collect a property to unlock one.
+            </li>
           )}
           {availableRewards.map((b) => {
             const redeemed = redeemedRewardBusinessIds.includes(b.id);
             const eligible = canRedeem(b.id);
             return (
-              <li key={b.id}>
-                <span>
-                  {b.name}: {b.reward.title} ({b.reward.pointsCost} pts)
-                </span>
-                <button
-                  type="button"
-                  disabled={redeemed || !eligible}
-                  onClick={() => redeemReward(b.id)}
-                >
+              <li key={b.id} className="reward-card">
+                <PlaceholderImage category={b.categoryGroup} className="reward-card__image" />
+                <div className="reward-card__body">
+                  <strong>{b.reward.title}</strong>
+                  <span>{b.name}</span>
+                  <span className="reward-card__cost">{b.reward.pointsCost} pts</span>
+                </div>
+                <button type="button" disabled={redeemed || !eligible} onClick={() => redeemReward(b.id)}>
                   {redeemed ? "Redeemed" : "Use"}
                 </button>
               </li>
@@ -105,13 +113,18 @@ export function CollectionPage() {
       )}
 
       {subTab === "Badges" && (
-        <ul className="rewards-page__badges">
+        <ul className="badge-list">
           {badges.map((badge) => {
             const earned = earnedBadgeIds.includes(badge.id);
+            const business = businesses.find((b) => b.id === badge.associatedBusinessId);
+            const Icon = business ? CATEGORY_ICON_BY_RAW_CATEGORY[business.category] : StarIcon;
             return (
               <li key={badge.id} className={earned ? "badge badge--earned" : "badge"}>
-                <strong>{badge.title}</strong>
-                <p>{badge.description}</p>
+                <span className="badge__icon">{Icon ? <Icon /> : <StarIcon />}</span>
+                <span className="badge__text">
+                  <strong>{badge.title}</strong>
+                  <p>{badge.description}</p>
+                </span>
               </li>
             );
           })}

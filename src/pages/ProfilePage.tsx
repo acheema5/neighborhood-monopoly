@@ -3,6 +3,8 @@ import { businesses } from "../data/businesses";
 import { neighborhood } from "../data/neighborhood";
 import { playerSeed } from "../data/player";
 import { useAppStore } from "../store/useAppStore";
+import { ProgressBar } from "../components/ProgressBar";
+import { ChevronRightIcon, UserIcon } from "../components/icons";
 
 export function ProfilePage() {
   const navigate = useNavigate();
@@ -13,27 +15,61 @@ export function ProfilePage() {
 
   return (
     <div className="profile-page">
-      <h1>{playerSeed.name}</h1>
-      <p>Level {playerSeed.level} Explorer · {playerSeed.streakDays} day streak</p>
+      <div className="profile-page__identity">
+        <span className="profile-page__avatar">
+          <UserIcon />
+        </span>
+        <div>
+          <h1>{playerSeed.name}</h1>
+          <p>Level {playerSeed.level} Explorer · {playerSeed.streakDays} day streak</p>
+        </div>
+      </div>
+
+      <div className="stat-row">
+        <div className="stat-row__item">
+          <strong>{collectedBusinessIds.length}</strong>
+          <span>Properties</span>
+        </div>
+        <div className="stat-row__item">
+          <strong>{pointsBalance}</strong>
+          <span>Points</span>
+        </div>
+        <div className="stat-row__item">
+          <strong>{earnedBadgeIds.length}</strong>
+          <span>Badges</span>
+        </div>
+      </div>
 
       <h2>My {neighborhood.name}</h2>
       <p>
         {collectedBusinessIds.length} / {businesses.length} properties collected
       </p>
-      <p>{pointsBalance} points earned</p>
-      <p>{earnedBadgeIds.length} badges unlocked</p>
+      <ProgressBar value={collectedBusinessIds.length} max={businesses.length} />
 
-      <button type="button" onClick={() => navigate("/collection")}>
-        Collection History
-      </button>
-      <button type="button" onClick={() => navigate("/collection?tab=rewards")}>
-        Rewards
-      </button>
+      <ul className="settings-list">
+        <li>
+          <button type="button" onClick={() => navigate("/collection")}>
+            <span>Collection History</span>
+            <ChevronRightIcon />
+          </button>
+        </li>
+        <li>
+          <button type="button" onClick={() => navigate("/collection?tab=rewards")}>
+            <span>My Rewards</span>
+            <ChevronRightIcon />
+          </button>
+        </li>
+      </ul>
 
       <h2>Settings</h2>
-      <button type="button" onClick={resetDemo}>
-        Reset Demo
-      </button>
+      <ul className="settings-list">
+        <li>
+          <button type="button" onClick={resetDemo}>
+            <span>Reset Demo</span>
+            <ChevronRightIcon />
+          </button>
+        </li>
+      </ul>
 
       <h2>About this demo</h2>
       <p className="demo-disclaimer">{neighborhood.disclaimer}</p>

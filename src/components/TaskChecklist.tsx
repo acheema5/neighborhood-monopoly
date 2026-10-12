@@ -1,5 +1,6 @@
 import type { Business } from "../data/types";
 import { useAppStore } from "../store/useAppStore";
+import { CheckIcon } from "./icons";
 
 export function TaskChecklist({ business }: { business: Business }) {
   const isTaskCompleted = useAppStore((s) => s.isTaskCompleted);
@@ -8,23 +9,23 @@ export function TaskChecklist({ business }: { business: Business }) {
 
   return (
     <ul className="task-checklist">
-      {business.tasks.map((task) => {
+      {business.tasks.map((task, index) => {
         const completed = isTaskCompleted(business.id, task.id);
         const label = task.type === "simulated_qr" ? `${task.label} — Simulate QR Scan` : task.label;
         return (
           <li key={task.id} className="task-checklist__item">
-            <label className="task-checklist__label">
-              <span className="task-checklist__checkbox-wrap">
-                <input
-                  type="checkbox"
-                  checked={completed}
-                  disabled={isCollected || completed}
-                  onChange={() => completeTask(business.id, task.id)}
-                />
-                {label}
+            <button
+              type="button"
+              className="task-checklist__row"
+              disabled={isCollected || completed}
+              onClick={() => completeTask(business.id, task.id)}
+            >
+              <span className={`task-checklist__step${completed ? " task-checklist__step--done" : ""}`}>
+                {completed ? <CheckIcon /> : index + 1}
               </span>
+              <span className="task-checklist__label">{label}</span>
               <span className="task-checklist__points">+{task.points} pts</span>
-            </label>
+            </button>
           </li>
         );
       })}

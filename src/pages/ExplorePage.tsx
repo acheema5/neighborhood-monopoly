@@ -4,6 +4,7 @@ import { neighborhood } from "../data/neighborhood";
 import { useAppStore } from "../store/useAppStore";
 import { ExploreMap } from "../components/ExploreMap";
 import { BusinessPreviewCard } from "../components/BusinessPreviewCard";
+import { ProgressBar } from "../components/ProgressBar";
 import { BookIcon, SearchIcon, UtensilsIcon, BagIcon } from "../components/icons";
 import type { CategoryGroup } from "../data/types";
 
@@ -36,6 +37,7 @@ export function ExplorePage() {
       <p className="explore-page__progress">
         {collectedCount} / {businesses.length} places collected
       </p>
+      <ProgressBar value={collectedCount} max={businesses.length} />
       <p className="demo-disclaimer">
         Unofficial school demo · real businesses, fictional rewards &amp; pricing
       </p>
