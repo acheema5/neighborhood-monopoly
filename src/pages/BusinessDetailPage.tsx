@@ -4,6 +4,7 @@ import { businesses } from "../data/businesses";
 import { useAppStore } from "../store/useAppStore";
 import { TaskChecklist } from "../components/TaskChecklist";
 import { UnlockModal } from "../components/UnlockModal";
+import { PlaceholderImage } from "../components/PlaceholderImage";
 
 export function BusinessDetailPage() {
   const { businessId } = useParams();
@@ -27,7 +28,7 @@ export function BusinessDetailPage() {
 
   return (
     <div className="business-detail">
-      <div className="business-detail__image" aria-hidden />
+      <PlaceholderImage category={business.category} className="business-detail__image" />
       <h1>{business.name}</h1>
       <p className="business-detail__meta">
         {business.category} · {business.addressOrArea} · {business.distanceLabel}

@@ -2,13 +2,15 @@ import { useMemo, useState } from "react";
 import { businesses } from "../data/businesses";
 import { neighborhood } from "../data/neighborhood";
 import { useAppStore } from "../store/useAppStore";
-import { BusinessCard } from "../components/BusinessCard";
+import { ExploreMap } from "../components/ExploreMap";
+import { BusinessPreviewCard } from "../components/BusinessPreviewCard";
 
 const CATEGORIES = ["All", "Food & Drink", "Shopping", "Arts", "Services"] as const;
 
 export function ExplorePage() {
   const [category, setCategory] = useState<typeof CATEGORIES[number]>("All");
   const [query, setQuery] = useState("");
+  const [selectedId, setSelectedId] = useState<string | null>(null);
   const collectedCount = useAppStore((s) => s.collectedBusinessIds.length);
 
   const filtered = useMemo(() => {
@@ -19,15 +21,18 @@ export function ExplorePage() {
     });
   }, [category, query]);
 
+  const selected = businesses.find((b) => b.id === selectedId) ?? null;
+
   return (
     <div className="explore-page">
       <h1>{neighborhood.name}</h1>
-      <p>
+      <p className="explore-page__progress">
         {collectedCount} / {businesses.length} places collected
       </p>
 
       <input
         type="search"
+        className="explore-page__search"
         placeholder="Search businesses"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
@@ -46,12 +51,9 @@ export function ExplorePage() {
         ))}
       </div>
 
-      {/* TODO: replace list with stylized vector map + positioned BusinessMarker pins (project.md section 6A) */}
-      <div className="explore-page__list">
-        {filtered.map((business) => (
-          <BusinessCard key={business.id} business={business} />
-        ))}
-      </div>
+      <ExploreMap businesses={filtered} selectedId={selectedId} onSelect={setSelectedId} />
+
+      {selected && <BusinessPreviewCard business={selected} />}
     </div>
   );
 }

@@ -1,5 +1,6 @@
 import type { NeighborhoodEvent } from "../data/types";
 import { useAppStore } from "../store/useAppStore";
+import { PlaceholderImage } from "./PlaceholderImage";
 
 export function EventCard({ event }: { event: NeighborhoodEvent }) {
   const isSaved = useAppStore((s) => s.savedEventIds.includes(event.id));
@@ -7,7 +8,7 @@ export function EventCard({ event }: { event: NeighborhoodEvent }) {
 
   return (
     <div className="event-card">
-      <div className="event-card__image" aria-hidden />
+      <PlaceholderImage category={event.category} className="event-card__image" />
       <div className="event-card__body">
         <span className="event-card__category">{event.category}</span>
         <h3>{event.title}</h3>
