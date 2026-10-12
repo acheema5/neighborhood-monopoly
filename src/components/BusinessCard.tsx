@@ -7,7 +7,10 @@ export function BusinessCard({ business }: { business: Business }) {
   const isCollected = useAppStore((s) => s.isCollected(business.id));
 
   return (
-    <Link to={`/business/${business.id}`} className="business-card">
+    <Link
+      to={`/business/${business.id}`}
+      className={`business-card${isCollected ? " business-card--collected" : ""}`}
+    >
       <div className="business-card__image-wrap">
         <PlaceholderImage category={business.category} className="business-card__image" />
         {isCollected && <span className="business-card__stamp">✓</span>}
@@ -15,9 +18,6 @@ export function BusinessCard({ business }: { business: Business }) {
       <div className="business-card__body">
         <div className="business-card__top">
           <span className="business-card__category">{business.category}</span>
-          <span className={`business-card__status${isCollected ? " business-card__status--collected" : ""}`}>
-            {isCollected ? "Collected" : "Not collected"}
-          </span>
         </div>
         <h3 className="business-card__name">{business.name}</h3>
         <p className="business-card__distance">{business.distanceLabel}</p>

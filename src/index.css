@@ -176,6 +176,10 @@ ul {
   box-shadow: var(--shadow-sm);
 }
 
+.business-card--collected {
+  border-color: var(--color-accent);
+}
+
 .business-card__image-wrap {
   position: relative;
 }
@@ -215,11 +219,6 @@ ul {
   text-transform: uppercase;
   letter-spacing: 0.3px;
   margin-bottom: var(--space-1);
-}
-
-.business-card__status--collected {
-  color: var(--color-accent);
-  font-weight: 700;
 }
 
 .business-card__name,
@@ -526,6 +525,14 @@ ul {
   padding: 4px 12px;
   font-size: 12px;
   font-weight: 600;
+  flex-shrink: 0;
+}
+
+.rewards-page__coupons button:disabled {
+  border-color: var(--color-border);
+  background: transparent;
+  color: var(--color-text-muted);
+  cursor: default;
 }
 
 .badge {
