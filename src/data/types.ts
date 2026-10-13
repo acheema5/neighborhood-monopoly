@@ -20,6 +20,7 @@ export interface BusinessReward {
   title: string;
   pointsCost: number;
   mockOnly: true;
+  instant?: true;
 }
 
 export interface Business {

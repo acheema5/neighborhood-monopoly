@@ -130,6 +130,7 @@ export const useAppStore = create<AppState>((set, get) => ({
     if (!business) return false;
     if (!get().isCollected(businessId)) return false;
     if (get().redeemedRewardBusinessIds.includes(businessId)) return false;
+    if (business.reward.instant) return true;
     return get().pointsBalance >= business.reward.pointsCost;
   },
 
@@ -138,7 +139,9 @@ export const useAppStore = create<AppState>((set, get) => ({
     if (!business || !get().canRedeem(businessId)) return;
 
     set({
-      pointsBalance: get().pointsBalance - business.reward.pointsCost,
+      pointsBalance: business.reward.instant
+        ? get().pointsBalance
+        : get().pointsBalance - business.reward.pointsCost,
       redeemedRewardBusinessIds: [...get().redeemedRewardBusinessIds, businessId],
     });
   },

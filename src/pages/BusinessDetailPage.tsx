@@ -4,6 +4,7 @@ import { businesses } from "../data/businesses";
 import { useAppStore } from "../store/useAppStore";
 import { TaskChecklist } from "../components/TaskChecklist";
 import { UnlockModal } from "../components/UnlockModal";
+import { RedeemConfirmModal } from "../components/RedeemConfirmModal";
 import { PlaceholderImage } from "../components/PlaceholderImage";
 import { ArrowLeftIcon } from "../components/icons";
 
@@ -18,11 +19,12 @@ export function BusinessDetailPage() {
   const isRedeemed = useAppStore((s) =>
     business ? s.redeemedRewardBusinessIds.includes(business.id) : false,
   );
+  const pointsBalance = useAppStore((s) => s.pointsBalance);
   const collectBusiness = useAppStore((s) => s.collectBusiness);
-  const redeemReward = useAppStore((s) => s.redeemReward);
 
   const [showUnlock, setShowUnlock] = useState(false);
   const [showDirections, setShowDirections] = useState(false);
+  const [showRedeem, setShowRedeem] = useState(false);
 
   if (!business) {
     return <p>Business not found.</p>;
@@ -78,14 +80,20 @@ export function BusinessDetailPage() {
 
       <h2>Reward</h2>
       <p className="business-detail__reward-preview">
-        {business.reward.title} · {business.reward.pointsCost} pts
+        {business.reward.title}
+        {" · "}
+        {business.reward.instant
+          ? "Free with collection"
+          : isCollected && !isRedeemed && !canRedeem
+            ? `${business.reward.pointsCost - pointsBalance} more points needed`
+            : `${business.reward.pointsCost} pts`}
       </p>
       {isCollected && (
         <button
           type="button"
           className="business-detail__cta"
           disabled={isRedeemed || !canRedeem}
-          onClick={() => redeemReward(business.id)}
+          onClick={() => setShowRedeem(true)}
         >
           {isRedeemed ? "Redeemed" : "Redeem Reward (demo)"}
         </button>
@@ -110,6 +118,10 @@ export function BusinessDetailPage() {
           onViewCollection={() => navigate("/collection")}
           onBackToMap={() => navigate("/")}
         />
+      )}
+
+      {showRedeem && (
+        <RedeemConfirmModal business={business} onClose={() => setShowRedeem(false)} />
       )}
     </div>
   );
