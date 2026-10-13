@@ -99,7 +99,7 @@ All featured businesses and their addresses are sourced from public business lis
 - **Illustrative reward:** 10% off a used album (demo) (750 points)
 
 ## Example events (fictional)
-- **East Village Coffee Crawl** — Saturday • Demo event. Discover three neighborhood cafes and unlock a Coffee Scout badge.
+- **East Village Coffee Crawl** — Saturday • Demo event. A self-guided route through three neighborhood cafes. Collecting Coffee Project New York unlocks the Coffee Scout badge.
 - **St. Marks Book & Vinyl Walk** — Sunday • Demo event. Explore a bookstore and two record shops.
 - **9th Street Style Trail** — Next weekend • Demo event. Visit two independent fashion shops and earn points.
 

@@ -781,7 +781,7 @@
       "id": "ev1",
       "name": "East Village Coffee Crawl",
       "dateLabel": "Saturday • Demo event",
-      "description": "Discover three neighborhood cafes and unlock a Coffee Scout badge.",
+      "description": "A self-guided route through three neighborhood cafes. Collecting Coffee Project New York unlocks the Coffee Scout badge.",
       "venue": "Multi-stop neighborhood route",
       "mockOnly": true,
       "participatingBusinessIds": [
