@@ -6,6 +6,7 @@ import { CollectionPage } from "./pages/CollectionPage";
 import { EventsPage } from "./pages/EventsPage";
 import { ProfilePage } from "./pages/ProfilePage";
 import { MerchantPage } from "./pages/MerchantPage";
+import { MerchantDashboardPage } from "./pages/MerchantDashboardPage";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/events" element={<EventsPage />} />
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/merchant" element={<MerchantPage />} />
+        <Route path="/merchant/:businessId" element={<MerchantDashboardPage />} />
       </Routes>
     </AppShell>
   );

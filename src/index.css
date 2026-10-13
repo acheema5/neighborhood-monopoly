@@ -1029,7 +1029,7 @@ ul {
   margin: 0;
 }
 
-/* ---------- Merchant demo (concept screen) ---------- */
+/* ---------- Merchant dashboard (simulated) ---------- */
 
 .merchant-page__form {
   display: flex;
@@ -1118,4 +1118,119 @@ ul {
   font-size: 12px;
   font-weight: 600;
   flex-shrink: 0;
+}
+
+.merchant-page__row-actions {
+  display: flex;
+  gap: var(--space-2);
+  flex-shrink: 0;
+}
+
+.merchant-page__row-actions button {
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text);
+  border-radius: var(--radius-full);
+  padding: 5px 12px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.merchant-page__offer--editing {
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--space-2);
+}
+
+.merchant-page__offer--editing input {
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+  padding: var(--space-2);
+  font-size: 14px;
+  font-family: inherit;
+}
+
+.merchant-page__offer--editing button {
+  border: 1px solid var(--color-accent);
+  background: var(--color-accent-soft);
+  color: var(--color-accent);
+  border-radius: var(--radius-md);
+  padding: var(--space-2);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.merchant-page__checkbox {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: 13px;
+  color: var(--color-text);
+}
+
+/* ---------- Merchant picker ---------- */
+
+.merchant-picker-list {
+  list-style: none;
+  padding: 0;
+}
+
+.merchant-picker-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-sm);
+  text-decoration: none;
+  color: inherit;
+  overflow: hidden;
+  padding-right: var(--space-3);
+  margin-bottom: var(--space-3);
+}
+
+.merchant-picker-row__image {
+  width: 64px;
+  height: 64px;
+  flex-shrink: 0;
+}
+
+.merchant-picker-row__body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+  padding: var(--space-2) 0;
+}
+
+.merchant-picker-row__body strong {
+  font-size: 15px;
+}
+
+.merchant-picker-row__address {
+  font-size: 12px;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ---------- Merchant dashboard ---------- */
+
+.merchant-dashboard__switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  text-decoration: none;
+  margin-bottom: var(--space-3);
+}
+
+.merchant-dashboard__switch svg {
+  width: 14px;
+  height: 14px;
 }

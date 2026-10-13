@@ -75,7 +75,7 @@ export function ProfilePage() {
       <ul className="settings-list">
         <li>
           <button type="button" onClick={() => navigate("/merchant")}>
-            <span>Merchant Demo (concept)</span>
+            <span>I am a merchant</span>
             <ChevronRightIcon />
           </button>
         </li>
