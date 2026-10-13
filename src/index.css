@@ -713,7 +713,8 @@ ul {
 
 /* ---------- Redeem confirm modal ---------- */
 
-.redeem-modal__overlay {
+.redeem-modal__overlay,
+.visit-confirm-modal__overlay {
   position: fixed;
   inset: 0;
   background: rgba(23, 23, 23, 0.55);
@@ -725,7 +726,8 @@ ul {
   z-index: 2000;
 }
 
-.redeem-modal {
+.redeem-modal,
+.visit-confirm-modal {
   background: var(--color-surface);
   border-radius: var(--radius-lg);
   padding: var(--space-6) var(--space-5);
@@ -736,7 +738,8 @@ ul {
   animation: unlock-pop-in 220ms ease-out;
 }
 
-.redeem-modal__eyebrow {
+.redeem-modal__eyebrow,
+.visit-confirm-modal__eyebrow {
   color: var(--color-accent);
   font-weight: 700;
   text-transform: uppercase;
@@ -767,7 +770,27 @@ ul {
   margin-top: var(--space-4);
 }
 
-.redeem-modal__actions button {
+/* ---------- Visit confirm modal ---------- */
+
+.visit-confirm-modal__name {
+  margin: var(--space-1) 0 var(--space-2);
+  font-size: 18px;
+}
+
+.visit-confirm-modal__body {
+  font-size: 13px;
+  margin: 0;
+}
+
+.visit-confirm-modal__actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-top: var(--space-5);
+}
+
+.redeem-modal__actions button,
+.visit-confirm-modal__actions button {
   border: none;
   border-radius: var(--radius-md);
   padding: var(--space-3);
@@ -775,12 +798,14 @@ ul {
   font-weight: 600;
 }
 
-.redeem-modal__actions button:first-child {
+.redeem-modal__actions button:first-child,
+.visit-confirm-modal__actions button:first-child {
   background: var(--color-accent);
   color: var(--color-accent-contrast);
 }
 
-.redeem-modal__actions button:last-child {
+.redeem-modal__actions button:last-child,
+.visit-confirm-modal__actions button:last-child {
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   color: var(--color-text);
