@@ -8,7 +8,8 @@ import { BusinessCard } from "../components/BusinessCard";
 import { ProgressBar } from "../components/ProgressBar";
 import { PlaceholderImage } from "../components/PlaceholderImage";
 import { BookIcon, UtensilsIcon, BagIcon, StarIcon, CATEGORY_ICON_BY_RAW_CATEGORY } from "../components/icons";
-import type { CategoryGroup } from "../data/types";
+import { RedeemConfirmModal } from "../components/RedeemConfirmModal";
+import type { Business, CategoryGroup } from "../data/types";
 
 const CATEGORIES: Array<{ label: "All" | CategoryGroup; Icon?: typeof BookIcon }> = [
   { label: "All" },
@@ -24,13 +25,13 @@ export function CollectionPage() {
   const initialTab = SUB_TABS.find((t) => t.toLowerCase() === params.get("tab")) ?? "Properties";
   const [subTab, setSubTab] = useState<typeof SUB_TABS[number]>(initialTab);
   const [category, setCategory] = useState<"All" | CategoryGroup>("All");
+  const [redeemTarget, setRedeemTarget] = useState<Business | null>(null);
 
   const pointsBalance = useAppStore((s) => s.pointsBalance);
   const collectedBusinessIds = useAppStore((s) => s.collectedBusinessIds);
   const redeemedRewardBusinessIds = useAppStore((s) => s.redeemedRewardBusinessIds);
   const earnedBadgeIds = useAppStore((s) => s.earnedBadgeIds);
   const canRedeem = useAppStore((s) => s.canRedeem);
-  const redeemReward = useAppStore((s) => s.redeemReward);
 
   const filtered = businesses.filter((b) => category === "All" || b.categoryGroup === category);
   const availableRewards = businesses.filter((b) => collectedBusinessIds.includes(b.id));
@@ -95,15 +96,22 @@ export function CollectionPage() {
           {availableRewards.map((b) => {
             const redeemed = redeemedRewardBusinessIds.includes(b.id);
             const eligible = canRedeem(b.id);
+            const pointsShort = b.reward.pointsCost - pointsBalance;
             return (
               <li key={b.id} className="reward-card">
                 <PlaceholderImage category={b.categoryGroup} className="reward-card__image" />
                 <div className="reward-card__body">
                   <strong>{b.reward.title}</strong>
                   <span>{b.name}</span>
-                  <span className="reward-card__cost">{b.reward.pointsCost} pts</span>
+                  <span className="reward-card__cost">
+                    {b.reward.instant
+                      ? "Free with collection"
+                      : !redeemed && !eligible
+                        ? `${pointsShort} more points needed`
+                        : `${b.reward.pointsCost} pts`}
+                  </span>
                 </div>
-                <button type="button" disabled={redeemed || !eligible} onClick={() => redeemReward(b.id)}>
+                <button type="button" disabled={redeemed || !eligible} onClick={() => setRedeemTarget(b)}>
                   {redeemed ? "Redeemed" : "Use"}
                 </button>
               </li>
@@ -129,6 +137,10 @@ export function CollectionPage() {
             );
           })}
         </ul>
+      )}
+
+      {redeemTarget && (
+        <RedeemConfirmModal business={redeemTarget} onClose={() => setRedeemTarget(null)} />
       )}
     </div>
   );

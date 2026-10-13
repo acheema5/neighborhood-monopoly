@@ -97,6 +97,7 @@
         "title": "Free espresso upgrade (demo)",
         "pointsCost": 300,
         "mockOnly": true,
+        "instant": true,
         "redeemAction": "show demo success modal; no actual discount or partner redemption"
       }
     },
