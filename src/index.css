@@ -928,3 +928,94 @@ ul {
 .collection-page__header h1 {
   margin: 0;
 }
+
+/* ---------- Merchant demo (concept screen) ---------- */
+
+.merchant-page__form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-bottom: var(--space-3);
+}
+
+.merchant-page__form input {
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+  padding: var(--space-3);
+  font-size: 14px;
+  font-family: inherit;
+}
+
+.merchant-page__cta {
+  border: none;
+  border-radius: var(--radius-md);
+  padding: var(--space-3);
+  font-size: 14px;
+  font-weight: 600;
+  background: var(--color-accent);
+  color: var(--color-accent-contrast);
+}
+
+.merchant-page__offer-list,
+.merchant-page__redemption-list {
+  list-style: none;
+  padding: 0;
+  margin-bottom: var(--space-4);
+}
+
+.merchant-page__empty {
+  color: var(--color-text-muted);
+  font-size: 14px;
+}
+
+.merchant-page__offer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+  padding: var(--space-3);
+  font-size: 14px;
+  margin-bottom: var(--space-2);
+}
+
+.merchant-page__redemption {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+  padding: var(--space-3);
+  margin-bottom: var(--space-2);
+}
+
+.merchant-page__redemption div {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.merchant-page__redemption strong {
+  font-size: 14px;
+}
+
+.merchant-page__redemption span {
+  font-size: 12px;
+  color: var(--color-text-muted);
+}
+
+.merchant-page__redemption button {
+  border: 1px solid var(--color-accent);
+  background: var(--color-accent-soft);
+  color: var(--color-accent);
+  border-radius: var(--radius-full);
+  padding: 7px 14px;
+  font-size: 12px;
+  font-weight: 600;
+  flex-shrink: 0;
+}

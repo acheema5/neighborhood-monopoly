@@ -71,6 +71,16 @@ export function ProfilePage() {
         </li>
       </ul>
 
+      <h2>For business owners</h2>
+      <ul className="settings-list">
+        <li>
+          <button type="button" onClick={() => navigate("/merchant")}>
+            <span>Merchant Demo (concept)</span>
+            <ChevronRightIcon />
+          </button>
+        </li>
+      </ul>
+
       <h2>About this demo</h2>
       <p className="demo-disclaimer">{neighborhood.disclaimer}</p>
     </div>
