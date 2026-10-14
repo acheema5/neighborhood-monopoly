@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { businesses } from "../data/businesses";
+import { useBusinesses } from "../hooks/useBusinesses";
 import { neighborhood } from "../data/neighborhood";
 import { useAppStore } from "../store/useAppStore";
 import { ExploreMap } from "../components/ExploreMap";
@@ -20,6 +20,7 @@ export function ExplorePage() {
   const [query, setQuery] = useState("");
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const collectedCount = useAppStore((s) => s.collectedBusinessIds.length);
+  const businesses = useBusinesses();
 
   const filtered = useMemo(() => {
     return businesses.filter((b) => {
@@ -27,7 +28,7 @@ export function ExplorePage() {
       const matchesQuery = b.name.toLowerCase().includes(query.toLowerCase());
       return matchesCategory && matchesQuery;
     });
-  }, [category, query]);
+  }, [businesses, category, query]);
 
   const selected = businesses.find((b) => b.id === selectedId) ?? null;
 
@@ -38,9 +39,6 @@ export function ExplorePage() {
         {collectedCount} / {businesses.length} places collected
       </p>
       <ProgressBar value={collectedCount} max={businesses.length} />
-      <p className="demo-disclaimer">
-        Unofficial school demo · real businesses, fictional rewards &amp; pricing
-      </p>
 
       <div className="explore-page__search-wrap">
         <SearchIcon />

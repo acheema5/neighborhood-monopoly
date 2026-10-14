@@ -20,7 +20,6 @@ export function EventCard({ event }: { event: NeighborhoodEvent }) {
         <p className="event-card__participants">
           Featuring: {participants.map((p) => p.name).join(", ")}
         </p>
-        <p className="demo-disclaimer">Demo event — not a confirmed real-world gathering.</p>
         <button type="button" onClick={() => toggleSavedEvent(event.id)}>
           {isSaved ? "Interested ✓" : "Mark Interested"}
         </button>

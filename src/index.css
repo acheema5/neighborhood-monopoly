@@ -691,6 +691,34 @@ ul {
   color: var(--color-text);
 }
 
+.unlock-modal__feedback {
+  margin-top: var(--space-4);
+  font-size: 13px;
+}
+
+.unlock-modal__feedback-actions {
+  display: flex;
+  gap: var(--space-2);
+  justify-content: center;
+  margin-top: var(--space-2);
+}
+
+.unlock-modal__feedback-actions button {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  color: var(--color-text);
+  padding: var(--space-2) var(--space-3);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.unlock-modal__feedback-thanks {
+  margin-top: var(--space-4);
+  font-size: 13px;
+  color: var(--color-accent);
+}
+
 @keyframes unlock-fade-in {
   from {
     opacity: 0;
@@ -768,6 +796,28 @@ ul {
   flex-direction: column;
   gap: var(--space-2);
   margin-top: var(--space-4);
+}
+
+.redeem-modal__purchase-check {
+  margin-top: var(--space-4);
+  font-size: 13px;
+}
+
+.redeem-modal__purchase-actions {
+  display: flex;
+  gap: var(--space-2);
+  justify-content: center;
+  margin-top: var(--space-2);
+}
+
+.redeem-modal__purchase-actions button {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  color: var(--color-text);
+  padding: var(--space-2) var(--space-3);
+  font-size: 13px;
+  font-weight: 600;
 }
 
 /* ---------- Visit confirm modal ---------- */
@@ -1018,6 +1068,18 @@ ul {
   color: var(--color-text-muted);
 }
 
+.settings-list--readonly li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+  padding: var(--space-3);
+  font-size: 14px;
+  margin-bottom: var(--space-2);
+}
+
 .collection-page__header {
   display: flex;
   align-items: flex-start;
@@ -1038,13 +1100,15 @@ ul {
   margin-bottom: var(--space-3);
 }
 
-.merchant-page__form input {
+.merchant-page__form input,
+.merchant-page__form textarea {
   border: 1px solid var(--color-border);
   background: var(--color-surface);
   border-radius: var(--radius-md);
   padding: var(--space-3);
   font-size: 14px;
   font-family: inherit;
+  resize: vertical;
 }
 
 .merchant-page__cta {

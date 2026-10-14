@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { businesses } from "../data/businesses";
+import { useBusiness } from "../hooks/useBusinesses";
 import { useAppStore } from "../store/useAppStore";
 import { TaskChecklist } from "../components/TaskChecklist";
 import { UnlockModal } from "../components/UnlockModal";
@@ -11,7 +11,7 @@ import { ArrowLeftIcon } from "../components/icons";
 export function BusinessDetailPage() {
   const { businessId } = useParams();
   const navigate = useNavigate();
-  const business = businesses.find((b) => b.id === businessId);
+  const business = useBusiness(businessId);
 
   const canCollect = useAppStore((s) => (business ? s.canCollect(business.id) : false));
   const isCollected = useAppStore((s) => (business ? s.isCollected(business.id) : false));
@@ -19,12 +19,19 @@ export function BusinessDetailPage() {
   const isRedeemed = useAppStore((s) =>
     business ? s.redeemedRewardBusinessIds.includes(business.id) : false,
   );
+  const isPendingRedemption = useAppStore((s) =>
+    business ? s.pendingRedemptionBusinessIds.includes(business.id) : false,
+  );
   const pointsBalance = useAppStore((s) => s.pointsBalance);
   const collectBusiness = useAppStore((s) => s.collectBusiness);
+  const logDiscoveryView = useAppStore((s) => s.logDiscoveryView);
 
   const [showUnlock, setShowUnlock] = useState(false);
-  const [showDirections, setShowDirections] = useState(false);
   const [showRedeem, setShowRedeem] = useState(false);
+
+  useEffect(() => {
+    if (business) logDiscoveryView(business.id);
+  }, [business, logDiscoveryView]);
 
   if (!business) {
     return <p>Business not found.</p>;
@@ -92,25 +99,23 @@ export function BusinessDetailPage() {
         <button
           type="button"
           className="business-detail__cta"
-          disabled={isRedeemed || !canRedeem}
+          disabled={isRedeemed || isPendingRedemption || !canRedeem}
           onClick={() => setShowRedeem(true)}
         >
-          {isRedeemed ? "Redeemed" : "Redeem Reward (demo)"}
+          {isRedeemed
+            ? "Redeemed"
+            : isPendingRedemption
+              ? "Pending merchant confirmation"
+              : "Redeem Reward"}
         </button>
       )}
 
       <button
         type="button"
         className="business-detail__cta business-detail__cta--secondary"
-        onClick={() => setShowDirections(true)}
       >
-        Get Directions (demo)
+        Get Directions
       </button>
-      {showDirections && (
-        <p className="demo-disclaimer">
-          Directions are simulated for this demo — no real routing is performed.
-        </p>
-      )}
 
       {showUnlock && (
         <UnlockModal

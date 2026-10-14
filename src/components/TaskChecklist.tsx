@@ -32,7 +32,7 @@ export function TaskChecklist({ business }: { business: Business }) {
         {business.tasks.map((task, index) => {
           const completed = isTaskCompleted(business.id, task.id);
           const isQr = task.type === "simulated_qr";
-          const label = isQr ? `${task.label} — Simulate QR Scan` : task.label;
+          const label = isQr ? `${task.label} — Confirm Visit` : task.label;
           return (
             <li key={task.id} className="task-checklist__item">
               <button

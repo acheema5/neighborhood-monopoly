@@ -11,7 +11,16 @@ export function ProfilePage() {
   const collectedBusinessIds = useAppStore((s) => s.collectedBusinessIds);
   const pointsBalance = useAppStore((s) => s.pointsBalance);
   const earnedBadgeIds = useAppStore((s) => s.earnedBadgeIds);
+  const visitLog = useAppStore((s) => s.visitLog);
+  const incrementalPurchaseByBusiness = useAppStore((s) => s.incrementalPurchaseByBusiness);
+  const valueFeedbackByBusiness = useAppStore((s) => s.valueFeedbackByBusiness);
+  const discoveryViewedBusinessIds = useAppStore((s) => s.discoveryViewedBusinessIds);
   const resetDemo = useAppStore((s) => s.resetDemo);
+
+  const purchaseAnswers = Object.values(incrementalPurchaseByBusiness);
+  const incrementalPurchaseCount = purchaseAnswers.filter(Boolean).length;
+  const feedbackAnswers = Object.values(valueFeedbackByBusiness);
+  const worthItCount = feedbackAnswers.filter(Boolean).length;
 
   return (
     <div className="profile-page">
@@ -65,9 +74,33 @@ export function ProfilePage() {
       <ul className="settings-list">
         <li>
           <button type="button" onClick={resetDemo}>
-            <span>Reset Demo</span>
+            <span>Reset Progress</span>
             <ChevronRightIcon />
           </button>
+        </li>
+      </ul>
+
+      <h2>App impact (self-reported)</h2>
+      <ul className="settings-list settings-list--readonly">
+        <li>
+          <span>Unfamiliar businesses viewed</span>
+          <strong>{discoveryViewedBusinessIds.length}</strong>
+        </li>
+        <li>
+          <span>Visits confirmed via app</span>
+          <strong>{visitLog.length}</strong>
+        </li>
+        <li>
+          <span>Incremental purchases reported</span>
+          <strong>
+            {incrementalPurchaseCount} / {purchaseAnswers.length}
+          </strong>
+        </li>
+        <li>
+          <span>Said collecting was worth it</span>
+          <strong>
+            {worthItCount} / {feedbackAnswers.length}
+          </strong>
         </li>
       </ul>
 
@@ -80,9 +113,6 @@ export function ProfilePage() {
           </button>
         </li>
       </ul>
-
-      <h2>About this demo</h2>
-      <p className="demo-disclaimer">{neighborhood.disclaimer}</p>
     </div>
   );
 }

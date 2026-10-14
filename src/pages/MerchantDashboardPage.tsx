@@ -1,48 +1,43 @@
 import { useEffect, useState } from "react";
 import type { FormEvent } from "react";
 import { Link, useParams } from "react-router-dom";
-import { businesses } from "../data/businesses";
+import { useBusiness } from "../hooks/useBusinesses";
+import { useAppStore } from "../store/useAppStore";
 import { ArrowLeftIcon } from "../components/icons";
+import type { CatalogItem } from "../data/types";
 
-interface MenuItem {
-  id: string;
-  name: string;
-  priceUSD: number;
-}
-
-interface Offer {
-  id: string;
-  title: string;
-  pointsCost: number;
-  instant: boolean;
-}
-
-interface Redemption {
-  id: string;
-  customerName: string;
-  offerTitle: string;
-  whenLabel: string;
-  confirmed: boolean;
-}
-
-const SUB_TABS = ["Menu", "Offers", "Redemptions"] as const;
-
-function seedRedemptions(offerTitle: string): Redemption[] {
-  return [
-    { id: "r1", customerName: "Alex", offerTitle, whenLabel: "2 min ago", confirmed: false },
-    { id: "r2", customerName: "Jordan", offerTitle, whenLabel: "18 min ago", confirmed: false },
-    { id: "r3", customerName: "Sam", offerTitle, whenLabel: "1 hr ago", confirmed: false },
-  ];
-}
+const SUB_TABS = ["Profile", "Menu", "Offer", "Redemptions", "Reports"] as const;
 
 export function MerchantDashboardPage() {
   const { businessId } = useParams();
-  const business = businesses.find((b) => b.id === businessId);
+  const business = useBusiness(businessId);
 
-  const [subTab, setSubTab] = useState<typeof SUB_TABS[number]>("Menu");
-  const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
-  const [offers, setOffers] = useState<Offer[]>([]);
-  const [redemptions, setRedemptions] = useState<Redemption[]>([]);
+  const updateBusinessProfile = useAppStore((s) => s.updateBusinessProfile);
+  const updateCatalog = useAppStore((s) => s.updateCatalog);
+  const updateReward = useAppStore((s) => s.updateReward);
+  const confirmRedemption = useAppStore((s) => s.confirmRedemption);
+  const isPending = useAppStore((s) =>
+    business ? s.pendingRedemptionBusinessIds.includes(business.id) : false,
+  );
+  const isRedeemed = useAppStore((s) =>
+    business ? s.redeemedRewardBusinessIds.includes(business.id) : false,
+  );
+  const visitCount = useAppStore((s) =>
+    business ? s.visitLog.filter((v) => v.businessId === business.id).length : 0,
+  );
+  const incrementalPurchaseAnswer = useAppStore((s) =>
+    business ? s.incrementalPurchaseByBusiness[business.id] : undefined,
+  );
+  const valueFeedbackAnswer = useAppStore((s) =>
+    business ? s.valueFeedbackByBusiness[business.id] : undefined,
+  );
+
+  const [subTab, setSubTab] = useState<typeof SUB_TABS[number]>("Profile");
+
+  const [profileName, setProfileName] = useState("");
+  const [profileCategory, setProfileCategory] = useState("");
+  const [profileAddress, setProfileAddress] = useState("");
+  const [profileDescription, setProfileDescription] = useState("");
 
   const [itemName, setItemName] = useState("");
   const [itemPrice, setItemPrice] = useState("");
@@ -50,29 +45,21 @@ export function MerchantDashboardPage() {
   const [editItemName, setEditItemName] = useState("");
   const [editItemPrice, setEditItemPrice] = useState("");
 
-  const [offerTitle, setOfferTitle] = useState("");
-  const [offerCost, setOfferCost] = useState("");
-  const [offerInstant, setOfferInstant] = useState(false);
-  const [editingOfferId, setEditingOfferId] = useState<string | null>(null);
-  const [editOfferTitle, setEditOfferTitle] = useState("");
-  const [editOfferCost, setEditOfferCost] = useState("");
-  const [editOfferInstant, setEditOfferInstant] = useState(false);
+  const [rewardTitle, setRewardTitle] = useState("");
+  const [rewardCost, setRewardCost] = useState("");
+  const [rewardInstant, setRewardInstant] = useState(false);
 
   useEffect(() => {
     if (!business) return;
-    setSubTab("Menu");
-    setMenuItems(business.catalog.map((c) => ({ id: c.id, name: c.name, priceUSD: c.priceUSD })));
-    setOffers([
-      {
-        id: "seed-offer",
-        title: business.reward.title,
-        pointsCost: business.reward.pointsCost,
-        instant: !!business.reward.instant,
-      },
-    ]);
-    setRedemptions(seedRedemptions(business.reward.title));
+    setSubTab("Profile");
+    setProfileName(business.name);
+    setProfileCategory(business.category);
+    setProfileAddress(business.address);
+    setProfileDescription(business.description);
+    setRewardTitle(business.reward.title);
+    setRewardCost(String(business.reward.pointsCost));
+    setRewardInstant(!!business.reward.instant);
     setEditingItemId(null);
-    setEditingOfferId(null);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [businessId]);
 
@@ -80,16 +67,31 @@ export function MerchantDashboardPage() {
     return <p>Business not found.</p>;
   }
 
+  function handleSaveProfile(e: FormEvent) {
+    e.preventDefault();
+    if (!profileName.trim() || !profileCategory.trim() || !profileAddress.trim()) return;
+    updateBusinessProfile(business!.id, {
+      name: profileName.trim(),
+      category: profileCategory.trim(),
+      address: profileAddress.trim(),
+      description: profileDescription.trim(),
+    });
+  }
+
   function handleAddItem(e: FormEvent) {
     e.preventDefault();
     const price = Number(itemPrice);
     if (!itemName.trim() || !Number.isFinite(price) || price <= 0) return;
-    setMenuItems((prev) => [...prev, { id: `item-${Date.now()}`, name: itemName.trim(), priceUSD: price }]);
+    const next: CatalogItem[] = [
+      ...business!.catalog,
+      { id: `item-${Date.now()}`, name: itemName.trim(), priceUSD: price, isMock: true },
+    ];
+    updateCatalog(business!.id, next);
     setItemName("");
     setItemPrice("");
   }
 
-  function startEditItem(item: MenuItem) {
+  function startEditItem(item: CatalogItem) {
     setEditingItemId(item.id);
     setEditItemName(item.name);
     setEditItemPrice(String(item.priceUSD));
@@ -98,53 +100,30 @@ export function MerchantDashboardPage() {
   function saveEditItem(id: string) {
     const price = Number(editItemPrice);
     if (!editItemName.trim() || !Number.isFinite(price) || price <= 0) return;
-    setMenuItems((prev) =>
-      prev.map((i) => (i.id === id ? { ...i, name: editItemName.trim(), priceUSD: price } : i)),
+    const next = business!.catalog.map((i) =>
+      i.id === id ? { ...i, name: editItemName.trim(), priceUSD: price } : i,
     );
+    updateCatalog(business!.id, next);
     setEditingItemId(null);
   }
 
   function deleteItem(id: string) {
-    setMenuItems((prev) => prev.filter((i) => i.id !== id));
-  }
-
-  function handleAddOffer(e: FormEvent) {
-    e.preventDefault();
-    const cost = Number(offerCost);
-    if (!offerTitle.trim() || !Number.isFinite(cost) || cost < 0) return;
-    setOffers((prev) => [
-      ...prev,
-      { id: `offer-${Date.now()}`, title: offerTitle.trim(), pointsCost: cost, instant: offerInstant },
-    ]);
-    setOfferTitle("");
-    setOfferCost("");
-    setOfferInstant(false);
-  }
-
-  function startEditOffer(offer: Offer) {
-    setEditingOfferId(offer.id);
-    setEditOfferTitle(offer.title);
-    setEditOfferCost(String(offer.pointsCost));
-    setEditOfferInstant(offer.instant);
-  }
-
-  function saveEditOffer(id: string) {
-    const cost = Number(editOfferCost);
-    if (!editOfferTitle.trim() || !Number.isFinite(cost) || cost < 0) return;
-    setOffers((prev) =>
-      prev.map((o) =>
-        o.id === id ? { ...o, title: editOfferTitle.trim(), pointsCost: cost, instant: editOfferInstant } : o,
-      ),
+    updateCatalog(
+      business!.id,
+      business!.catalog.filter((i) => i.id !== id),
     );
-    setEditingOfferId(null);
   }
 
-  function deleteOffer(id: string) {
-    setOffers((prev) => prev.filter((o) => o.id !== id));
-  }
-
-  function confirmRedemption(id: string) {
-    setRedemptions((prev) => prev.map((r) => (r.id === id ? { ...r, confirmed: true } : r)));
+  function handleSaveReward(e: FormEvent) {
+    e.preventDefault();
+    const cost = Number(rewardCost);
+    if (!rewardTitle.trim() || !Number.isFinite(cost) || cost < 0) return;
+    updateReward(business!.id, {
+      title: rewardTitle.trim(),
+      pointsCost: cost,
+      mockOnly: true,
+      ...(rewardInstant ? { instant: true } : {}),
+    });
   }
 
   return (
@@ -156,10 +135,6 @@ export function MerchantDashboardPage() {
       <h1>{business.name}</h1>
       <p className="business-detail__meta">
         {business.category} · {business.address}
-      </p>
-      <p className="demo-disclaimer">
-        Simulated merchant view for {business.name} — edits here are local to this session and do
-        not change what customers see in the consumer app.
       </p>
 
       <div className="segmented">
@@ -174,6 +149,40 @@ export function MerchantDashboardPage() {
           </button>
         ))}
       </div>
+
+      {subTab === "Profile" && (
+        <>
+          <h2>Business profile</h2>
+          <form className="merchant-page__form" onSubmit={handleSaveProfile}>
+            <input
+              type="text"
+              placeholder="Business name"
+              value={profileName}
+              onChange={(e) => setProfileName(e.target.value)}
+            />
+            <input
+              type="text"
+              placeholder="Category (e.g. Coffee Shop)"
+              value={profileCategory}
+              onChange={(e) => setProfileCategory(e.target.value)}
+            />
+            <input
+              type="text"
+              placeholder="Address"
+              value={profileAddress}
+              onChange={(e) => setProfileAddress(e.target.value)}
+            />
+            <textarea
+              placeholder="Description"
+              value={profileDescription}
+              onChange={(e) => setProfileDescription(e.target.value)}
+            />
+            <button type="submit" className="merchant-page__cta">
+              Save Profile
+            </button>
+          </form>
+        </>
+      )}
 
       {subTab === "Menu" && (
         <>
@@ -199,8 +208,8 @@ export function MerchantDashboardPage() {
           </form>
 
           <ul className="merchant-page__offer-list">
-            {menuItems.length === 0 && <li className="merchant-page__empty">No menu items yet.</li>}
-            {menuItems.map((item) =>
+            {business.catalog.length === 0 && <li className="merchant-page__empty">No menu items yet.</li>}
+            {business.catalog.map((item) =>
               editingItemId === item.id ? (
                 <li key={item.id} className="merchant-page__offer merchant-page__offer--editing">
                   <input
@@ -242,109 +251,101 @@ export function MerchantDashboardPage() {
         </>
       )}
 
-      {subTab === "Offers" && (
+      {subTab === "Offer" && (
         <>
-          <h2>Add an offer</h2>
-          <form className="merchant-page__form" onSubmit={handleAddOffer}>
+          <h2>Reward offer</h2>
+          <form className="merchant-page__form" onSubmit={handleSaveReward}>
             <input
               type="text"
               placeholder="Offer title (e.g. 10% off any drink)"
-              value={offerTitle}
-              onChange={(e) => setOfferTitle(e.target.value)}
+              value={rewardTitle}
+              onChange={(e) => setRewardTitle(e.target.value)}
             />
             <input
               type="number"
               placeholder="Points cost"
               min={0}
-              value={offerCost}
-              onChange={(e) => setOfferCost(e.target.value)}
+              value={rewardCost}
+              onChange={(e) => setRewardCost(e.target.value)}
+              disabled={rewardInstant}
             />
             <label className="merchant-page__checkbox">
               <input
                 type="checkbox"
-                checked={offerInstant}
-                onChange={(e) => setOfferInstant(e.target.checked)}
+                checked={rewardInstant}
+                onChange={(e) => setRewardInstant(e.target.checked)}
               />
               Instant (free with collection)
             </label>
             <button type="submit" className="merchant-page__cta">
-              Create Offer
+              Save Offer
             </button>
           </form>
-
-          <ul className="merchant-page__offer-list">
-            {offers.length === 0 && <li className="merchant-page__empty">No offers created yet.</li>}
-            {offers.map((offer) =>
-              editingOfferId === offer.id ? (
-                <li key={offer.id} className="merchant-page__offer merchant-page__offer--editing">
-                  <input
-                    type="text"
-                    value={editOfferTitle}
-                    onChange={(e) => setEditOfferTitle(e.target.value)}
-                  />
-                  <input
-                    type="number"
-                    min={0}
-                    value={editOfferCost}
-                    onChange={(e) => setEditOfferCost(e.target.value)}
-                  />
-                  <label className="merchant-page__checkbox">
-                    <input
-                      type="checkbox"
-                      checked={editOfferInstant}
-                      onChange={(e) => setEditOfferInstant(e.target.checked)}
-                    />
-                    Instant
-                  </label>
-                  <button type="button" onClick={() => saveEditOffer(offer.id)}>
-                    Save
-                  </button>
-                  <button type="button" onClick={() => setEditingOfferId(null)}>
-                    Cancel
-                  </button>
-                </li>
-              ) : (
-                <li key={offer.id} className="merchant-page__offer">
-                  <span>{offer.title}</span>
-                  <span className="status-pill status-pill--collected">
-                    {offer.instant ? "Free with collection" : `${offer.pointsCost} pts`}
-                  </span>
-                  <span className="merchant-page__row-actions">
-                    <button type="button" onClick={() => startEditOffer(offer)}>
-                      Edit
-                    </button>
-                    <button type="button" onClick={() => deleteOffer(offer.id)}>
-                      Delete
-                    </button>
-                  </span>
-                </li>
-              ),
-            )}
-          </ul>
         </>
       )}
 
       {subTab === "Redemptions" && (
         <>
-          <h2>Pending redemptions</h2>
+          <h2>Redemption status</h2>
           <ul className="merchant-page__redemption-list">
-            {redemptions.map((r) => (
-              <li key={r.id} className="merchant-page__redemption">
+            {isPending && (
+              <li className="merchant-page__redemption">
                 <div>
-                  <strong>
-                    {r.customerName} redeemed "{r.offerTitle}"
-                  </strong>
-                  <span>{r.whenLabel}</span>
+                  <strong>Reward requested: "{business.reward.title}"</strong>
+                  <span>Awaiting your confirmation</span>
                 </div>
-                {r.confirmed ? (
-                  <span className="status-pill status-pill--collected">Confirmed</span>
-                ) : (
-                  <button type="button" onClick={() => confirmRedemption(r.id)}>
-                    Confirm Redemption
-                  </button>
-                )}
+                <button type="button" onClick={() => confirmRedemption(business!.id)}>
+                  Confirm Redemption
+                </button>
               </li>
-            ))}
+            )}
+            {isRedeemed && (
+              <li className="merchant-page__redemption">
+                <div>
+                  <strong>Reward confirmed: "{business.reward.title}"</strong>
+                </div>
+                <span className="status-pill status-pill--collected">Confirmed</span>
+              </li>
+            )}
+            {!isPending && !isRedeemed && (
+              <li className="merchant-page__empty">No pending redemptions right now.</li>
+            )}
+          </ul>
+        </>
+      )}
+
+      {subTab === "Reports" && (
+        <>
+          <h2>Activity report</h2>
+          <ul className="settings-list settings-list--readonly">
+            <li>
+              <span>Visits confirmed</span>
+              <strong>{visitCount}</strong>
+            </li>
+            <li>
+              <span>Reward redeemed</span>
+              <strong>{isRedeemed ? "Yes" : isPending ? "Pending" : "Not yet"}</strong>
+            </li>
+            <li>
+              <span>Incremental purchase reported</span>
+              <strong>
+                {incrementalPurchaseAnswer === undefined
+                  ? "Not asked yet"
+                  : incrementalPurchaseAnswer
+                    ? "Yes"
+                    : "No"}
+              </strong>
+            </li>
+            <li>
+              <span>Said collecting was worth it</span>
+              <strong>
+                {valueFeedbackAnswer === undefined
+                  ? "Not asked yet"
+                  : valueFeedbackAnswer
+                    ? "Yes"
+                    : "No"}
+              </strong>
+            </li>
           </ul>
         </>
       )}

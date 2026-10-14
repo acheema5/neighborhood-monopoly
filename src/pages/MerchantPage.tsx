@@ -1,16 +1,14 @@
 import { Link } from "react-router-dom";
-import { businesses } from "../data/businesses";
+import { useBusinesses } from "../hooks/useBusinesses";
 import { PlaceholderImage } from "../components/PlaceholderImage";
 import { ChevronRightIcon } from "../components/icons";
 
 export function MerchantPage() {
+  const businesses = useBusinesses();
+
   return (
     <div className="merchant-page">
       <h1>Merchant</h1>
-      <p className="demo-disclaimer">
-        Simulated merchant login — select your business to manage its menu, offers, and
-        redemptions. Nothing here is wired to real business accounts or data.
-      </p>
 
       <h2>Select your business</h2>
       <ul className="merchant-picker-list">
