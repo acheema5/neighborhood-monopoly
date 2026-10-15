@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { businesses } from "../data/businesses";
+import { useBusinesses } from "../hooks/useBusinesses";
 import { badges } from "../data/badges";
 import { neighborhood } from "../data/neighborhood";
 import { useAppStore } from "../store/useAppStore";
@@ -32,6 +32,7 @@ export function CollectionPage() {
   const redeemedRewardBusinessIds = useAppStore((s) => s.redeemedRewardBusinessIds);
   const earnedBadgeIds = useAppStore((s) => s.earnedBadgeIds);
   const canRedeem = useAppStore((s) => s.canRedeem);
+  const businesses = useBusinesses();
 
   const filtered = businesses.filter((b) => category === "All" || b.categoryGroup === category);
   const availableRewards = businesses.filter((b) => collectedBusinessIds.includes(b.id));

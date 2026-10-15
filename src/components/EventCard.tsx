@@ -1,11 +1,12 @@
 import type { NeighborhoodEvent } from "../data/types";
-import { businesses } from "../data/businesses";
+import { useBusinesses } from "../hooks/useBusinesses";
 import { useAppStore } from "../store/useAppStore";
 import { PlaceholderImage } from "./PlaceholderImage";
 
 export function EventCard({ event }: { event: NeighborhoodEvent }) {
   const isSaved = useAppStore((s) => s.savedEventIds.includes(event.id));
   const toggleSavedEvent = useAppStore((s) => s.toggleSavedEvent);
+  const businesses = useBusinesses();
 
   const participants = businesses.filter((b) => event.participatingBusinessIds.includes(b.id));
 

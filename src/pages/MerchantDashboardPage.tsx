@@ -128,7 +128,7 @@ export function MerchantDashboardPage() {
 
   return (
     <div className="merchant-page">
-      <Link to="/merchant" className="merchant-dashboard__switch">
+      <Link to="/merchant/claim" className="merchant-dashboard__switch">
         <ArrowLeftIcon /> Switch business
       </Link>
 

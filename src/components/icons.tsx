@@ -142,6 +142,17 @@ export function ArrowLeftIcon(props: IconProps) {
   );
 }
 
+export function StorefrontIcon(props: IconProps) {
+  return (
+    <svg {...base(props)}>
+      <path d="M4 10 5.5 4h13L20 10" />
+      <path d="M4 10v9h16v-9" />
+      <path d="M4 10a2.5 2.5 0 0 0 5 0 2.5 2.5 0 0 0 5 0 2.5 2.5 0 0 0 5 0" />
+      <path d="M10 19v-5h4v5" />
+    </svg>
+  );
+}
+
 export function StarIcon(props: IconProps) {
   return (
     <svg {...base(props)} fill="currentColor" strokeWidth={1}>
