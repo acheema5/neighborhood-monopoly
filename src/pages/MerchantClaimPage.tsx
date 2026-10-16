@@ -42,7 +42,12 @@ export function MerchantClaimPage() {
         {results.map((business) => (
           <li key={business.id}>
             <div className="merchant-picker-row">
-              <PlaceholderImage category={business.categoryGroup} className="merchant-picker-row__image" />
+              <PlaceholderImage
+                categoryGroup={business.categoryGroup}
+                rawCategory={business.category}
+                className="merchant-picker-row__image"
+                alt={`${business.name} category icon`}
+              />
               <div className="merchant-picker-row__body">
                 <span className="business-card__category">{business.category}</span>
                 <strong>{business.name}</strong>

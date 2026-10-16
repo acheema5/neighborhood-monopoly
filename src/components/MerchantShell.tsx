@@ -6,7 +6,7 @@ export function MerchantShell({ children }: { children: ReactNode }) {
   return (
     <div className="merchant-shell" data-theme="merchant">
       <header className="merchant-shell__header">
-        <Link to="/profile" className="merchant-shell__exit" aria-label="Exit merchant portal">
+        <Link to="/app/profile" className="merchant-shell__exit" aria-label="Exit merchant portal">
           <ArrowLeftIcon />
         </Link>
         <span className="merchant-shell__brand">

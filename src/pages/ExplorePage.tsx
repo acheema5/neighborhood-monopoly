@@ -1,11 +1,13 @@
 import { useMemo, useState } from "react";
+import { Link } from "react-router-dom";
 import { useBusinesses } from "../hooks/useBusinesses";
 import { neighborhood } from "../data/neighborhood";
 import { useAppStore } from "../store/useAppStore";
 import { ExploreMap } from "../components/ExploreMap";
 import { BusinessPreviewCard } from "../components/BusinessPreviewCard";
+import { PlaceholderImage } from "../components/PlaceholderImage";
 import { ProgressBar } from "../components/ProgressBar";
-import { BookIcon, SearchIcon, UtensilsIcon, BagIcon } from "../components/icons";
+import { BookIcon, SearchIcon, UtensilsIcon, BagIcon, CheckIcon } from "../components/icons";
 import type { CategoryGroup } from "../data/types";
 
 const CATEGORIES: Array<{ label: "All" | CategoryGroup; Icon?: typeof BookIcon }> = [
@@ -20,6 +22,7 @@ export function ExplorePage() {
   const [query, setQuery] = useState("");
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const collectedCount = useAppStore((s) => s.collectedBusinessIds.length);
+  const isCollected = useAppStore((s) => s.isCollected);
   const businesses = useBusinesses();
 
   const filtered = useMemo(() => {
@@ -34,10 +37,14 @@ export function ExplorePage() {
 
   return (
     <div className="explore-page">
-      <h1>{neighborhood.name}</h1>
-      <p className="explore-page__progress">
-        {collectedCount} / {businesses.length} places collected
-      </p>
+      <header className="explore-page__header">
+        <div>
+          <h1>{neighborhood.name}</h1>
+          <p className="explore-page__progress">
+            {collectedCount} / {businesses.length} places collected
+          </p>
+        </div>
+      </header>
       <ProgressBar value={collectedCount} max={businesses.length} />
 
       <div className="explore-page__search-wrap">
@@ -45,9 +52,10 @@ export function ExplorePage() {
         <input
           type="search"
           className="explore-page__search"
-          placeholder="Search businesses"
+          placeholder="Search East Village businesses"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
+          aria-label="Search businesses"
         />
       </div>
 
@@ -68,6 +76,40 @@ export function ExplorePage() {
       <div className="explore-page__map-area">
         <ExploreMap businesses={filtered} selectedId={selectedId} onSelect={setSelectedId} />
         {selected && <BusinessPreviewCard business={selected} />}
+      </div>
+
+      <div className="explore-page__nearby">
+        <h2>Nearby places</h2>
+        <div className="explore-page__nearby-row">
+          {filtered.map((business) => {
+            const collected = isCollected(business.id);
+            return (
+              <Link
+                key={business.id}
+                to={`/app/business/${business.id}`}
+                className={`nearby-chip${collected ? " nearby-chip--collected" : ""}${selectedId === business.id ? " nearby-chip--selected" : ""}`}
+                onMouseEnter={() => setSelectedId(business.id)}
+                onClick={() => setSelectedId(business.id)}
+              >
+                <PlaceholderImage
+                  categoryGroup={business.categoryGroup}
+                  rawCategory={business.category}
+                  className="nearby-chip__image"
+                  alt={`${business.name} category icon`}
+                />
+                {collected && (
+                  <span className="nearby-chip__check">
+                    <CheckIcon />
+                  </span>
+                )}
+                <span className="nearby-chip__name">{business.name}</span>
+              </Link>
+            );
+          })}
+          {filtered.length === 0 && (
+            <p className="explore-page__empty">No businesses match your search.</p>
+          )}
+        </div>
       </div>
     </div>
   );

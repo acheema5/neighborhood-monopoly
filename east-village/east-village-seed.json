@@ -4,7 +4,7 @@
     "id": "east-village",
     "name": "East Village",
     "city": "New York City",
-    "demoArea": "East 5th–13th Streets, Bowery/Third Avenue to Avenue B; prototype boundary, not formal neighborhood definition",
+    "demoArea": "East 5th–13th Streets, Bowery/Third Avenue to Avenue B",
     "mapCenterHint": "St. Marks Place / Tompkins Square Park",
     "allLocationsAreReal": true
   },
@@ -15,7 +15,6 @@
     "startingPoints": 420,
     "streakDays": 2,
     "initialCollectedBusinessIds": [
-      "coffee-project",
       "east-village-books"
     ],
     "badges": [
@@ -72,7 +71,7 @@
           },
           {
             "id": "visit",
-            "label": "Mark a simulated visit",
+            "label": "Mark a visit",
             "type": "demo_checkin",
             "points": 50
           },
@@ -84,7 +83,7 @@
           },
           {
             "id": "scan",
-            "label": "Scan demo QR code",
+            "label": "Scan QR code",
             "type": "simulated_qr",
             "points": 100
           }
@@ -94,7 +93,7 @@
         "badge": "Coffee Scout"
       },
       "reward": {
-        "title": "Free espresso upgrade (demo)",
+        "title": "Free espresso upgrade",
         "pointsCost": 300,
         "mockOnly": true,
         "redeemAction": "show demo success modal; no actual discount or partner redemption"
@@ -147,7 +146,7 @@
           },
           {
             "id": "visit",
-            "label": "Mark a simulated visit",
+            "label": "Mark a visit",
             "type": "demo_checkin",
             "points": 50
           },
@@ -159,7 +158,7 @@
           },
           {
             "id": "scan",
-            "label": "Scan demo QR code",
+            "label": "Scan QR code",
             "type": "simulated_qr",
             "points": 100
           }
@@ -169,7 +168,7 @@
         "badge": "Pastry Passport"
       },
       "reward": {
-        "title": "10% off a pastry (demo)",
+        "title": "10% off a pastry",
         "pointsCost": 350,
         "mockOnly": true,
         "redeemAction": "show demo success modal; no actual discount or partner redemption"
@@ -222,7 +221,7 @@
           },
           {
             "id": "visit",
-            "label": "Mark a simulated visit",
+            "label": "Mark a visit",
             "type": "demo_checkin",
             "points": 50
           },
@@ -234,7 +233,7 @@
           },
           {
             "id": "scan",
-            "label": "Scan demo QR code",
+            "label": "Scan QR code",
             "type": "simulated_qr",
             "points": 100
           }
@@ -244,7 +243,7 @@
         "badge": "Historic Sweet Tooth"
       },
       "reward": {
-        "title": "Free mini cookie with purchase (demo)",
+        "title": "Free mini cookie with purchase",
         "pointsCost": 400,
         "mockOnly": true,
         "redeemAction": "show demo success modal; no actual discount or partner redemption"
@@ -297,7 +296,7 @@
           },
           {
             "id": "visit",
-            "label": "Mark a simulated visit",
+            "label": "Mark a visit",
             "type": "demo_checkin",
             "points": 50
           },
@@ -309,7 +308,7 @@
           },
           {
             "id": "scan",
-            "label": "Scan demo QR code",
+            "label": "Scan QR code",
             "type": "simulated_qr",
             "points": 100
           }
@@ -319,7 +318,7 @@
         "badge": "Page Turner"
       },
       "reward": {
-        "title": "$5 off a used-book purchase (demo)",
+        "title": "$5 off a used-book purchase",
         "pointsCost": 450,
         "mockOnly": true,
         "redeemAction": "show demo success modal; no actual discount or partner redemption"
@@ -372,7 +371,7 @@
           },
           {
             "id": "visit",
-            "label": "Mark a simulated visit",
+            "label": "Mark a visit",
             "type": "demo_checkin",
             "points": 50
           },
@@ -384,7 +383,7 @@
           },
           {
             "id": "scan",
-            "label": "Scan demo QR code",
+            "label": "Scan QR code",
             "type": "simulated_qr",
             "points": 100
           }
@@ -394,7 +393,7 @@
         "badge": "Neighborhood Table"
       },
       "reward": {
-        "title": "Free mint tea with entrée (demo)",
+        "title": "Free mint tea with entrée",
         "pointsCost": 500,
         "mockOnly": true,
         "redeemAction": "show demo success modal; no actual discount or partner redemption"
@@ -447,7 +446,7 @@
           },
           {
             "id": "visit",
-            "label": "Mark a simulated visit",
+            "label": "Mark a visit",
             "type": "demo_checkin",
             "points": 50
           },
@@ -459,7 +458,7 @@
           },
           {
             "id": "scan",
-            "label": "Scan demo QR code",
+            "label": "Scan QR code",
             "type": "simulated_qr",
             "points": 100
           }
@@ -469,7 +468,7 @@
         "badge": "Crate Digger"
       },
       "reward": {
-        "title": "$5 off vinyl purchase (demo)",
+        "title": "$5 off vinyl purchase",
         "pointsCost": 550,
         "mockOnly": true,
         "redeemAction": "show demo success modal; no actual discount or partner redemption"
@@ -522,7 +521,7 @@
           },
           {
             "id": "visit",
-            "label": "Mark a simulated visit",
+            "label": "Mark a visit",
             "type": "demo_checkin",
             "points": 50
           },
@@ -534,7 +533,7 @@
           },
           {
             "id": "scan",
-            "label": "Scan demo QR code",
+            "label": "Scan QR code",
             "type": "simulated_qr",
             "points": 100
           }
@@ -544,7 +543,7 @@
         "badge": "Vintage Hunter"
       },
       "reward": {
-        "title": "10% off accessories (demo)",
+        "title": "10% off accessories",
         "pointsCost": 600,
         "mockOnly": true,
         "redeemAction": "show demo success modal; no actual discount or partner redemption"
@@ -597,7 +596,7 @@
           },
           {
             "id": "visit",
-            "label": "Mark a simulated visit",
+            "label": "Mark a visit",
             "type": "demo_checkin",
             "points": 50
           },
@@ -609,7 +608,7 @@
           },
           {
             "id": "scan",
-            "label": "Scan demo QR code",
+            "label": "Scan QR code",
             "type": "simulated_qr",
             "points": 100
           }
@@ -619,7 +618,7 @@
         "badge": "Style Explorer"
       },
       "reward": {
-        "title": "$10 off $75 (demo)",
+        "title": "$10 off $75",
         "pointsCost": 650,
         "mockOnly": true,
         "redeemAction": "show demo success modal; no actual discount or partner redemption"
@@ -672,7 +671,7 @@
           },
           {
             "id": "visit",
-            "label": "Mark a simulated visit",
+            "label": "Mark a visit",
             "type": "demo_checkin",
             "points": 50
           },
@@ -684,7 +683,7 @@
           },
           {
             "id": "scan",
-            "label": "Scan demo QR code",
+            "label": "Scan QR code",
             "type": "simulated_qr",
             "points": 100
           }
@@ -694,7 +693,7 @@
         "badge": "Side B"
       },
       "reward": {
-        "title": "Free protective sleeve (demo)",
+        "title": "Free protective sleeve",
         "pointsCost": 700,
         "mockOnly": true,
         "redeemAction": "show demo success modal; no actual discount or partner redemption"
@@ -747,7 +746,7 @@
           },
           {
             "id": "visit",
-            "label": "Mark a simulated visit",
+            "label": "Mark a visit",
             "type": "demo_checkin",
             "points": 50
           },
@@ -759,7 +758,7 @@
           },
           {
             "id": "scan",
-            "label": "Scan demo QR code",
+            "label": "Scan QR code",
             "type": "simulated_qr",
             "points": 100
           }
@@ -769,7 +768,7 @@
         "badge": "Deep Cuts"
       },
       "reward": {
-        "title": "10% off a used album (demo)",
+        "title": "10% off a used album",
         "pointsCost": 750,
         "mockOnly": true,
         "redeemAction": "show demo success modal; no actual discount or partner redemption"
@@ -780,7 +779,7 @@
     {
       "id": "ev1",
       "name": "East Village Coffee Crawl",
-      "dateLabel": "Saturday • Demo event",
+      "dateLabel": "Saturday",
       "description": "A self-guided route through three neighborhood cafes. Collecting Coffee Project New York unlocks the Coffee Scout badge.",
       "venue": "Multi-stop neighborhood route",
       "mockOnly": true,
@@ -793,7 +792,7 @@
     {
       "id": "ev2",
       "name": "St. Marks Book & Vinyl Walk",
-      "dateLabel": "Sunday • Demo event",
+      "dateLabel": "Sunday",
       "description": "Explore a bookstore and two record shops.",
       "venue": "St. Marks Place and nearby blocks",
       "mockOnly": true,
@@ -806,7 +805,7 @@
     {
       "id": "ev3",
       "name": "9th Street Style Trail",
-      "dateLabel": "Next weekend • Demo event",
+      "dateLabel": "Next weekend",
       "description": "Visit two independent fashion shops and earn points.",
       "venue": "East 9th Street",
       "mockOnly": true,

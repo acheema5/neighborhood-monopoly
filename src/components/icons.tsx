@@ -7,7 +7,7 @@ function base(props: IconProps) {
     viewBox: "0 0 24 24",
     fill: "none",
     stroke: "currentColor",
-    strokeWidth: 1.8,
+    strokeWidth: 1.6,
     strokeLinecap: "round" as const,
     strokeLinejoin: "round" as const,
     ...props,
@@ -89,18 +89,17 @@ export function CompassIcon(props: IconProps) {
   return (
     <svg {...base(props)}>
       <circle cx="12" cy="12" r="9" />
-      <path d="m15 9-2 6-4 2 2-6Z" />
+      <path d="m15.3 8.7-2 5.1-5.1 2 2-5.1Z" fill="currentColor" stroke="none" />
+      <circle cx="12" cy="12" r="1" fill="currentColor" stroke="none" />
     </svg>
   );
 }
 
-export function GridIcon(props: IconProps) {
+export function StackIcon(props: IconProps) {
   return (
     <svg {...base(props)}>
-      <rect x="3.5" y="3.5" width="7" height="7" rx="1.2" />
-      <rect x="13.5" y="3.5" width="7" height="7" rx="1.2" />
-      <rect x="13.5" y="13.5" width="7" height="7" rx="1.2" />
-      <rect x="3.5" y="13.5" width="7" height="7" rx="1.2" />
+      <rect x="3.5" y="3.5" width="13.5" height="13.5" rx="2.4" />
+      <path d="M8 20.5h10a2 2 0 0 0 2-2V8.5" />
     </svg>
   );
 }
@@ -112,6 +111,7 @@ export function CalendarIcon(props: IconProps) {
       <path d="M3.5 9.5h17" />
       <path d="M8 2.5v4" />
       <path d="M16 2.5v4" />
+      <circle cx="8.5" cy="14" r="1.1" fill="currentColor" stroke="none" />
     </svg>
   );
 }
@@ -165,6 +165,79 @@ export function CheckIcon(props: IconProps) {
   return (
     <svg {...base(props)} strokeWidth={2.4}>
       <path d="M20 6 9 17l-5-5" />
+    </svg>
+  );
+}
+
+export function QrIcon(props: IconProps) {
+  return (
+    <svg {...base(props)}>
+      <rect x="3.5" y="3.5" width="6.5" height="6.5" rx="1" />
+      <rect x="14" y="3.5" width="6.5" height="6.5" rx="1" />
+      <rect x="3.5" y="14" width="6.5" height="6.5" rx="1" />
+      <path d="M14 14h3v3" />
+      <path d="M20.5 14v6.5H14" />
+      <path d="M17 17.5v.01" />
+    </svg>
+  );
+}
+
+export function SparklesIcon(props: IconProps) {
+  return (
+    <svg {...base(props)} fill="currentColor" strokeWidth={0.5}>
+      <path d="M12 2.5c.4 3 1.7 4.6 4.7 5-3 .4-4.3 1.9-4.7 5-.4-3.1-1.7-4.6-4.7-5 3-.4 4.3-2 4.7-5Z" />
+      <path d="M19 14.5c.2 1.6.9 2.4 2.4 2.6-1.5.2-2.2 1-2.4 2.6-.2-1.6-.9-2.4-2.4-2.6 1.5-.2 2.2-1 2.4-2.6Z" />
+    </svg>
+  );
+}
+
+export function LockIcon(props: IconProps) {
+  return (
+    <svg {...base(props)}>
+      <rect x="5" y="10.5" width="14" height="10" rx="2" />
+      <path d="M8 10.5V7a4 4 0 0 1 8 0v3.5" />
+    </svg>
+  );
+}
+
+export function ListIcon(props: IconProps) {
+  return (
+    <svg {...base(props)}>
+      <path d="M8 6h12" />
+      <path d="M8 12h12" />
+      <path d="M8 18h8" />
+      <circle cx="4" cy="6" r="1" fill="currentColor" stroke="none" />
+      <circle cx="4" cy="12" r="1" fill="currentColor" stroke="none" />
+      <circle cx="4" cy="18" r="1" fill="currentColor" stroke="none" />
+    </svg>
+  );
+}
+
+export function TagIcon(props: IconProps) {
+  return (
+    <svg {...base(props)}>
+      <path d="M20 11.4 12.6 4H5a1 1 0 0 0-1 1v7.6l8.4 8.4a1.5 1.5 0 0 0 2.1 0l5.5-5.5a1.5 1.5 0 0 0 0-2.1Z" />
+      <circle cx="8.5" cy="8.5" r="1.3" fill="currentColor" stroke="none" />
+    </svg>
+  );
+}
+
+export function TicketIcon(props: IconProps) {
+  return (
+    <svg {...base(props)}>
+      <path d="M3.5 9a2 2 0 0 0 0 4v3.5a1 1 0 0 0 1 1h15a1 1 0 0 0 1-1V13a2 2 0 0 1 0-4V6.5a1 1 0 0 0-1-1h-15a1 1 0 0 0-1 1Z" />
+      <path d="M14 6.5v11" strokeDasharray="1.6 2.2" />
+    </svg>
+  );
+}
+
+export function ChartIcon(props: IconProps) {
+  return (
+    <svg {...base(props)}>
+      <path d="M4 20V10" />
+      <path d="M12 20V4" />
+      <path d="M20 20v-7" />
+      <path d="M3 20h18" />
     </svg>
   );
 }

@@ -9,18 +9,12 @@ interface RedeemConfirmModalProps {
 
 export function RedeemConfirmModal({ business, onClose }: RedeemConfirmModalProps) {
   const requestRedemption = useAppStore((s) => s.requestRedemption);
-  const recordIncrementalPurchase = useAppStore((s) => s.recordIncrementalPurchase);
+  const reward = useAppStore((s) => s.getEffectiveReward(business.id)) ?? business.reward;
   const [requested, setRequested] = useState(false);
-  const [purchaseAnswered, setPurchaseAnswered] = useState(false);
 
   function handleConfirm() {
     requestRedemption(business.id);
     setRequested(true);
-  }
-
-  function handlePurchaseAnswer(madePurchase: boolean) {
-    recordIncrementalPurchase(business.id, madePurchase);
-    setPurchaseAnswered(true);
   }
 
   return (
@@ -28,15 +22,15 @@ export function RedeemConfirmModal({ business, onClose }: RedeemConfirmModalProp
       <div className="redeem-modal">
         {!requested ? (
           <>
-            <p className="redeem-modal__eyebrow">Confirm Redemption</p>
-            <h2 className="redeem-modal__name">{business.reward.title}</h2>
+            <p className="redeem-modal__eyebrow">Confirm redemption</p>
+            <h2 className="redeem-modal__name">{reward.title}</h2>
             <p className="redeem-modal__business">{business.name}</p>
             <p className="redeem-modal__cost">
-              {business.reward.instant ? "Free with collection" : `${business.reward.pointsCost} pts`}
+              {reward.instant ? "Free with collection" : `${reward.pointsCost} pts`}
             </p>
             <div className="redeem-modal__actions">
               <button type="button" onClick={handleConfirm}>
-                Confirm Redemption
+                Confirm redemption
               </button>
               <button type="button" onClick={onClose}>
                 Cancel
@@ -45,32 +39,16 @@ export function RedeemConfirmModal({ business, onClose }: RedeemConfirmModalProp
           </>
         ) : (
           <>
-            <p className="redeem-modal__eyebrow">Redemption requested</p>
-            <h2 className="redeem-modal__name">{business.reward.title}</h2>
+            <p className="redeem-modal__eyebrow">Pending confirmation</p>
+            <h2 className="redeem-modal__name">Show this at {business.name}</h2>
             <p className="redeem-modal__business">
-              Show this screen at {business.name} — a staff member confirms it before points are
-              finalized.
+              A staff member confirms your redemption before it's applied.
             </p>
-
-            {!purchaseAnswered ? (
-              <div className="redeem-modal__purchase-check">
-                <p>Did you buy anything else during this visit?</p>
-                <div className="redeem-modal__purchase-actions">
-                  <button type="button" onClick={() => handlePurchaseAnswer(true)}>
-                    Yes
-                  </button>
-                  <button type="button" onClick={() => handlePurchaseAnswer(false)}>
-                    No
-                  </button>
-                </div>
-              </div>
-            ) : (
-              <div className="redeem-modal__actions">
-                <button type="button" onClick={onClose}>
-                  Done
-                </button>
-              </div>
-            )}
+            <div className="redeem-modal__actions">
+              <button type="button" onClick={onClose}>
+                Done
+              </button>
+            </div>
           </>
         )}
       </div>

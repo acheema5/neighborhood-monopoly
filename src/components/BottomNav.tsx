@@ -1,11 +1,11 @@
 import { NavLink } from "react-router-dom";
-import { CalendarIcon, CompassIcon, GridIcon, UserIcon } from "./icons";
+import { CalendarIcon, CompassIcon, StackIcon, UserIcon } from "./icons";
 
 const TABS = [
-  { to: "/", label: "Explore", Icon: CompassIcon },
-  { to: "/collection", label: "Collection", Icon: GridIcon },
-  { to: "/events", label: "Events", Icon: CalendarIcon },
-  { to: "/profile", label: "Profile", Icon: UserIcon },
+  { to: "/app", label: "Explore", Icon: CompassIcon },
+  { to: "/app/collection", label: "Collection", Icon: StackIcon },
+  { to: "/app/events", label: "Events", Icon: CalendarIcon },
+  { to: "/app/profile", label: "Profile", Icon: UserIcon },
 ];
 
 export function BottomNav() {
@@ -15,7 +15,7 @@ export function BottomNav() {
         <NavLink
           key={to}
           to={to}
-          end={to === "/"}
+          end={to === "/app"}
           className={({ isActive }) => `bottom-nav__item${isActive ? " bottom-nav__item--active" : ""}`}
         >
           <Icon />

@@ -1,10 +1,12 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { businesses } from "../data/businesses";
 import { neighborhood } from "../data/neighborhood";
 import { playerSeed } from "../data/player";
 import { useAppStore } from "../store/useAppStore";
 import { ProgressBar } from "../components/ProgressBar";
-import { ChevronRightIcon, UserIcon } from "../components/icons";
+import { ConfirmModal } from "../components/ConfirmModal";
+import { ChevronRightIcon, UserIcon, StorefrontIcon, CheckIcon } from "../components/icons";
 
 export function ProfilePage() {
   const navigate = useNavigate();
@@ -12,15 +14,18 @@ export function ProfilePage() {
   const pointsBalance = useAppStore((s) => s.pointsBalance);
   const earnedBadgeIds = useAppStore((s) => s.earnedBadgeIds);
   const visitLog = useAppStore((s) => s.visitLog);
-  const incrementalPurchaseByBusiness = useAppStore((s) => s.incrementalPurchaseByBusiness);
-  const valueFeedbackByBusiness = useAppStore((s) => s.valueFeedbackByBusiness);
-  const discoveryViewedBusinessIds = useAppStore((s) => s.discoveryViewedBusinessIds);
+  const redeemedRewardBusinessIds = useAppStore((s) => s.redeemedRewardBusinessIds);
+  const pilotFeedback = useAppStore((s) => s.pilotFeedback);
+  const setPilotFeedback = useAppStore((s) => s.setPilotFeedback);
   const resetDemo = useAppStore((s) => s.resetDemo);
 
-  const purchaseAnswers = Object.values(incrementalPurchaseByBusiness);
-  const incrementalPurchaseCount = purchaseAnswers.filter(Boolean).length;
-  const feedbackAnswers = Object.values(valueFeedbackByBusiness);
-  const worthItCount = feedbackAnswers.filter(Boolean).length;
+  const [showResetConfirm, setShowResetConfirm] = useState(false);
+
+  const recentVisits = [...visitLog]
+    .sort((a, b) => b.timestamp - a.timestamp)
+    .slice(0, 4)
+    .map((v) => businesses.find((b) => b.id === v.businessId))
+    .filter((b): b is (typeof businesses)[number] => !!b);
 
   return (
     <div className="profile-page">
@@ -57,14 +62,104 @@ export function ProfilePage() {
 
       <ul className="settings-list">
         <li>
-          <button type="button" onClick={() => navigate("/collection")}>
-            <span>Collection History</span>
+          <button type="button" onClick={() => navigate("/app/collection")}>
+            <span>Collection history</span>
             <ChevronRightIcon />
           </button>
         </li>
         <li>
-          <button type="button" onClick={() => navigate("/collection?tab=rewards")}>
-            <span>My Rewards</span>
+          <button type="button" onClick={() => navigate("/app/collection?tab=rewards")}>
+            <span>My rewards</span>
+            <ChevronRightIcon />
+          </button>
+        </li>
+      </ul>
+
+      <h2>Recent activity</h2>
+      {recentVisits.length === 0 ? (
+        <p className="profile-page__empty">No check-ins yet — collect a property to get started.</p>
+      ) : (
+        <ul className="activity-list">
+          {recentVisits.map((business) => (
+            <li key={business.id} className="activity-list__item">
+              <span className="activity-list__icon">
+                <CheckIcon />
+              </span>
+              <span>Checked in at {business.name}</span>
+            </li>
+          ))}
+        </ul>
+      )}
+
+      <h2>Reward history</h2>
+      {redeemedRewardBusinessIds.length === 0 ? (
+        <p className="profile-page__empty">No rewards redeemed yet.</p>
+      ) : (
+        <ul className="activity-list">
+          {redeemedRewardBusinessIds.map((id) => {
+            const business = businesses.find((b) => b.id === id);
+            if (!business) return null;
+            return (
+              <li key={id} className="activity-list__item">
+                <span className="activity-list__icon">
+                  <CheckIcon />
+                </span>
+                <span>Redeemed {business.reward.title} at {business.name}</span>
+              </li>
+            );
+          })}
+        </ul>
+      )}
+
+      <h2>Pilot feedback</h2>
+      <div className="pilot-feedback">
+        <div className="pilot-feedback__row">
+          <span>Did this app help you discover a place you hadn't visited before?</span>
+          <div className="pilot-feedback__buttons">
+            <button
+              type="button"
+              className={pilotFeedback.discoveredNewPlace === true ? "pilot-feedback__btn pilot-feedback__btn--active" : "pilot-feedback__btn"}
+              onClick={() => setPilotFeedback({ discoveredNewPlace: true })}
+            >
+              Yes
+            </button>
+            <button
+              type="button"
+              className={pilotFeedback.discoveredNewPlace === false ? "pilot-feedback__btn pilot-feedback__btn--active" : "pilot-feedback__btn"}
+              onClick={() => setPilotFeedback({ discoveredNewPlace: false })}
+            >
+              No
+            </button>
+          </div>
+        </div>
+        <div className="pilot-feedback__row">
+          <span>Would you use this to explore your neighborhood again?</span>
+          <div className="pilot-feedback__buttons">
+            <button
+              type="button"
+              className={pilotFeedback.wouldExploreAgain === true ? "pilot-feedback__btn pilot-feedback__btn--active" : "pilot-feedback__btn"}
+              onClick={() => setPilotFeedback({ wouldExploreAgain: true })}
+            >
+              Yes
+            </button>
+            <button
+              type="button"
+              className={pilotFeedback.wouldExploreAgain === false ? "pilot-feedback__btn pilot-feedback__btn--active" : "pilot-feedback__btn"}
+              onClick={() => setPilotFeedback({ wouldExploreAgain: false })}
+            >
+              No
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <h2>For business owners</h2>
+      <ul className="settings-list">
+        <li>
+          <button type="button" onClick={() => navigate("/merchant")}>
+            <span>
+              <StorefrontIcon /> I am a merchant
+            </span>
             <ChevronRightIcon />
           </button>
         </li>
@@ -73,46 +168,25 @@ export function ProfilePage() {
       <h2>Settings</h2>
       <ul className="settings-list">
         <li>
-          <button type="button" onClick={resetDemo}>
-            <span>Reset Progress</span>
+          <button type="button" onClick={() => setShowResetConfirm(true)}>
+            <span>Reset progress</span>
             <ChevronRightIcon />
           </button>
         </li>
       </ul>
 
-      <h2>App impact (self-reported)</h2>
-      <ul className="settings-list settings-list--readonly">
-        <li>
-          <span>Unfamiliar businesses viewed</span>
-          <strong>{discoveryViewedBusinessIds.length}</strong>
-        </li>
-        <li>
-          <span>Visits confirmed via app</span>
-          <strong>{visitLog.length}</strong>
-        </li>
-        <li>
-          <span>Incremental purchases reported</span>
-          <strong>
-            {incrementalPurchaseCount} / {purchaseAnswers.length}
-          </strong>
-        </li>
-        <li>
-          <span>Said collecting was worth it</span>
-          <strong>
-            {worthItCount} / {feedbackAnswers.length}
-          </strong>
-        </li>
-      </ul>
-
-      <h2>For business owners</h2>
-      <ul className="settings-list">
-        <li>
-          <button type="button" onClick={() => navigate("/merchant")}>
-            <span>I am a merchant</span>
-            <ChevronRightIcon />
-          </button>
-        </li>
-      </ul>
+      {showResetConfirm && (
+        <ConfirmModal
+          title="Reset progress?"
+          body="This restores the starting state — East Village Books collected, Coffee Project not yet collected, and all points, badges and redemptions reset."
+          confirmLabel="Reset progress"
+          onConfirm={() => {
+            resetDemo();
+            setShowResetConfirm(false);
+          }}
+          onCancel={() => setShowResetConfirm(false)}
+        />
+      )}
     </div>
   );
 }

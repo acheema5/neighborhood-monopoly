@@ -21,6 +21,7 @@ export interface BusinessReward {
   pointsCost: number;
   mockOnly: true;
   instant?: true;
+  enabled?: boolean;
 }
 
 export interface Business {
@@ -34,7 +35,10 @@ export interface Business {
   mapPosition: { lat: number; lng: number };
   catalogLabel: string;
   catalog: CatalogItem[];
-  tasks: BusinessTask[];
+  /** The single required action that collects this property. */
+  checkInTask: BusinessTask;
+  /** Optional activities that award bonus points but never block collecting. */
+  bonusTasks: BusinessTask[];
   unlockPointsBonus: number;
   badgeId: string;
   badgeTitle: string;

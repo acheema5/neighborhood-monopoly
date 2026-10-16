@@ -7,7 +7,7 @@ import { useAppStore } from "../store/useAppStore";
 import { BusinessCard } from "../components/BusinessCard";
 import { ProgressBar } from "../components/ProgressBar";
 import { PlaceholderImage } from "../components/PlaceholderImage";
-import { BookIcon, UtensilsIcon, BagIcon, StarIcon, CATEGORY_ICON_BY_RAW_CATEGORY } from "../components/icons";
+import { BookIcon, UtensilsIcon, BagIcon, StarIcon, LockIcon, CATEGORY_ICON_BY_RAW_CATEGORY } from "../components/icons";
 import { RedeemConfirmModal } from "../components/RedeemConfirmModal";
 import type { Business, CategoryGroup } from "../data/types";
 
@@ -20,6 +20,22 @@ const CATEGORIES: Array<{ label: "All" | CategoryGroup; Icon?: typeof BookIcon }
 
 const SUB_TABS = ["Properties", "Rewards", "Badges"] as const;
 
+function badgeProgress(
+  badgeId: string,
+  collectedCount: number,
+  totalCount: number,
+  collected: Business[],
+): string | null {
+  if (badgeId === "block-explorer") return `${Math.min(collectedCount, 3)} / 3 collected`;
+  if (badgeId === "local-legend") return `${collectedCount} / ${totalCount} collected`;
+  if (badgeId === "culture-collector") {
+    const hasBookstore = collected.some((b) => b.category === "Books") ? 1 : 0;
+    const musicCount = Math.min(collected.filter((b) => b.category === "Music").length, 2);
+    return `${hasBookstore + musicCount} / 3 requirements met`;
+  }
+  return null;
+}
+
 export function CollectionPage() {
   const [params] = useSearchParams();
   const initialTab = SUB_TABS.find((t) => t.toLowerCase() === params.get("tab")) ?? "Properties";
@@ -30,12 +46,18 @@ export function CollectionPage() {
   const pointsBalance = useAppStore((s) => s.pointsBalance);
   const collectedBusinessIds = useAppStore((s) => s.collectedBusinessIds);
   const redeemedRewardBusinessIds = useAppStore((s) => s.redeemedRewardBusinessIds);
+  const pendingRedemptionBusinessIds = useAppStore((s) => s.pendingRedemptionBusinessIds);
   const earnedBadgeIds = useAppStore((s) => s.earnedBadgeIds);
   const canRedeem = useAppStore((s) => s.canRedeem);
+  const getEffectiveReward = useAppStore((s) => s.getEffectiveReward);
   const businesses = useBusinesses();
 
   const filtered = businesses.filter((b) => category === "All" || b.categoryGroup === category);
-  const availableRewards = businesses.filter((b) => collectedBusinessIds.includes(b.id));
+  const collectedBusinesses = businesses.filter((b) => collectedBusinessIds.includes(b.id));
+  const availableRewards = collectedBusinesses.filter((b) => getEffectiveReward(b.id)?.enabled !== false);
+
+  const instantRewards = availableRewards.filter((b) => getEffectiveReward(b.id)?.instant);
+  const pointsRewards = availableRewards.filter((b) => !getEffectiveReward(b.id)?.instant);
 
   return (
     <div className="collection-page">
@@ -80,60 +102,107 @@ export function CollectionPage() {
           </div>
 
           <div className="collection-page__grid">
-            {filtered.map((business) => (
-              <BusinessCard key={business.id} business={business} />
+            {filtered.map((business, index) => (
+              <BusinessCard key={business.id} business={business} index={index} />
             ))}
           </div>
         </>
       )}
 
       {subTab === "Rewards" && (
-        <ul className="reward-list">
-          {availableRewards.length === 0 && (
-            <li className="reward-card reward-card--empty">
-              No rewards yet — collect a property to unlock one.
-            </li>
-          )}
-          {availableRewards.map((b) => {
-            const redeemed = redeemedRewardBusinessIds.includes(b.id);
-            const eligible = canRedeem(b.id);
-            const pointsShort = b.reward.pointsCost - pointsBalance;
-            return (
-              <li key={b.id} className="reward-card">
-                <PlaceholderImage category={b.categoryGroup} className="reward-card__image" />
-                <div className="reward-card__body">
-                  <strong>{b.reward.title}</strong>
-                  <span>{b.name}</span>
-                  <span className="reward-card__cost">
-                    {b.reward.instant
-                      ? "Free with collection"
-                      : !redeemed && !eligible
-                        ? `${pointsShort} more points needed`
-                        : `${b.reward.pointsCost} pts`}
-                  </span>
-                </div>
-                <button type="button" disabled={redeemed || !eligible} onClick={() => setRedeemTarget(b)}>
-                  {redeemed ? "Redeemed" : "Use"}
-                </button>
-              </li>
-            );
-          })}
-        </ul>
+        <div className="reward-wallet">
+          <section>
+            <h2>Unlocked with collection</h2>
+            <ul className="reward-list">
+              {instantRewards.length === 0 && (
+                <li className="reward-card reward-card--empty">No instant rewards yet.</li>
+              )}
+              {instantRewards.map((b) => {
+                const reward = getEffectiveReward(b.id)!;
+                const redeemed = redeemedRewardBusinessIds.includes(b.id);
+                const pending = pendingRedemptionBusinessIds.includes(b.id);
+                const eligible = canRedeem(b.id);
+                return (
+                  <li key={b.id} className={`reward-card${redeemed ? " reward-card--redeemed" : ""}`}>
+                    <PlaceholderImage
+                      categoryGroup={b.categoryGroup}
+                      rawCategory={b.category}
+                      className="reward-card__image"
+                      alt={`${b.name} category icon`}
+                    />
+                    <div className="reward-card__body">
+                      <strong>{reward.title}</strong>
+                      <span>{b.name}</span>
+                      <span className="reward-card__cost">Free with collection</span>
+                    </div>
+                    <button type="button" disabled={redeemed || pending || !eligible} onClick={() => setRedeemTarget(b)}>
+                      {redeemed ? "Redeemed" : pending ? "Pending" : "Redeem"}
+                    </button>
+                  </li>
+                );
+              })}
+            </ul>
+          </section>
+
+          <section>
+            <h2>Earn with points</h2>
+            <ul className="reward-list">
+              {pointsRewards.length === 0 && (
+                <li className="reward-card reward-card--empty">
+                  No points rewards yet — collect a property to unlock one.
+                </li>
+              )}
+              {pointsRewards.map((b) => {
+                const reward = getEffectiveReward(b.id)!;
+                const redeemed = redeemedRewardBusinessIds.includes(b.id);
+                const pending = pendingRedemptionBusinessIds.includes(b.id);
+                const eligible = canRedeem(b.id);
+                const pointsShort = Math.max(reward.pointsCost - pointsBalance, 0);
+                return (
+                  <li key={b.id} className={`reward-card${redeemed ? " reward-card--redeemed" : ""}`}>
+                    <PlaceholderImage
+                      categoryGroup={b.categoryGroup}
+                      rawCategory={b.category}
+                      className="reward-card__image"
+                      alt={`${b.name} category icon`}
+                    />
+                    <div className="reward-card__body">
+                      <strong>{reward.title}</strong>
+                      <span>{b.name}</span>
+                      <span className="reward-card__cost">
+                        {!redeemed && !eligible && pointsShort > 0
+                          ? `${pointsShort} more points needed`
+                          : `${reward.pointsCost} pts`}
+                      </span>
+                    </div>
+                    <button type="button" disabled={redeemed || pending || !eligible} onClick={() => setRedeemTarget(b)}>
+                      {redeemed ? "Redeemed" : pending ? "Pending" : "Redeem"}
+                    </button>
+                  </li>
+                );
+              })}
+            </ul>
+          </section>
+        </div>
       )}
 
       {subTab === "Badges" && (
-        <ul className="badge-list">
+        <ul className="badge-grid">
           {badges.map((badge) => {
             const earned = earnedBadgeIds.includes(badge.id);
             const business = businesses.find((b) => b.id === badge.associatedBusinessId);
             const Icon = business ? CATEGORY_ICON_BY_RAW_CATEGORY[business.category] : StarIcon;
+            const progress = earned
+              ? null
+              : badgeProgress(badge.id, collectedBusinessIds.length, businesses.length, collectedBusinesses);
             return (
-              <li key={badge.id} className={earned ? "badge badge--earned" : "badge"}>
-                <span className="badge__icon">{Icon ? <Icon /> : <StarIcon />}</span>
-                <span className="badge__text">
-                  <strong>{badge.title}</strong>
-                  <p>{badge.description}</p>
+              <li key={badge.id} className={earned ? "badge-tile badge-tile--earned" : "badge-tile"}>
+                <span className="badge-tile__icon">
+                  {earned ? Icon ? <Icon /> : <StarIcon /> : <LockIcon />}
                 </span>
+                <strong>{badge.title}</strong>
+                <p>{badge.description}</p>
+                {progress && <span className="badge-tile__progress">{progress}</span>}
               </li>
             );
           })}
