@@ -20,10 +20,14 @@ const GLYPH_BY_CATEGORY: Record<string, keyof typeof GLYPH_PATHS> = {
   Bar: "utensils",
   "Ice Cream": "cupcake",
   Diner: "utensils",
+  "Noodle Shop": "utensils",
+  Vietnamese: "utensils",
+  Dessert: "cupcake",
   Books: "book",
   Music: "music",
   Vintage: "bag",
   Fashion: "bag",
+  "Plants & Gifts": "bag",
 };
 
 export function markerGlyphSvg(category: string): string {

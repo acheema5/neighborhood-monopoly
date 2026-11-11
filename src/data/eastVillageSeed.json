@@ -18,7 +18,7 @@
     "badges": [
       "First Steps"
     ],
-    "collectibleGoal": 15
+    "collectibleGoal": 22
   },
   "businesses": [
     {
@@ -1146,6 +1146,531 @@
         "mockOnly": true,
         "redeemAction": "show demo success modal; no actual discount or partner redemption"
       }
+    },
+    {
+      "id": "noreetuh",
+      "name": "Noreetuh",
+      "category": "Restaurant",
+      "address": "128 1st Ave, New York, NY 10009",
+      "description": "A chef-owned New American restaurant with a modern Hawaiian accent.",
+      "isRealBusiness": true,
+      "dataStatus": "Business name, category and address based on public listings. All menu items, prices, tasks, discounts and copy are illustrative, not verified offerings.",
+      "featured": false,
+      "imageSearchQuery": "Noreetuh East Village NYC storefront",
+      "catalogLabel": "Sample menu",
+      "catalog": [
+        {
+          "id": "noreetuh-1",
+          "name": "Tuna Poke Bowl",
+          "priceUSD": 19.0,
+          "isMock": true
+        },
+        {
+          "id": "noreetuh-2",
+          "name": "Mentaiko Spaghetti",
+          "priceUSD": 24.0,
+          "isMock": true
+        },
+        {
+          "id": "noreetuh-3",
+          "name": "Pork Belly",
+          "priceUSD": 21.0,
+          "isMock": true
+        },
+        {
+          "id": "noreetuh-4",
+          "name": "Spam Musubi",
+          "priceUSD": 9.0,
+          "isMock": true
+        }
+      ],
+      "collection": {
+        "requiredTasks": [
+          {
+            "id": "discover",
+            "label": "Discover this business",
+            "type": "tap",
+            "points": 25
+          },
+          {
+            "id": "visit",
+            "label": "Mark a visit",
+            "type": "demo_checkin",
+            "points": 50
+          },
+          {
+            "id": "action",
+            "label": "Try a modern Hawaiian dinner spot",
+            "type": "demo_action",
+            "points": 75
+          },
+          {
+            "id": "checkin",
+            "label": "Check in with a photo",
+            "type": "photo_checkin",
+            "points": 100
+          }
+        ],
+        "unlockWhen": "all tasks completed",
+        "unlockPointsBonus": 150,
+        "badge": "Island Table"
+      },
+      "reward": {
+        "title": "Free spam musubi starter",
+        "pointsCost": 1050,
+        "mockOnly": true,
+        "redeemAction": "show demo success modal; no actual discount or partner redemption"
+      }
+    },
+    {
+      "id": "ho-foods",
+      "name": "Ho Foods",
+      "category": "Noodle Shop",
+      "address": "110 E 7th St, New York, NY 10009",
+      "description": "A cult-favorite ten-seat counter serving housemade Taiwanese beef noodle soup.",
+      "isRealBusiness": true,
+      "dataStatus": "Business name, category and address based on public listings. All menu items, prices, tasks, discounts and copy are illustrative, not verified offerings.",
+      "featured": false,
+      "imageSearchQuery": "Ho Foods East Village NYC storefront",
+      "catalogLabel": "Sample menu",
+      "catalog": [
+        {
+          "id": "ho-foods-1",
+          "name": "Traditional Beef Noodle Soup",
+          "priceUSD": 23.5,
+          "isMock": true
+        },
+        {
+          "id": "ho-foods-2",
+          "name": "Fan Tuan",
+          "priceUSD": 8.5,
+          "isMock": true
+        },
+        {
+          "id": "ho-foods-3",
+          "name": "Chili Wontons",
+          "priceUSD": 12.0,
+          "isMock": true
+        },
+        {
+          "id": "ho-foods-4",
+          "name": "Scallion Pancake",
+          "priceUSD": 7.5,
+          "isMock": true
+        }
+      ],
+      "collection": {
+        "requiredTasks": [
+          {
+            "id": "discover",
+            "label": "Discover this business",
+            "type": "tap",
+            "points": 25
+          },
+          {
+            "id": "visit",
+            "label": "Mark a visit",
+            "type": "demo_checkin",
+            "points": 50
+          },
+          {
+            "id": "action",
+            "label": "Slurp a bowl of beef noodle soup",
+            "type": "demo_action",
+            "points": 75
+          },
+          {
+            "id": "checkin",
+            "label": "Check in with a photo",
+            "type": "photo_checkin",
+            "points": 100
+          }
+        ],
+        "unlockWhen": "all tasks completed",
+        "unlockPointsBonus": 150,
+        "badge": "Noodle Regular"
+      },
+      "reward": {
+        "title": "Free scallion pancake",
+        "pointsCost": 1100,
+        "mockOnly": true,
+        "redeemAction": "show demo success modal; no actual discount or partner redemption"
+      }
+    },
+    {
+      "id": "banh-anh-em",
+      "name": "Bánh Anh Em",
+      "category": "Vietnamese",
+      "address": "99 3rd Ave, New York, NY 10003",
+      "description": "A no-reservations Vietnamese spot known for basement-baked banh mi and steamed rice rolls.",
+      "isRealBusiness": true,
+      "dataStatus": "Business name, category and address based on public listings. All menu items, prices, tasks, discounts and copy are illustrative, not verified offerings.",
+      "featured": false,
+      "imageSearchQuery": "Banh Anh Em East Village NYC storefront",
+      "catalogLabel": "Sample menu",
+      "catalog": [
+        {
+          "id": "banh-anh-em-1",
+          "name": "Banh Mi",
+          "priceUSD": 14.0,
+          "isMock": true
+        },
+        {
+          "id": "banh-anh-em-2",
+          "name": "Banh Cuon Hanoi",
+          "priceUSD": 17.0,
+          "isMock": true
+        },
+        {
+          "id": "banh-anh-em-3",
+          "name": "Bun Bo Hue",
+          "priceUSD": 19.0,
+          "isMock": true
+        },
+        {
+          "id": "banh-anh-em-4",
+          "name": "Steamed Rice Rolls",
+          "priceUSD": 15.0,
+          "isMock": true
+        }
+      ],
+      "collection": {
+        "requiredTasks": [
+          {
+            "id": "discover",
+            "label": "Discover this business",
+            "type": "tap",
+            "points": 25
+          },
+          {
+            "id": "visit",
+            "label": "Mark a visit",
+            "type": "demo_checkin",
+            "points": 50
+          },
+          {
+            "id": "action",
+            "label": "Wait in line for the banh mi",
+            "type": "demo_action",
+            "points": 75
+          },
+          {
+            "id": "checkin",
+            "label": "Check in with a photo",
+            "type": "photo_checkin",
+            "points": 100
+          }
+        ],
+        "unlockWhen": "all tasks completed",
+        "unlockPointsBonus": 150,
+        "badge": "Banh Mi Line Veteran"
+      },
+      "reward": {
+        "title": "$5 off a banh mi",
+        "pointsCost": 1150,
+        "mockOnly": true,
+        "redeemAction": "show demo success modal; no actual discount or partner redemption"
+      }
+    },
+    {
+      "id": "pastry-box",
+      "name": "The Pastry Box",
+      "category": "Bakery",
+      "address": "515 E 12th St, New York, NY 10009",
+      "description": "A chef-owned bakery known for its sea-salt chocolate chip cookies and daily pastries.",
+      "isRealBusiness": true,
+      "dataStatus": "Business name, category and address based on public listings. All menu items, prices, tasks, discounts and copy are illustrative, not verified offerings.",
+      "featured": false,
+      "imageSearchQuery": "The Pastry Box East Village NYC storefront",
+      "catalogLabel": "Sample menu",
+      "catalog": [
+        {
+          "id": "pastry-box-1",
+          "name": "Sea Salt Chocolate Chip Cookie",
+          "priceUSD": 5.0,
+          "isMock": true
+        },
+        {
+          "id": "pastry-box-2",
+          "name": "Black and White Cookie",
+          "priceUSD": 4.5,
+          "isMock": true
+        },
+        {
+          "id": "pastry-box-3",
+          "name": "Cinnamon Roll",
+          "priceUSD": 6.0,
+          "isMock": true
+        },
+        {
+          "id": "pastry-box-4",
+          "name": "Brownie",
+          "priceUSD": 4.0,
+          "isMock": true
+        }
+      ],
+      "collection": {
+        "requiredTasks": [
+          {
+            "id": "discover",
+            "label": "Discover this business",
+            "type": "tap",
+            "points": 25
+          },
+          {
+            "id": "visit",
+            "label": "Mark a visit",
+            "type": "demo_checkin",
+            "points": 50
+          },
+          {
+            "id": "action",
+            "label": "Pick up a fresh-baked cookie",
+            "type": "demo_action",
+            "points": 75
+          },
+          {
+            "id": "checkin",
+            "label": "Check in with a photo",
+            "type": "photo_checkin",
+            "points": 100
+          }
+        ],
+        "unlockWhen": "all tasks completed",
+        "unlockPointsBonus": 150,
+        "badge": "Cookie Regular"
+      },
+      "reward": {
+        "title": "Free cookie with any purchase",
+        "pointsCost": 1200,
+        "mockOnly": true,
+        "redeemAction": "show demo success modal; no actual discount or partner redemption"
+      }
+    },
+    {
+      "id": "vazacs-horseshoe-bar",
+      "name": "7B Horseshoe Bar (Vazac's)",
+      "category": "Bar",
+      "address": "108 Ave B, New York, NY 10009",
+      "description": "A landmark corner dive bar on Avenue B, open since the 1980s and seen in classic NYC films.",
+      "isRealBusiness": true,
+      "dataStatus": "Business name, category and address based on public listings. All menu items, prices, tasks, discounts and copy are illustrative, not verified offerings.",
+      "featured": false,
+      "imageSearchQuery": "7B Horseshoe Bar Vazacs East Village NYC storefront",
+      "catalogLabel": "Sample menu",
+      "catalog": [
+        {
+          "id": "vazacs-horseshoe-bar-1",
+          "name": "Draft Beer",
+          "priceUSD": 7.0,
+          "isMock": true
+        },
+        {
+          "id": "vazacs-horseshoe-bar-2",
+          "name": "Well Drink",
+          "priceUSD": 9.0,
+          "isMock": true
+        },
+        {
+          "id": "vazacs-horseshoe-bar-3",
+          "name": "Jukebox Play",
+          "priceUSD": 1.0,
+          "isMock": true
+        },
+        {
+          "id": "vazacs-horseshoe-bar-4",
+          "name": "Bag of Chips",
+          "priceUSD": 2.0,
+          "isMock": true
+        }
+      ],
+      "collection": {
+        "requiredTasks": [
+          {
+            "id": "discover",
+            "label": "Discover this business",
+            "type": "tap",
+            "points": 25
+          },
+          {
+            "id": "visit",
+            "label": "Mark a visit",
+            "type": "demo_checkin",
+            "points": 50
+          },
+          {
+            "id": "action",
+            "label": "Play a song on the jukebox",
+            "type": "demo_action",
+            "points": 75
+          },
+          {
+            "id": "checkin",
+            "label": "Check in with a photo",
+            "type": "photo_checkin",
+            "points": 100
+          }
+        ],
+        "unlockWhen": "all tasks completed",
+        "unlockPointsBonus": 150,
+        "badge": "Corner Regular"
+      },
+      "reward": {
+        "title": "$2 off a draft beer",
+        "pointsCost": 1250,
+        "mockOnly": true,
+        "redeemAction": "show demo success modal; no actual discount or partner redemption"
+      }
+    },
+    {
+      "id": "from-lucie",
+      "name": "From Lucie",
+      "category": "Dessert",
+      "address": "263 E 10th St, New York, NY 10009",
+      "description": "A French-countryside-inspired cake atelier known for elaborate layer cakes.",
+      "isRealBusiness": true,
+      "dataStatus": "Business name, category and address based on public listings. All menu items, prices, tasks, discounts and copy are illustrative, not verified offerings.",
+      "featured": false,
+      "imageSearchQuery": "From Lucie East Village NYC storefront",
+      "catalogLabel": "Sample menu",
+      "catalog": [
+        {
+          "id": "from-lucie-1",
+          "name": "Slice of Layer Cake",
+          "priceUSD": 9.0,
+          "isMock": true
+        },
+        {
+          "id": "from-lucie-2",
+          "name": "Chocolate Chip Cookie",
+          "priceUSD": 5.5,
+          "isMock": true
+        },
+        {
+          "id": "from-lucie-3",
+          "name": "Seasonal Tart",
+          "priceUSD": 8.0,
+          "isMock": true
+        },
+        {
+          "id": "from-lucie-4",
+          "name": "Madeleines (3)",
+          "priceUSD": 6.0,
+          "isMock": true
+        }
+      ],
+      "collection": {
+        "requiredTasks": [
+          {
+            "id": "discover",
+            "label": "Discover this business",
+            "type": "tap",
+            "points": 25
+          },
+          {
+            "id": "visit",
+            "label": "Mark a visit",
+            "type": "demo_checkin",
+            "points": 50
+          },
+          {
+            "id": "action",
+            "label": "Pick a slice of a French-style cake",
+            "type": "demo_action",
+            "points": 75
+          },
+          {
+            "id": "checkin",
+            "label": "Check in with a photo",
+            "type": "photo_checkin",
+            "points": 100
+          }
+        ],
+        "unlockWhen": "all tasks completed",
+        "unlockPointsBonus": 150,
+        "badge": "Cake Regular"
+      },
+      "reward": {
+        "title": "Free madeleines with a cake slice",
+        "pointsCost": 1300,
+        "mockOnly": true,
+        "redeemAction": "show demo success modal; no actual discount or partner redemption"
+      }
+    },
+    {
+      "id": "kinka",
+      "name": "KINKA",
+      "category": "Plants & Gifts",
+      "address": "63 E 7th St, New York, NY 10003",
+      "description": "A plant and gift shop with curated art from local NYC artists and houseplants.",
+      "isRealBusiness": true,
+      "dataStatus": "Business name, category and address based on public listings. All menu items, prices, tasks, discounts and copy are illustrative, not verified offerings.",
+      "featured": false,
+      "imageSearchQuery": "KINKA East Village NYC storefront",
+      "catalogLabel": "Sample inventory",
+      "catalog": [
+        {
+          "id": "kinka-1",
+          "name": "Potted Succulent",
+          "priceUSD": 18.0,
+          "isMock": true
+        },
+        {
+          "id": "kinka-2",
+          "name": "Local Artist Print",
+          "priceUSD": 25.0,
+          "isMock": true
+        },
+        {
+          "id": "kinka-3",
+          "name": "Ceramic Planter",
+          "priceUSD": 22.0,
+          "isMock": true
+        },
+        {
+          "id": "kinka-4",
+          "name": "Greeting Card",
+          "priceUSD": 6.0,
+          "isMock": true
+        }
+      ],
+      "collection": {
+        "requiredTasks": [
+          {
+            "id": "discover",
+            "label": "Discover this business",
+            "type": "tap",
+            "points": 25
+          },
+          {
+            "id": "visit",
+            "label": "Mark a visit",
+            "type": "demo_checkin",
+            "points": 50
+          },
+          {
+            "id": "action",
+            "label": "Browse a plant and gift shop",
+            "type": "demo_action",
+            "points": 75
+          },
+          {
+            "id": "checkin",
+            "label": "Check in with a photo",
+            "type": "photo_checkin",
+            "points": 100
+          }
+        ],
+        "unlockWhen": "all tasks completed",
+        "unlockPointsBonus": 150,
+        "badge": "Plant Parent"
+      },
+      "reward": {
+        "title": "10% off a potted plant",
+        "pointsCost": 1350,
+        "mockOnly": true,
+        "redeemAction": "show demo success modal; no actual discount or partner redemption"
+      }
     }
   ],
   "events": [
@@ -1195,7 +1720,7 @@
     },
     {
       "name": "Local Legend",
-      "condition": "Unlock all 15 properties"
+      "condition": "Unlock all 22 properties"
     },
     {
       "name": "Coffee Scout",

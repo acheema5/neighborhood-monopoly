@@ -16,6 +16,13 @@ export const businessCoordinates: Record<string, { lat: number; lng: number }> =
   "daveys-ice-cream": { lat: 40.7290119, lng: -73.9865689 },
   veselka: { lat: 40.7289775, lng: -73.9869985 },
   "trash-and-vaudeville": { lat: 40.7266424, lng: -73.9852878 },
+  noreetuh: { lat: 40.7273102, lng: -73.9852896 },
+  "ho-foods": { lat: 40.7264166, lng: -73.9847126 },
+  "banh-anh-em": { lat: 40.7322913, lng: -73.987672 },
+  "pastry-box": { lat: 40.728842, lng: -73.980505 },
+  "vazacs-horseshoe-bar": { lat: 40.7250128, lng: -73.9813915 },
+  "from-lucie": { lat: 40.7285237, lng: -73.9832612 },
+  kinka: { lat: 40.7276646, lng: -73.9868606 },
 };
 
 export const EAST_VILLAGE_CENTER: [number, number] = [40.7275, -73.9865];

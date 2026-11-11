@@ -26,7 +26,7 @@ const milestoneBadges: Badge[] = [
   {
     id: slugify("Local Legend"),
     title: "Local Legend",
-    description: "Unlock all 15 properties.",
+    description: "Unlock all 22 properties.",
     type: "milestone",
   },
   {

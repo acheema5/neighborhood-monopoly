@@ -22,8 +22,8 @@ People often pass by small businesses without knowing what makes them special. L
 
 - **Primary user:** A resident, student, or visitor exploring East Village businesses.
 - **Secondary user (now in scope):** A local business owner who claims a listing, edits their profile and menu, configures a reward offer, and confirms redemptions.
-- **Demo geography:** East Village, NYC. All fifteen businesses are real, named places; all menus, tasks, rewards, and prices are invented demo content, clearly labeled as such throughout the UI.
-- **Demo dataset:** 15 East Village businesses and 3 curated demo events.
+- **Demo geography:** East Village, NYC. All twenty-two businesses are real, named places; all menus, tasks, rewards, and prices are invented demo content, clearly labeled as such throughout the UI.
+- **Demo dataset:** 22 East Village businesses and 3 curated demo events.
 
 ## 4. Product principles
 
@@ -54,7 +54,7 @@ A persistent **bottom navigation bar** with four destinations: **Explore, Collec
 
 ### A. Explore (default landing page)
 
-- Neighborhood header with a collection progress cue (`X / 15 places collected`) and progress bar.
+- Neighborhood header with a collection progress cue (`X / 22 places collected`) and progress bar.
 - Search bar and category chips (All, Food & Drink, Culture, Fashion).
 - A Leaflet/OpenStreetMap-based map (roughly half the screen) with branded markers — dark for uncollected, forest green for collected.
 - Tapping a marker reveals a bottom preview card (image, name, category, status, reward teaser); tapping the card opens the business detail page.
@@ -74,7 +74,7 @@ The central screen where discovery turns into action.
 
 ### C. Collection
 
-- Progress header (`X / 15 properties collected`) with a progress bar and points pill.
+- Progress header (`X / 22 properties collected`) with a progress bar and points pill.
 - **Properties** sub-tab: a two-column grid of collectible cards — category icon artwork, index number, a green stamp for collected businesses, status pill. Category filter chips.
 - **Rewards** sub-tab: a wallet split into "Unlocked with collection" (instant rewards) and "Earn with points" (points-gated rewards), each showing locked/eligible/redeemed state.
 - **Badges** sub-tab: a two-column badge grid with earned/locked states and live progress toward milestone badges (e.g. "2 / 3 collected" for Block Explorer).
@@ -115,8 +115,8 @@ A single Zustand store (`src/store/useAppStore.ts`, persisted to `localStorage`)
 
 The app always starts (and Reset Demo always restores) from:
 
-- East Village selected, 15 businesses loaded.
-- **Nothing collected yet** — 0 / 15 properties, so every pilot tester starts from the same empty state.
+- East Village selected, 22 businesses loaded.
+- **Nothing collected yet** — 0 / 22 properties, so every pilot tester starts from the same empty state.
 - Starting points balance of 0, with only the "First Steps" badge already earned.
 - No pending or confirmed redemptions.
 - No merchant profile/menu/offer overrides.
@@ -137,7 +137,7 @@ This state is defined in `src/data/eastVillageSeed.json` (`player.initialCollect
 
 - [x] The app starts locally with `npm install && npm run dev`.
 - [x] Explore, Collection, Events, and Profile are reachable from a persistent bottom nav; the merchant portal has its own shell reachable from Profile.
-- [x] Explore shows 15 East Village businesses on a real map with working search and category filters.
+- [x] Explore shows 22 East Village businesses on a real map with working search and category filters.
 - [x] Business detail collects a property with a single simulated check-in; optional bonus activities never block collection; re-checking in is a no-op.
 - [x] Collected state, points, and badges stay in sync across Explore, Collection, and Profile.
 - [x] Rewards distinguish instant vs. points-gated, and redemption goes through a pending → merchant-confirmed flow that updates both sides.

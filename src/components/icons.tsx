@@ -256,8 +256,12 @@ export const CATEGORY_ICON_BY_RAW_CATEGORY: Record<string, (props: IconProps) =>
   Bar: UtensilsIcon,
   "Ice Cream": CupcakeIcon,
   Diner: UtensilsIcon,
+  "Noodle Shop": UtensilsIcon,
+  Vietnamese: UtensilsIcon,
+  Dessert: CupcakeIcon,
   Books: BookIcon,
   Music: MusicIcon,
   Vintage: BagIcon,
   Fashion: BagIcon,
+  "Plants & Gifts": BagIcon,
 };
