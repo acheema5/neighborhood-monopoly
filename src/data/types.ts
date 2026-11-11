@@ -1,6 +1,6 @@
 export type CategoryGroup = "Food & Drink" | "Culture" | "Fashion";
 
-export type TaskType = "tap" | "demo_checkin" | "demo_action" | "simulated_qr";
+export type TaskType = "tap" | "demo_checkin" | "demo_action" | "photo_checkin";
 
 export interface BusinessTask {
   id: string;

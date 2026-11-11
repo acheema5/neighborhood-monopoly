@@ -6,7 +6,7 @@ import { slugify } from "./slug";
 
 export const businesses: Business[] = seed.businesses.map((b): Business => {
   const allTasks = b.collection.requiredTasks as Business["bonusTasks"];
-  const checkInTask = allTasks.find((t) => t.type === "simulated_qr") ?? allTasks[allTasks.length - 1];
+  const checkInTask = allTasks.find((t) => t.type === "photo_checkin") ?? allTasks[allTasks.length - 1];
   const bonusTasks = allTasks.filter((t) => t.id !== checkInTask.id);
 
   return {

@@ -22,14 +22,14 @@ People often pass by small businesses without knowing what makes them special. L
 
 - **Primary user:** A resident, student, or visitor exploring East Village businesses.
 - **Secondary user (now in scope):** A local business owner who claims a listing, edits their profile and menu, configures a reward offer, and confirms redemptions.
-- **Demo geography:** East Village, NYC. All ten businesses are real, named places; all menus, tasks, rewards, and prices are invented demo content, clearly labeled as such throughout the UI.
-- **Demo dataset:** 10 East Village businesses and 3 curated demo events.
+- **Demo geography:** East Village, NYC. All fifteen businesses are real, named places; all menus, tasks, rewards, and prices are invented demo content, clearly labeled as such throughout the UI.
+- **Demo dataset:** 15 East Village businesses and 3 curated demo events.
 
 ## 4. Product principles
 
 1. **One clear journey, not fifteen average ones.** Discover → collect with a single check-in → earn a reward → (as a merchant) confirm it. Every screen supports this loop.
 2. **Local-first.** The small cafes, bookstores, record shops, and boutiques of the East Village are the stars.
-3. **Collecting is one step.** A single simulated QR check-in collects a property. Optional bonus activities award extra points but never block collection.
+3. **Collecting is one step.** A single photo check-in collects a property — tap once, and a short external form opens for a storefront photo. Optional bonus activities award extra points but never block collection.
 4. **Modern consumer-product design.** Warm off-white surfaces, charcoal text, a single muted forest-green accent, restrained shadows, consistent radii, Inter typography. Gamification comes from collectible cards, badges, and progress — not childish styling.
 5. **Demo over infrastructure.** A compelling, coherent click-through experience is more valuable than backend complexity. No backend, auth, database, payments, or real QR/location verification exist or are implied.
 
@@ -54,7 +54,7 @@ A persistent **bottom navigation bar** with four destinations: **Explore, Collec
 
 ### A. Explore (default landing page)
 
-- Neighborhood header with a collection progress cue (`X / 10 places collected`) and progress bar.
+- Neighborhood header with a collection progress cue (`X / 15 places collected`) and progress bar.
 - Search bar and category chips (All, Food & Drink, Culture, Fashion).
 - A Leaflet/OpenStreetMap-based map (roughly half the screen) with branded markers — dark for uncollected, forest green for collected.
 - Tapping a marker reveals a bottom preview card (image, name, category, status, reward teaser); tapping the card opens the business detail page.
@@ -66,7 +66,7 @@ The central screen where discovery turns into action.
 
 1. Category-illustrated hero image, name, category, address, short description.
 2. Reward preview card (instant vs. points-based, clearly labeled).
-3. **Simulate check-in** — the single required action that collects the property. Confirms via a lightweight "simulated QR scan" modal, then shows a collected success state with points earned, badge unlocked, and reward unlocked. Re-visiting an already-collected business shows a checked-in state instead of a repeatable button — points are never re-awarded.
+3. **Check in with a photo** — the single required action that collects the property. Confirms via a lightweight modal that opens an external Google Form (shop name pre-filled) for a verification photo, then shows a collected success state with points earned, badge unlocked, and reward unlocked. Re-visiting an already-collected business shows a checked-in state instead of a repeatable button — points are never re-awarded.
 4. Optional bonus activities (e.g. "Discover this business", "Mark a simulated visit") — each awards a small amount of bonus points once, but none of them block collecting the property.
 5. Sample menu/catalog with an explicit "illustrative, not verified" disclaimer.
 6. Redeem Reward action (once collected) — opens a pending-confirmation flow (see Section 6D).
@@ -74,7 +74,7 @@ The central screen where discovery turns into action.
 
 ### C. Collection
 
-- Progress header (`X / 10 properties collected`) with a progress bar and points pill.
+- Progress header (`X / 15 properties collected`) with a progress bar and points pill.
 - **Properties** sub-tab: a two-column grid of collectible cards — category icon artwork, index number, a green stamp for collected businesses, status pill. Category filter chips.
 - **Rewards** sub-tab: a wallet split into "Unlocked with collection" (instant rewards) and "Earn with points" (points-gated rewards), each showing locked/eligible/redeemed state.
 - **Badges** sub-tab: a two-column badge grid with earned/locked states and live progress toward milestone badges (e.g. "2 / 3 collected" for Block Explorer).
@@ -115,9 +115,9 @@ A single Zustand store (`src/store/useAppStore.ts`, persisted to `localStorage`)
 
 The app always starts (and Reset Demo always restores) from:
 
-- East Village selected, 10 businesses loaded.
-- **East Village Books already collected**; all other nine businesses, **including Coffee Project New York, not yet collected**.
-- Starting points balance of 420, with "First Steps" and "Page Turner" badges already earned.
+- East Village selected, 15 businesses loaded.
+- **Nothing collected yet** — 0 / 15 properties, so every pilot tester starts from the same empty state.
+- Starting points balance of 0, with only the "First Steps" badge already earned.
 - No pending or confirmed redemptions.
 - No merchant profile/menu/offer overrides.
 
@@ -137,7 +137,7 @@ This state is defined in `src/data/eastVillageSeed.json` (`player.initialCollect
 
 - [x] The app starts locally with `npm install && npm run dev`.
 - [x] Explore, Collection, Events, and Profile are reachable from a persistent bottom nav; the merchant portal has its own shell reachable from Profile.
-- [x] Explore shows 10 East Village businesses on a real map with working search and category filters.
+- [x] Explore shows 15 East Village businesses on a real map with working search and category filters.
 - [x] Business detail collects a property with a single simulated check-in; optional bonus activities never block collection; re-checking in is a no-op.
 - [x] Collected state, points, and badges stay in sync across Explore, Collection, and Profile.
 - [x] Rewards distinguish instant vs. points-gated, and redemption goes through a pending → merchant-confirmed flow that updates both sides.

@@ -21,7 +21,10 @@ export function UnlockModal({ business, onViewCollection, onExploreMore }: Unloc
         <p className="unlock-modal__reward">+{totalPoints} points</p>
         <p className="unlock-modal__coupon">Badge earned — {business.badgeTitle}</p>
         {business.reward.enabled !== false && (
-          <p className="unlock-modal__unlocked-reward">Reward unlocked: {business.reward.title}</p>
+          <p className="unlock-modal__unlocked-reward">
+            Reward unlocked: {business.reward.title}
+            <span className="example-tag">Example — not redeemable</span>
+          </p>
         )}
 
         <div className="unlock-modal__actions">

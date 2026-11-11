@@ -12,16 +12,13 @@
   "player": {
     "name": "Alex",
     "level": 3,
-    "startingPoints": 420,
-    "streakDays": 2,
-    "initialCollectedBusinessIds": [
-      "east-village-books"
-    ],
+    "startingPoints": 0,
+    "streakDays": 0,
+    "initialCollectedBusinessIds": [],
     "badges": [
-      "First Steps",
-      "Page Turner"
+      "First Steps"
     ],
-    "collectibleGoal": 10
+    "collectibleGoal": 15
   },
   "businesses": [
     {
@@ -82,9 +79,9 @@
             "points": 75
           },
           {
-            "id": "scan",
-            "label": "Scan QR code",
-            "type": "simulated_qr",
+            "id": "checkin",
+            "label": "Check in with a photo",
+            "type": "photo_checkin",
             "points": 100
           }
         ],
@@ -158,9 +155,9 @@
             "points": 75
           },
           {
-            "id": "scan",
-            "label": "Scan QR code",
-            "type": "simulated_qr",
+            "id": "checkin",
+            "label": "Check in with a photo",
+            "type": "photo_checkin",
             "points": 100
           }
         ],
@@ -233,9 +230,9 @@
             "points": 75
           },
           {
-            "id": "scan",
-            "label": "Scan QR code",
-            "type": "simulated_qr",
+            "id": "checkin",
+            "label": "Check in with a photo",
+            "type": "photo_checkin",
             "points": 100
           }
         ],
@@ -308,9 +305,9 @@
             "points": 75
           },
           {
-            "id": "scan",
-            "label": "Scan QR code",
-            "type": "simulated_qr",
+            "id": "checkin",
+            "label": "Check in with a photo",
+            "type": "photo_checkin",
             "points": 100
           }
         ],
@@ -383,9 +380,9 @@
             "points": 75
           },
           {
-            "id": "scan",
-            "label": "Scan QR code",
-            "type": "simulated_qr",
+            "id": "checkin",
+            "label": "Check in with a photo",
+            "type": "photo_checkin",
             "points": 100
           }
         ],
@@ -458,9 +455,9 @@
             "points": 75
           },
           {
-            "id": "scan",
-            "label": "Scan QR code",
-            "type": "simulated_qr",
+            "id": "checkin",
+            "label": "Check in with a photo",
+            "type": "photo_checkin",
             "points": 100
           }
         ],
@@ -533,9 +530,9 @@
             "points": 75
           },
           {
-            "id": "scan",
-            "label": "Scan QR code",
-            "type": "simulated_qr",
+            "id": "checkin",
+            "label": "Check in with a photo",
+            "type": "photo_checkin",
             "points": 100
           }
         ],
@@ -608,9 +605,9 @@
             "points": 75
           },
           {
-            "id": "scan",
-            "label": "Scan QR code",
-            "type": "simulated_qr",
+            "id": "checkin",
+            "label": "Check in with a photo",
+            "type": "photo_checkin",
             "points": 100
           }
         ],
@@ -683,9 +680,9 @@
             "points": 75
           },
           {
-            "id": "scan",
-            "label": "Scan QR code",
-            "type": "simulated_qr",
+            "id": "checkin",
+            "label": "Check in with a photo",
+            "type": "photo_checkin",
             "points": 100
           }
         ],
@@ -758,9 +755,9 @@
             "points": 75
           },
           {
-            "id": "scan",
-            "label": "Scan QR code",
-            "type": "simulated_qr",
+            "id": "checkin",
+            "label": "Check in with a photo",
+            "type": "photo_checkin",
             "points": 100
           }
         ],
@@ -771,6 +768,381 @@
       "reward": {
         "title": "10% off a used album",
         "pointsCost": 750,
+        "mockOnly": true,
+        "redeemAction": "show demo success modal; no actual discount or partner redemption"
+      }
+    },
+    {
+      "id": "artichoke-pizza",
+      "name": "Artichoke Basille's Pizza",
+      "category": "Pizza",
+      "address": "321 E 14th St, New York, NY 10003",
+      "description": "A cult-favorite slice shop famous for its artichoke and crab slices.",
+      "isRealBusiness": true,
+      "dataStatus": "Business name, category and address based on public listings. All menu items, prices, tasks, discounts and copy are illustrative, not verified offerings.",
+      "featured": false,
+      "imageSearchQuery": "Artichoke Basille's Pizza East Village NYC storefront",
+      "catalogLabel": "Sample menu",
+      "catalog": [
+        {
+          "id": "artichoke-pizza-1",
+          "name": "Artichoke Slice",
+          "priceUSD": 6.5,
+          "isMock": true
+        },
+        {
+          "id": "artichoke-pizza-2",
+          "name": "Margherita Slice",
+          "priceUSD": 4.5,
+          "isMock": true
+        },
+        {
+          "id": "artichoke-pizza-3",
+          "name": "Sicilian Slice",
+          "priceUSD": 5.0,
+          "isMock": true
+        },
+        {
+          "id": "artichoke-pizza-4",
+          "name": "Garlic Knots",
+          "priceUSD": 4.0,
+          "isMock": true
+        }
+      ],
+      "collection": {
+        "requiredTasks": [
+          {
+            "id": "discover",
+            "label": "Discover this business",
+            "type": "tap",
+            "points": 25
+          },
+          {
+            "id": "visit",
+            "label": "Mark a visit",
+            "type": "demo_checkin",
+            "points": 50
+          },
+          {
+            "id": "action",
+            "label": "Try a neighborhood slice shop",
+            "type": "demo_action",
+            "points": 75
+          },
+          {
+            "id": "checkin",
+            "label": "Check in with a photo",
+            "type": "photo_checkin",
+            "points": 100
+          }
+        ],
+        "unlockWhen": "all tasks completed",
+        "unlockPointsBonus": 150,
+        "badge": "Slice Scout"
+      },
+      "reward": {
+        "title": "Free garlic knots with a slice",
+        "pointsCost": 800,
+        "mockOnly": true,
+        "redeemAction": "show demo success modal; no actual discount or partner redemption"
+      }
+    },
+    {
+      "id": "mcsorleys",
+      "name": "McSorley's Old Ale House",
+      "category": "Bar",
+      "address": "15 E 7th St, New York, NY 10003",
+      "description": "One of NYC's oldest continuously operating bars, pouring its own light and dark ale since 1854.",
+      "isRealBusiness": true,
+      "dataStatus": "Business name, category and address based on public listings. All menu items, prices, tasks, discounts and copy are illustrative, not verified offerings.",
+      "featured": false,
+      "imageSearchQuery": "McSorley's Old Ale House East Village NYC storefront",
+      "catalogLabel": "Sample menu",
+      "catalog": [
+        {
+          "id": "mcsorleys-1",
+          "name": "House Light Ale",
+          "priceUSD": 6.0,
+          "isMock": true
+        },
+        {
+          "id": "mcsorleys-2",
+          "name": "House Dark Ale",
+          "priceUSD": 6.0,
+          "isMock": true
+        },
+        {
+          "id": "mcsorleys-3",
+          "name": "Liverwurst Plate",
+          "priceUSD": 7.0,
+          "isMock": true
+        },
+        {
+          "id": "mcsorleys-4",
+          "name": "Cheese & Crackers",
+          "priceUSD": 6.5,
+          "isMock": true
+        }
+      ],
+      "collection": {
+        "requiredTasks": [
+          {
+            "id": "discover",
+            "label": "Discover this business",
+            "type": "tap",
+            "points": 25
+          },
+          {
+            "id": "visit",
+            "label": "Mark a visit",
+            "type": "demo_checkin",
+            "points": 50
+          },
+          {
+            "id": "action",
+            "label": "Step into a historic NYC bar",
+            "type": "demo_action",
+            "points": 75
+          },
+          {
+            "id": "checkin",
+            "label": "Check in with a photo",
+            "type": "photo_checkin",
+            "points": 100
+          }
+        ],
+        "unlockWhen": "all tasks completed",
+        "unlockPointsBonus": 150,
+        "badge": "Old Ale Regular"
+      },
+      "reward": {
+        "title": "$5 off a round",
+        "pointsCost": 850,
+        "mockOnly": true,
+        "redeemAction": "show demo success modal; no actual discount or partner redemption"
+      }
+    },
+    {
+      "id": "daveys-ice-cream",
+      "name": "Davey's Ice Cream",
+      "category": "Ice Cream",
+      "address": "309 E 9th St, New York, NY 10003",
+      "description": "Small-batch, rotating ice cream flavors scooped right in the East Village.",
+      "isRealBusiness": true,
+      "dataStatus": "Business name, category and address based on public listings. All menu items, prices, tasks, discounts and copy are illustrative, not verified offerings.",
+      "featured": false,
+      "imageSearchQuery": "Davey's Ice Cream East Village NYC storefront",
+      "catalogLabel": "Sample menu",
+      "catalog": [
+        {
+          "id": "daveys-ice-cream-1",
+          "name": "Single Scoop",
+          "priceUSD": 5.5,
+          "isMock": true
+        },
+        {
+          "id": "daveys-ice-cream-2",
+          "name": "Double Scoop",
+          "priceUSD": 7.5,
+          "isMock": true
+        },
+        {
+          "id": "daveys-ice-cream-3",
+          "name": "Ice Cream Sandwich",
+          "priceUSD": 6.0,
+          "isMock": true
+        },
+        {
+          "id": "daveys-ice-cream-4",
+          "name": "Pint To Go",
+          "priceUSD": 11.0,
+          "isMock": true
+        }
+      ],
+      "collection": {
+        "requiredTasks": [
+          {
+            "id": "discover",
+            "label": "Discover this business",
+            "type": "tap",
+            "points": 25
+          },
+          {
+            "id": "visit",
+            "label": "Mark a visit",
+            "type": "demo_checkin",
+            "points": 50
+          },
+          {
+            "id": "action",
+            "label": "Pick a rotating seasonal flavor",
+            "type": "demo_action",
+            "points": 75
+          },
+          {
+            "id": "checkin",
+            "label": "Check in with a photo",
+            "type": "photo_checkin",
+            "points": 100
+          }
+        ],
+        "unlockWhen": "all tasks completed",
+        "unlockPointsBonus": 150,
+        "badge": "Scoop Scout"
+      },
+      "reward": {
+        "title": "Free scoop upsize",
+        "pointsCost": 900,
+        "mockOnly": true,
+        "redeemAction": "show demo success modal; no actual discount or partner redemption"
+      }
+    },
+    {
+      "id": "veselka",
+      "name": "Veselka",
+      "category": "Diner",
+      "address": "144 2nd Ave, New York, NY 10003",
+      "description": "A 24-hour Ukrainian diner and East Village institution since 1954.",
+      "isRealBusiness": true,
+      "dataStatus": "Business name, category and address based on public listings. All menu items, prices, tasks, discounts and copy are illustrative, not verified offerings.",
+      "featured": false,
+      "imageSearchQuery": "Veselka East Village NYC storefront",
+      "catalogLabel": "Sample menu",
+      "catalog": [
+        {
+          "id": "veselka-1",
+          "name": "Pierogi Plate",
+          "priceUSD": 14.0,
+          "isMock": true
+        },
+        {
+          "id": "veselka-2",
+          "name": "Borscht",
+          "priceUSD": 8.0,
+          "isMock": true
+        },
+        {
+          "id": "veselka-3",
+          "name": "Potato Pancakes",
+          "priceUSD": 13.0,
+          "isMock": true
+        },
+        {
+          "id": "veselka-4",
+          "name": "Blintzes",
+          "priceUSD": 12.0,
+          "isMock": true
+        }
+      ],
+      "collection": {
+        "requiredTasks": [
+          {
+            "id": "discover",
+            "label": "Discover this business",
+            "type": "tap",
+            "points": 25
+          },
+          {
+            "id": "visit",
+            "label": "Mark a visit",
+            "type": "demo_checkin",
+            "points": 50
+          },
+          {
+            "id": "action",
+            "label": "Order a late-night diner classic",
+            "type": "demo_action",
+            "points": 75
+          },
+          {
+            "id": "checkin",
+            "label": "Check in with a photo",
+            "type": "photo_checkin",
+            "points": 100
+          }
+        ],
+        "unlockWhen": "all tasks completed",
+        "unlockPointsBonus": 150,
+        "badge": "Night Owl Diner"
+      },
+      "reward": {
+        "title": "Free side of pierogi",
+        "pointsCost": 950,
+        "mockOnly": true,
+        "redeemAction": "show demo success modal; no actual discount or partner redemption"
+      }
+    },
+    {
+      "id": "trash-and-vaudeville",
+      "name": "Trash and Vaudeville",
+      "category": "Fashion",
+      "address": "96 E 7th St, New York, NY 10009",
+      "description": "A punk and glam fashion institution on St. Marks Place since the 1970s.",
+      "isRealBusiness": true,
+      "dataStatus": "Business name, category and address based on public listings. All menu items, prices, tasks, discounts and copy are illustrative, not verified offerings.",
+      "featured": false,
+      "imageSearchQuery": "Trash and Vaudeville East Village NYC storefront",
+      "catalogLabel": "Sample inventory",
+      "catalog": [
+        {
+          "id": "trash-and-vaudeville-1",
+          "name": "Studded Belt",
+          "priceUSD": 28.0,
+          "isMock": true
+        },
+        {
+          "id": "trash-and-vaudeville-2",
+          "name": "Band Tee",
+          "priceUSD": 32.0,
+          "isMock": true
+        },
+        {
+          "id": "trash-and-vaudeville-3",
+          "name": "Platform Boots",
+          "priceUSD": 95.0,
+          "isMock": true
+        },
+        {
+          "id": "trash-and-vaudeville-4",
+          "name": "Fishnet Tights",
+          "priceUSD": 14.0,
+          "isMock": true
+        }
+      ],
+      "collection": {
+        "requiredTasks": [
+          {
+            "id": "discover",
+            "label": "Discover this business",
+            "type": "tap",
+            "points": 25
+          },
+          {
+            "id": "visit",
+            "label": "Mark a visit",
+            "type": "demo_checkin",
+            "points": 50
+          },
+          {
+            "id": "action",
+            "label": "Browse a punk fashion landmark",
+            "type": "demo_action",
+            "points": 75
+          },
+          {
+            "id": "checkin",
+            "label": "Check in with a photo",
+            "type": "photo_checkin",
+            "points": 100
+          }
+        ],
+        "unlockWhen": "all tasks completed",
+        "unlockPointsBonus": 150,
+        "badge": "Punk Pilgrim"
+      },
+      "reward": {
+        "title": "10% off one item",
+        "pointsCost": 1000,
         "mockOnly": true,
         "redeemAction": "show demo success modal; no actual discount or partner redemption"
       }
@@ -823,7 +1195,7 @@
     },
     {
       "name": "Local Legend",
-      "condition": "Unlock all 10 properties"
+      "condition": "Unlock all 15 properties"
     },
     {
       "name": "Coffee Scout",

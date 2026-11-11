@@ -7,7 +7,8 @@ import { UnlockModal } from "../components/UnlockModal";
 import { RedeemConfirmModal } from "../components/RedeemConfirmModal";
 import { VisitConfirmModal } from "../components/VisitConfirmModal";
 import { PlaceholderImage } from "../components/PlaceholderImage";
-import { ArrowLeftIcon, CheckIcon, MapPinIcon, QrIcon } from "../components/icons";
+import { ArrowLeftIcon, CameraIcon, CheckIcon, MapPinIcon } from "../components/icons";
+import { checkInFormUrl } from "../data/checkInForm";
 
 export function BusinessDetailPage() {
   const { businessId } = useParams();
@@ -41,6 +42,7 @@ export function BusinessDetailPage() {
   }
 
   function handleConfirmCheckIn() {
+    window.open(checkInFormUrl(business!.name), "_blank", "noopener,noreferrer");
     checkInBusiness(business!.id);
     setShowCheckInConfirm(false);
     setShowUnlock(true);
@@ -81,6 +83,7 @@ export function BusinessDetailPage() {
               {reward!.instant ? "Unlocked on collection" : "Points reward"}
             </span>
             <strong>{reward!.title}</strong>
+            <span className="example-tag">Example — not redeemable</span>
           </div>
           <span className="reward-preview-card__cost">
             {reward!.instant ? "Free" : `${reward!.pointsCost} pts`}
@@ -91,11 +94,11 @@ export function BusinessDetailPage() {
       {!isCollected ? (
         <div className="checkin-module">
           <p className="checkin-module__explainer">
-            <QrIcon /> Collecting is one step: scan the QR code in store to check in. You'll earn{" "}
-            {totalCheckInPoints} points and unlock the {business.badgeTitle} badge.
+            <CameraIcon /> Collecting is one step: check in with a photo to confirm your visit. You'll
+            earn {totalCheckInPoints} points and unlock the {business.badgeTitle} badge.
           </p>
           <button type="button" className="business-detail__cta" onClick={() => setShowCheckInConfirm(true)}>
-            Check in
+            Check in with a photo
           </button>
         </div>
       ) : (
@@ -124,7 +127,9 @@ export function BusinessDetailPage() {
 
       {isCollected && rewardEnabled && (
         <>
-          <h2>Reward</h2>
+          <h2>
+            Reward <span className="example-tag">Example — not redeemable</span>
+          </h2>
           <p className="business-detail__reward-preview">
             {reward!.title}
             {" · "}

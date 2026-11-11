@@ -169,15 +169,11 @@ export function CheckIcon(props: IconProps) {
   );
 }
 
-export function QrIcon(props: IconProps) {
+export function CameraIcon(props: IconProps) {
   return (
     <svg {...base(props)}>
-      <rect x="3.5" y="3.5" width="6.5" height="6.5" rx="1" />
-      <rect x="14" y="3.5" width="6.5" height="6.5" rx="1" />
-      <rect x="3.5" y="14" width="6.5" height="6.5" rx="1" />
-      <path d="M14 14h3v3" />
-      <path d="M20.5 14v6.5H14" />
-      <path d="M17 17.5v.01" />
+      <path d="M4 8.5A1.5 1.5 0 0 1 5.5 7h2l1-2h7l1 2h2A1.5 1.5 0 0 1 20 8.5v9A1.5 1.5 0 0 1 18.5 19h-13A1.5 1.5 0 0 1 4 17.5Z" />
+      <circle cx="12" cy="12.5" r="3.5" />
     </svg>
   );
 }
@@ -256,6 +252,10 @@ export const CATEGORY_ICON_BY_RAW_CATEGORY: Record<string, (props: IconProps) =>
   "Coffee & Bakery": CoffeeIcon,
   Bakery: CupcakeIcon,
   Restaurant: UtensilsIcon,
+  Pizza: UtensilsIcon,
+  Bar: UtensilsIcon,
+  "Ice Cream": CupcakeIcon,
+  Diner: UtensilsIcon,
   Books: BookIcon,
   Music: MusicIcon,
   Vintage: BagIcon,

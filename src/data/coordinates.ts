@@ -11,6 +11,11 @@ export const businessCoordinates: Record<string, { lat: number; lng: number }> =
   "cloak-dagger": { lat: 40.7284792, lng: -73.9860541 },
   "stranded-records": { lat: 40.7272022, lng: -73.9903916 },
   "limited-to-one": { lat: 40.7294627, lng: -73.985542 },
+  "artichoke-pizza": { lat: 40.7320931, lng: -73.9839076 },
+  mcsorleys: { lat: 40.7287612, lng: -73.9897021 },
+  "daveys-ice-cream": { lat: 40.7290119, lng: -73.9865689 },
+  veselka: { lat: 40.7289775, lng: -73.9869985 },
+  "trash-and-vaudeville": { lat: 40.7266424, lng: -73.9852878 },
 };
 
 export const EAST_VILLAGE_CENTER: [number, number] = [40.7275, -73.9865];

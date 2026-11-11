@@ -23,7 +23,9 @@ export function RedeemConfirmModal({ business, onClose }: RedeemConfirmModalProp
         {!requested ? (
           <>
             <p className="redeem-modal__eyebrow">Confirm redemption</p>
-            <h2 className="redeem-modal__name">{reward.title}</h2>
+            <h2 className="redeem-modal__name">
+              {reward.title} <span className="example-tag">Example — not redeemable</span>
+            </h2>
             <p className="redeem-modal__business">{business.name}</p>
             <p className="redeem-modal__cost">
               {reward.instant ? "Free with collection" : `${reward.pointsCost} pts`}
@@ -42,7 +44,8 @@ export function RedeemConfirmModal({ business, onClose }: RedeemConfirmModalProp
             <p className="redeem-modal__eyebrow">Pending confirmation</p>
             <h2 className="redeem-modal__name">Show this at {business.name}</h2>
             <p className="redeem-modal__business">
-              A staff member confirms your redemption before it's applied.
+              In the merchant portal, a staff member confirms your redemption before it's applied.
+              <span className="example-tag">Example — not a real offer</span>
             </p>
             <div className="redeem-modal__actions">
               <button type="button" onClick={onClose}>

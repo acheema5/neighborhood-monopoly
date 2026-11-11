@@ -1018,6 +1018,20 @@ ul {
   flex-shrink: 0;
 }
 
+.example-tag {
+  display: inline-block;
+  font-size: 9.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  font-weight: 700;
+  color: var(--color-text-muted);
+  background: var(--color-border);
+  border-radius: var(--radius-sm, 4px);
+  padding: 1px 6px;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+
 /* ---------- Check-in module ---------- */
 
 .checkin-module {

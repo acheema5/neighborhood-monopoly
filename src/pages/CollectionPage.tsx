@@ -131,7 +131,9 @@ export function CollectionPage() {
                       alt={`${b.name} category icon`}
                     />
                     <div className="reward-card__body">
-                      <strong>{reward.title}</strong>
+                      <strong>
+                        {reward.title} <span className="example-tag">Example</span>
+                      </strong>
                       <span>{b.name}</span>
                       <span className="reward-card__cost">Free with collection</span>
                     </div>
@@ -167,7 +169,9 @@ export function CollectionPage() {
                       alt={`${b.name} category icon`}
                     />
                     <div className="reward-card__body">
-                      <strong>{reward.title}</strong>
+                      <strong>
+                        {reward.title} <span className="example-tag">Example</span>
+                      </strong>
                       <span>{b.name}</span>
                       <span className="reward-card__cost">
                         {!redeemed && !eligible && pointsShort > 0
